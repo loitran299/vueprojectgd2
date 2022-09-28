@@ -40,8 +40,8 @@
                 <span>Gửi mã cho khách hàng</span>
             </button>
         </div>
-        <Splitpanes>
-            <div class="grid">
+        <Splitpanes class="default-theme" horizontal>
+            <Pane class="grid" size="70" max-size="100" min-size="10">
                 <table>
                     <thead>
                         <tr>
@@ -377,7 +377,8 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
+            </Pane>
+            <Pane size="30" min-size="0">dfdsfsd</Pane>
         </Splitpanes>
     </div>
 </template>
@@ -385,11 +386,15 @@
 <script>
 import DateRequest from '@/components/base/DateRequest.vue'
 import SearchCombobox from '@/components/base/BaseCombobox.vue'
+import { Splitpanes, Pane } from 'splitpanes'
+import 'splitpanes/dist/splitpanes.css'
 export default {
     name: 'voucherID',
     components: {
         DateRequest,
-        SearchCombobox
+        SearchCombobox,
+        Splitpanes,
+        Pane
     },
     data() {
         return {

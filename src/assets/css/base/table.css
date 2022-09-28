@@ -1,7 +1,5 @@
 .grid {
     width: 100%;
-    max-height: 62vh;
-    height: 615px;
     background-color: #FFFFFF;
     overflow: auto;
 }
@@ -126,8 +124,19 @@ table thead tr:nth-child(1) th:first-child{
 
 /* --------resize---------- */
 .splitpanes {
+    height: 81vh;
+    max-height: 81vh;
+    min-height: 81vh;
     width: 100%;
     display: flex;
     flex-direction: column;
-    background-color: red;
 }
+
+.splitpanes.default-theme .splitpanes__pane {
+    background-color: #FFFFFF;
+}
+
+.splitpanes.default-theme .splitpanes__splitter {
+    background-color: #E3E8EF;
+}
+
