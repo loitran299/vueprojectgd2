@@ -1,0 +1,37 @@
+.el-date-picker .el-date-editor {
+    --el-datepicker-text-color: auto !important;
+    font-size: 13px;
+ }
+ 
+ .el-date-editor.el-input, .el-date-editor.el-input__wrapper {
+    width: 110px!important;
+ }
+ 
+ .el-date-picker .el-input__wrapper {
+    display: flex;
+    flex-direction: row-reverse;
+    box-shadow: none;
+    border: 1px solid #B0BEC5;
+    border-radius: 0px;
+    margin-top: -1px;
+    margin-right: 0px!important;
+    height: 30px;
+ }
+ 
+ .el-date-picker .el-input__wrapper.is-focus {
+    box-shadow: none;
+    border: 1px solid #3892d4;
+ }
+ 
+ .el-date-picker input::-webkit-input-placeholder {
+    font-family: Helvetica,Tahoma,Arial,sans-serif;
+    font-size: 12px;
+ }
+ 
+ .el-date-picker-popper {
+    /* width: 200px; */
+ }
+
+ .el-input__prefix-inner>:last-child {
+    margin-right: 0px!important;
+ }

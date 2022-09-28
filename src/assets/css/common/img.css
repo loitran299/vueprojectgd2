@@ -1,0 +1,24 @@
+.main-logo {
+    background-image: url('https://testpromotionprocess.misa.vn/Style/images/amis.png');
+    height: 32px;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.icon-diskdown {
+    background-image: url('./../../img/diskdownload.png');
+    height: 16px;
+    width: 16px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.icon-down {
+    background-image: url('./../../img/down.png');
+    height: 12px;
+    width: 12px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}

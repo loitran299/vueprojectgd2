@@ -1,0 +1,20 @@
+.main {
+    background-color: #F4F7FA;
+    flex: 1;
+    padding: 8px;
+    min-width: 1024;
+    overflow: hidden;
+}
+.main .m-row:first{
+    margin-bottom: 20px;
+}
+
+.m-row {
+    margin-top: 4px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+}
+.m-row label{
+    min-width: 80px;
+}

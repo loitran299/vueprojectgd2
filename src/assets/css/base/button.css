@@ -1,0 +1,19 @@
+.btn-icon {
+    color: black;
+    display: flex;
+    flex-direction: row;
+    text-decoration: none;
+    height: 30px;
+    align-items: center;
+    border: 1px solid #B0BEC5;
+    overflow: hidden;
+    padding: 0 2px;
+}
+.btn-icon:hover {
+    background-color: #CFD8DC;
+}
+
+.btn-icon span {
+    padding: 0 5px;
+    white-space: nowrap;
+}

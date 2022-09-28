@@ -1,0 +1,45 @@
+/* ------------------
+----css modal popup----------
+----author: TVLOI ----------
+----01/08/2022    ----------
+ */
+
+.el-select {
+    width: 200px;
+    height: 30px;
+    margin-top: 4px;
+    --el-select-input-focus-border-color: #ffffff !important;
+    --el-select-input-font-size: 13px !important;
+    --el-select-disabled-border: 1px solid #B0BEC5 !important;
+    border: none;
+}
+
+.el-select .el-input {
+    border-radius: 2px;
+    cursor: text!important;
+}
+.el-select .el-input__inner {
+    cursor: text!important;
+}
+.el-select .el-input::-webkit-input-placeholder {
+    cursor: text!important;
+}
+
+.el-select .el-input.is-focus {
+    border-color: #3892d4;
+}
+
+.el-select .el-input__wrapper {
+    height: 30px;
+    border: 1px solid #B0BEC5;
+    border-radius: 0px;
+    box-shadow: none;
+}
+
+.el-select.warning .el-input__wrapper {
+    border-color: #d24d4d;
+}
+
+.el-select .el-input__wrapper.is-focus {
+    border-color: #3892d4;
+}

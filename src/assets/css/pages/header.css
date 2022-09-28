@@ -1,0 +1,102 @@
+@import url('./../common/img.css');
+
+.container .header {
+    min-width: 1024px;
+    overflow: hidden;
+    width: 100%;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    box-shadow: -5px 1px 26px -5px rgb(171 164 164 / 75%);
+    font-family: Helvetica,Tahoma,Arial,sans-serif;
+}
+
+.header .header-right {
+    flex: 1;
+    justify-content: flex-end;
+    position: relative;
+}
+.main-logo {
+    min-width: 300px;
+    margin: 0 15px;
+    text-decoration: none;
+    line-height: 32px;
+    padding-left: 35px;
+    font-size: 24px;
+    color: black;
+    font-weight: 300;
+}
+
+.h-col {
+    padding-left: 8px;
+}
+
+.a-header-tab {
+    padding: 4px 8px 0 8px;
+    float: left;
+    line-height: 32px;
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    height: 40px;
+    margin-right: 2px;
+    cursor: pointer;
+}
+
+.a-header-tab.active {
+    color: #238de6;
+    font-weight: bold;
+    border-bottom-color: #238de6;
+}
+.a-header-tab:hover {
+    color: #238de6;
+}
+
+/* header avt */
+.h-avatar {
+    max-height: 40px;
+}
+.h-avatar img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-left: 8px;
+}
+
+.h-username {
+    display: flex;
+    align-items: center;
+}
+.h-username div{
+    cursor: pointer;
+}
+.h-username .text{
+    cursor: pointer;
+    padding-left: 8px;
+    display: flex;
+    flex-direction: column;
+    padding-right: 10px;
+}
+.h-username .text span:nth-child(2){
+    font-size: 11px;
+    color: #7D7D7D;
+}
+
+ .item-logout {
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 30%);
+    line-height: 30px;
+    padding: 0 10px 0 20px;
+    background-color: #ffffff;
+    width: 180px;
+    height: 30px;
+    position: fixed;
+    top: 50px;
+}
+.item-logout:hover {
+    background-color: #EEEFF0;
+}
+.item-logout a{
+    text-decoration: none;
+    color: #1d2129;
+}
