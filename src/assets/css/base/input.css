@@ -1,0 +1,13 @@
+.f-input {
+    border: none;
+    border-top:1px solid #cfcfcf;
+    height: 32px;
+    outline: none;
+    padding-left: 5px;
+    width: 100%;
+}
+
+.f-input::-webkit-input-placeholder {
+    display: none;
+    color: red;
+}

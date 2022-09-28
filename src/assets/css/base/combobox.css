@@ -7,11 +7,15 @@
 .el-select {
     width: 200px;
     height: 30px;
-    margin-top: 4px;
     --el-select-input-focus-border-color: #ffffff !important;
     --el-select-input-font-size: 13px !important;
     --el-select-disabled-border: 1px solid #B0BEC5 !important;
     border: none;
+    
+}
+
+.el-select.width-123 {
+    width: 123px;
 }
 
 .el-select .el-input {
@@ -34,6 +38,16 @@
     border: 1px solid #B0BEC5;
     border-radius: 0px;
     box-shadow: none;
+}
+
+.border-none {
+    width: inherit!important;
+    height: 32px;
+}
+.border-none .el-input__wrapper{
+    border: none;
+    border-top:1px solid #cfcfcf;
+    height: 32px;
 }
 
 .el-select.warning .el-input__wrapper {

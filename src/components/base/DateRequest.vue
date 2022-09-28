@@ -49,8 +49,7 @@ export default {
 @import url("@/assets/css/base/datepicker.css");
 #dateID {
   color: black;
-  width: fit-content;
-  padding: 0 5px 0 25px;
+  padding: 0 5px 0 0;
   box-sizing: border-box;
   display: flex;
   align-items: center;

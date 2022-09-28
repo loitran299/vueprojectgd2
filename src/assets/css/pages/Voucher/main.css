@@ -1,12 +1,17 @@
+@import url('./../../base/table.css');
+
 .main {
     background-color: #F4F7FA;
     flex: 1;
     padding: 8px;
-    min-width: 1024;
+    min-width: 1024px;
     overflow: hidden;
 }
-.main .m-row:first{
-    margin-bottom: 20px;
+.main .m-row:nth-child(1){
+    margin-bottom: 14px;
+}
+.main .m-row:nth-child(2){
+    margin-bottom: 16px;
 }
 
 .m-row {
@@ -14,7 +19,37 @@
     height: 30px;
     display: flex;
     align-items: center;
+    position: relative;
+}
+.m-row .btn-txt{
+    margin-top: 4px;
+    margin-left: 20px;
+}
+
+.m-row .btn-icon {
+    margin-top: 4px;
+    padding-left: 6px;
+    cursor: pointer;
+}
+
+.m-row .btn-icon.m-right {
+    position: fixed;
+    right: 10px;
+    background-color: #ffffff;
+}
+.m-row .btn-icon.m-right:hover {
+    background-color: #D0D8DC;
 }
 .m-row label{
     min-width: 80px;
+    margin-right: 25px;
+}
+
+.grid {
+    margin-top: 5px;
+}
+
+.filter-input {
+    display: flex;
+    width: calc(100%-29px);
 }

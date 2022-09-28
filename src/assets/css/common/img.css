@@ -22,3 +22,76 @@
     background-repeat: no-repeat;
     background-position: center;
 }
+
+.icon-add {
+    background-image: url('./../../img/add.png');
+    height: 16px;
+    width: 16px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.icon-watching {
+    background-image: url('./../../img/watching.png');
+    height: 18px;
+    width: 18px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.icon-edit {
+    background-image: url('./../../img/edit.png');
+    height: 18px;
+    width: 18px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.icon-request {
+    background-image: url('./../../img/request.png');
+    height: 18px;
+    width: 18px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.icon-undo {
+    background-image: url('./../../img/undo.png');
+    height: 18px;
+    width: 18px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.icon-cancel {
+    background-image: url('./../../img/cancel.png');
+    height: 18px;
+    width: 18px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.icon-go {
+    background-image: url('./../../img/go.png');
+    height: 18px;
+    width: 18px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.icon-check {
+    background-image: url('./../../img/check.png');
+    height: 16px;
+    width: 16px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.icon-uncheck {
+    background-image: url('./../../img/uncheck.png');
+    height: 16px;
+    width: 16px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}

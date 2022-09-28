@@ -8,7 +8,7 @@
     v-model="cbValue"
     filterable
     class="el-select"
-    placeholder=""
+    :placeholder="' '"
     popper-class="selectbox"
     id="comboboxID"
   >
@@ -34,7 +34,7 @@ export default {
   ],
   data() {
     return {
-      cbValue: 'Tuần này'
+      cbValue: ''
     };
   },
 
