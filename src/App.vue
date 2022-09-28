@@ -1,19 +1,10 @@
 <template>
-  <div class="container">
-    <Header></Header>
-    <TheVoucher></TheVoucher>
-  </div>
+  <router-view></router-view>
 </template>
 
 <script>
-import Header from '@/components/pages/common/TheHeader.vue'
-import TheVoucher from '@/components/pages/TheVoucher.vue';
 export default {
   name: 'App',
-  components: {
-    Header,
-    TheVoucher,
-}
 }
 </script>
 

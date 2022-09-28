@@ -22,9 +22,9 @@
         </div>
         <div class="icon-down" @click="showLogout = !showLogout"></div>
       </div>
-      <div class="item-logout" v-if="showLogout">
-        <a href="" class="logout">Đăng xuất</a>
-      </div>
+      <router-link :to="'/login'" class="item-logout" v-if="showLogout">
+        <div class="logout">Đăng xuất</div>
+      </router-link>
     </div>
   </div>
 </template>
