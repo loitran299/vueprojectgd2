@@ -36,6 +36,7 @@ export default {
     height: 270px;
     margin-bottom: 200px;
     border-radius: 10px;
+    font-family: Helvetica,Tahoma,Arial,sans-serif;
 }
 
 .login-top {
@@ -83,6 +84,7 @@ export default {
     width: 250px;
     height: 30px;
     text-decoration: none;
+    font-size: 14px;
 }
 
 .login-bottom {
