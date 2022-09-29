@@ -383,10 +383,12 @@
             </Pane>
         </Splitpanes>
     </div>
+    <FormDetail></FormDetail>
 </template>
 
 <script>
-    import VoucherInfo from '@/components/pages/common/VoucherInfo.vue'
+import FormDetail from '@/components/pages/common/FormDetail.vue'
+import VoucherInfo from '@/components/pages/common/VoucherInfo.vue'
 import DateRequest from '@/components/base/DateRequest.vue'
 import SearchCombobox from '@/components/base/BaseCombobox.vue'
 import { Splitpanes, Pane } from 'splitpanes'
@@ -398,7 +400,8 @@ export default {
         SearchCombobox,
         Splitpanes,
         Pane,
-        VoucherInfo
+        VoucherInfo,
+        FormDetail
     },
     data() {
         return {
