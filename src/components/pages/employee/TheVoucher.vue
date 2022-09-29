@@ -378,12 +378,15 @@
                     </tbody>
                 </table>
             </Pane>
-            <Pane size="30" min-size="0">dfdsfsd</Pane>
+            <Pane size="30" min-size="0">
+                <VoucherInfo></VoucherInfo>
+            </Pane>
         </Splitpanes>
     </div>
 </template>
 
 <script>
+    import VoucherInfo from '@/components/pages/common/VoucherInfo.vue'
 import DateRequest from '@/components/base/DateRequest.vue'
 import SearchCombobox from '@/components/base/BaseCombobox.vue'
 import { Splitpanes, Pane } from 'splitpanes'
@@ -394,7 +397,8 @@ export default {
         DateRequest,
         SearchCombobox,
         Splitpanes,
-        Pane
+        Pane,
+        VoucherInfo
     },
     data() {
         return {

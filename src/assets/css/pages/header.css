@@ -43,12 +43,13 @@
 }
 
 .a-header-tab.active {
-    color: #238de6;
+    color: #238de6!important;
     font-weight: bold;
     border-bottom-color: #238de6;
 }
 .a-header-tab:hover {
-    color: #238de6;
+    color: #238de6!important;
+    font-weight: bold;
 }
 
 /* header avt */
