@@ -1,0 +1,9 @@
+.pagination {
+    width: 100%;
+    min-height: 32px;
+    background-color: #FFFFFF;
+    border: 1px solid #cfcfcf;
+    border-top: none;
+    height: 32px;
+    z-index: 100;
+}
