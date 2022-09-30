@@ -87,8 +87,24 @@
     background-repeat: no-repeat;
     background-position: center;
 }
-.icon-uncheck {
-    background-image: url('./../../img/uncheck.png');
+.icon-close {
+    background-image: url('./../../img/close.png');
+    height: 16px;
+    width: 16px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.icon-save16 {
+    background-image: url('./../../img/save16.png');
+    height: 16px;
+    width: 16px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.icon-cancel16 {
+    background-image: url('./../../img/cancel16.png');
     height: 16px;
     width: 16px;
     background-size: contain;

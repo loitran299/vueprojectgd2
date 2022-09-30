@@ -1,0 +1,93 @@
+@import url('./../common/img.css');
+
+.overlay {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(6, 6, 6, 0.2) !important;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-content {
+    display: flex;
+    flex-direction: column;
+    position: relative!important;
+    background-color: #FFFFFF;
+    box-shadow: rgb(136 136 136) 0px 0px 6px;
+    border-radius: 5px;
+    margin: 0;
+    border: none;
+}
+
+.content-top button{
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    filter: brightness(0.8);
+}
+.content-top button:hover{
+    filter: brightness(1);
+}
+.content-top {
+    background-color: #3E96F4;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 34px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding: 9px;
+
+}
+.content-top span{
+    color: #FFFFFF;
+    font-family: Helvetica,Tahoma,Arial,sans-serif;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.vdr-container {
+    border: none!important;
+}
+
+/* ----------------center----------------- */
+
+.content-center {
+    flex: 1;
+}
+/* ---------------bottom */
+.content-bottom {
+    width: 100%;
+    height: 44px;
+    padding-top: 6px;
+    border-top: 1px solid rgb(207, 207, 207);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.content-bottom button div{
+    min-width: 18px;
+    min-height: 18px;
+}
+.content-bottom button span{
+    padding-top: 3px;
+    font: 300 13px helvetica, arial, verdana, sans-serif;
+}
+.content-bottom button{
+    border-radius: 3px;
+    border: 1px solid #b0bec5;
+    min-width: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+/* -------------------------- */

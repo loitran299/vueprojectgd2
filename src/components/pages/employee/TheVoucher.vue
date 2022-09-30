@@ -9,6 +9,7 @@
         <span>Lập yêu cầu cấp MGG</span>
       </button>
     </div>
+<<<<<<< HEAD
     <div class="m-row">
       <label for="">Trạng thái</label>
       <SearchCombobox class="width-123"></SearchCombobox>
@@ -446,6 +447,34 @@ export default {
     };
   },
 };
+=======
+    <FormDetail></FormDetail>
+</template>
+
+<script>
+import FormDetail from '@/components/pages/common/FormDetail.vue'
+import VoucherInfo from '@/components/pages/common/VoucherInfo.vue'
+import DateRequest from '@/components/base/DateRequest.vue'
+import SearchCombobox from '@/components/base/BaseCombobox.vue'
+import { Splitpanes, Pane } from 'splitpanes'
+import 'splitpanes/dist/splitpanes.css'
+export default {
+    name: 'voucherID',
+    components: {
+        DateRequest,
+        SearchCombobox,
+        Splitpanes,
+        Pane,
+        VoucherInfo,
+        FormDetail
+    },
+    data() {
+        return {
+            date: new Date()
+        }
+    },
+}
+>>>>>>> a7a71b2904a377cdc5f260e3feeb723a44a8f55a
 </script>
 
 <style scoped>
