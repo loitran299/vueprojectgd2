@@ -15,7 +15,7 @@
       <a class="h-avatar">
         <img src="@/assets/img/profile.jpg" alt="" />
       </a>
-      <div class="h-username">
+      <div class="h-username" v-click-outside="outSideLogout">
         <div class="text" @click="showLogout = !showLogout">
           <span>Trần Văn Lợi</span>
           <span>Nhân viên kinh doanh dịch vụ hóa đơn điện tử</span>
@@ -36,6 +36,11 @@ export default {
         return {
             showLogout: false
         }
+    },
+    methods: {
+      outSideLogout() {
+        this.showLogout = false;
+      }
     },
 };
 </script>

@@ -5,7 +5,7 @@
     width: 100%;
     height: 100vh;
     background-color: rgba(6, 6, 6, 0.2) !important;
-    z-index: 10;
+    z-index: 200;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -55,10 +55,106 @@
 }
 
 /* ----------------center----------------- */
-
-.content-center {
+.flex1 {
     flex: 1;
 }
+.content-center {
+    flex: 1;
+    overflow-y: scroll;
+}
+
+.content-center .content-center-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.content-center-box {
+    padding-bottom: 10px;
+}
+
+.content-center-box .box-title{
+    height: 37px;
+    padding:10px;
+    font-weight: bold;
+    background-color: #f5f5f5;
+}
+
+.content-center-box .box-row {
+    display: flex;
+    padding: 0 10px;
+    padding-top: 6px;
+}
+.content-center-box:nth-child(1) .box-row:nth-child(4) {
+    height: 40px;
+}
+.content-center-box:nth-child(1)  .box-row:nth-child(6) {
+    margin-top: 5px;
+}
+.content-center-box:nth-child(1)  .box-row:nth-child(7) {
+    margin-bottom: 5px;
+}
+.content-center-box:nth-child(1)  .box-row:nth-child(11) {
+    margin-top: 5px;
+}
+.content-center-box:nth-child(1)  .box-row:nth-child(13) {
+    margin-bottom: 5px;
+}
+.content-center-box:nth-child(1)  .box-row:last-child {
+    margin: 5px 0;
+}
+.content-center-box:nth-child(1)  .box-row:last-child label {
+    width: 200px;
+}
+
+.span-right {
+    width: 100px!important;
+    margin-left: 20px;
+}
+
+.box-row .width-80 {
+    width: 80px;
+}
+
+.box-row>span {
+    width: 150px;
+    white-space: nowrap;
+}
+.box-row>span>span {
+    color: red
+}
+.box-row .form-combobox {
+    flex: 1;
+    height: 28px;
+}
+
+.box-row .box-radio {
+    margin-right: 4px;
+    width: 19px;
+    height: 19px;
+}
+.box-row label {
+    margin-right: 15px;
+    /* text-align: center; */
+    line-height: 20px;
+}
+
+.box-row .box-input {
+    width: 150px;
+    height: 30px;
+    border: 1px solid #cfcfcf;
+    outline: none;
+    border-radius: 2px;
+    text-align: end;
+}
+.box-row .box-input:focus {
+    border: 1px solid #238de6;
+}
+
+.box-row textarea {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+}
+
 /* ---------------bottom */
 .content-bottom {
     width: 100%;

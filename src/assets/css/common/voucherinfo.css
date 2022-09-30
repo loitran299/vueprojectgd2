@@ -33,14 +33,17 @@
 .info-content .info-content-col:nth-child(1){
     width: 380px;
     height: fit-content;
+    overflow: hidden;
 }
 .info-content .info-content-col:nth-child(2){
     width: 350px;
     height: fit-content;
+    overflow: hidden;
 }
 .info-content .info-content-col:nth-child(3){
     width: 500px;
     height: fit-content;
+    overflow: hidden;
 }
 .info-content .info-content-col:nth-child(3) .info-content-row span{
     width: 150px;

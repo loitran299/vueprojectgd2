@@ -42,3 +42,8 @@
    height: 32px;
    margin-top: 0px!important;
  }
+
+ 
+.formMode  .el-date-picker .el-input__wrapper {
+   height: 28px!important;
+ }

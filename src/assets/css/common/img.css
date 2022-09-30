@@ -5,6 +5,14 @@
     background-size: contain;
 }
 
+.icon-uncheck {
+    background-image: url('./../../img/uncheck.png');
+    height: 16px;
+    width: 16px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
 .icon-diskdown {
     background-image: url('./../../img/diskdownload.png');
     height: 16px;
@@ -110,4 +118,49 @@
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+}
+.icon-page-first {
+    background-image: url('./../../img/page_first.png');
+    height: 16px;
+    width: 16px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.icon-page-prev {
+    background-image: url('./../../img/page_prev.png');
+    height: 16px;
+    width: 16px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.icon-page-next {
+    background-image: url('./../../img/page_next.png');
+    height: 16px;
+    width: 16px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.icon-page-last {
+    background-image: url('./../../img/page_last.png');
+    height: 16px;
+    width: 16px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.icon-page-refresh {
+    background-image: url('./../../img/refresh.png');
+    height: 16px;
+    width: 16px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.icon-spinner {
+    background-image: url("./../../img/spinner1.png");
+    background-repeat: no-repeat;
+    background-position: 130px;
 }

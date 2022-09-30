@@ -1,6 +1,6 @@
 <template>
-  <div id="dateID">
-    <SearchCombobox></SearchCombobox>
+  <div id="dateID" :class="{'formMode': !isShowCombobox}">
+    <SearchCombobox v-if="isShowCombobox"></SearchCombobox>
     <span>Từ</span>
     <el-date-picker
       :clearable="false"
@@ -34,6 +34,7 @@
 import SearchCombobox from "@/components/base/BaseCombobox.vue";
 export default {
   name: "dateID",
+  props: ["mode"],
   components: {
     SearchCombobox,
   },
@@ -41,6 +42,15 @@ export default {
     return {
       date: new Date(),
     };
+  },
+  computed: {
+    isShowCombobox() {
+      if(this.mode == 1){
+        return false;
+      }else {
+        return true;
+      }
+    }
   },
 };
 </script>
@@ -56,5 +66,17 @@ export default {
 }
 #dateID span{
     margin: 0 10px;
+}
+
+.formMode {
+  margin-top: 2px;
+}
+
+.formMode span{
+  margin-bottom: 10px!important;
+  padding-right: 5px!important;
+}
+.formMode span:nth-child(1){
+  margin-left: 0!important;
 }
 </style>
