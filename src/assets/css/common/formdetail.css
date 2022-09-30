@@ -23,9 +23,13 @@
 }
 
 .content-top button{
-    outline: none;
     border: none;
     background-color: transparent;
+    cursor: pointer;
+    filter: brightness(0.8);
+}
+.content-top button:hover{
+    filter: brightness(1);
 }
 .content-top {
     background-color: #3E96F4;
@@ -49,6 +53,9 @@
 .vdr-container {
     border: none!important;
 }
+
+/* ----------------center----------------- */
+
 .content-center {
     flex: 1;
 }
@@ -65,8 +72,8 @@
 }
 
 .content-bottom button div{
-    min-width: 20px;
-    min-height: 20px;
+    min-width: 18px;
+    min-height: 18px;
 }
 .content-bottom button span{
     padding-top: 3px;
