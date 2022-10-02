@@ -1,18 +1,18 @@
 <template>
-  <div class="container">
+  <div class="container" id="managerPage">
     <Header></Header>
-    <TheVoucher></TheVoucher>
+    <TheMain></TheMain>
   </div>
 </template>
 
 <script>
 import Header from '@/components/pages/common/TheHeader.vue'
-import TheVoucher from '@/components/pages/employee/EmployeeContent.vue';
+import TheMain from '@/components/pages/manager/ManagerContent.vue';
 export default {
-    name: 'employeePage',
+    name: 'managerPage',
     components: {
     Header,
-    TheVoucher,
+    TheMain,
     }
 }
 </script>

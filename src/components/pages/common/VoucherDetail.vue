@@ -40,7 +40,7 @@
             </div>
             <div class="box-row">
               <span>Ngày hiệu lực</span>
-              <DateRequest :mode="1"></DateRequest>
+              <DateRequest :mode="EnumDateRange.mode.Compact"></DateRequest>
             </div>
             <div class="box-row">
               <span>Giảm giá cho:</span>
@@ -158,7 +158,8 @@
 </template>
 
 <script>
-import DateRequest from "@/components/base/DateRequest.vue"
+  import EnumDateRange from "@/Enum/EnumDateRange";
+import DateRequest from "@/components/base/DateRange.vue"
 import BaseCombobox from "@/components/base/BaseCombobox.vue"
 export default {
   name: "formDetail",
@@ -169,7 +170,7 @@ export default {
   },
   data() {
     return {
-
+      EnumDateRange: EnumDateRange
     }
   },
   computed: {

@@ -164,3 +164,21 @@
     background-repeat: no-repeat;
     background-position: 130px;
 }
+
+.icon-browse {
+    background-image: url('./../../img/browse.png');
+    height: 18px;
+    width: 18px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.icon-refuse {
+    background-image: url('./../../img/refuse.png');
+    height: 18px;
+    width: 18px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}

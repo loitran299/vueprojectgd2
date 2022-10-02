@@ -426,9 +426,9 @@
 
 <script>
 import MyPagination from "@/components/base/BasePagination.vue"
-import FormDetail from "@/components/pages/common/FormDetail.vue";
+import FormDetail from "@/components/pages/common/VoucherDetail.vue";
 import VoucherInfo from "@/components/pages/common/VoucherInfo.vue";
-import DateRequest from "@/components/base/DateRequest.vue";
+import DateRequest from "@/components/base/DateRange.vue";
 import SearchCombobox from "@/components/base/BaseCombobox.vue";
 import { Splitpanes, Pane } from "splitpanes";
 import "splitpanes/dist/splitpanes.css";

@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import EnumDateRange from "@/Enum/EnumDateRange";
 import SearchCombobox from "@/components/base/BaseCombobox.vue";
 export default {
   name: "dateID",
@@ -45,7 +46,7 @@ export default {
   },
   computed: {
     isShowCombobox() {
-      if(this.mode == 1){
+      if(this.mode == EnumDateRange.mode.Compact){
         return false;
       }else {
         return true;
