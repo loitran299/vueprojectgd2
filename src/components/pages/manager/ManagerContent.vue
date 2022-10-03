@@ -13,7 +13,7 @@
         <button class="btn-txt btn-blue">Lấy dữ liệu</button>
       </div>
       <div class="m-row">
-        <button class="btn-icon btn-none">
+        <button class="btn-icon btn-none" @click="isShowPopup = true">
           <div class="icon-browse"></div>
           <span>Duyệt</span>
         </button>
@@ -407,12 +407,12 @@
         </Pane>
       </Splitpanes>
     </div>
-    <FormDetail v-if="isShowPopup" :isShow="isShowPopup" @changeShow="changeShowPopup"></FormDetail>
+    <BrowsePopup v-if="isShowPopup" :show="isShowPopup" @onClose="onClosePopup"></BrowsePopup>
   </template>
   
   <script>
+  import BrowsePopup from "@/components/pages/manager/BrowsePopup.vue"
   import MyPagination from "@/components/base/BasePagination.vue"
-  import FormDetail from "@/components/pages/common/VoucherDetail.vue";
   import VoucherInfo from "@/components/pages/common/VoucherInfo.vue";
   import DateRequest from "@/components/base/DateRange.vue";
   import SearchCombobox from "@/components/base/BaseCombobox.vue";
@@ -426,8 +426,8 @@
       Splitpanes,
       Pane,
       VoucherInfo,
-      FormDetail,
-      MyPagination
+      MyPagination,
+      BrowsePopup
     },
     data() {
       return {
@@ -437,6 +437,9 @@
     },
     methods: {
       changeShowPopup(value) {
+        this.isShowPopup = value;
+      },
+      onClosePopup(value) {
         this.isShowPopup = value;
       }
     },
