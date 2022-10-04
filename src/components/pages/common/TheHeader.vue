@@ -17,19 +17,20 @@
       </a>
       <div class="h-username" v-click-outside="outSideLogout">
         <div class="text" @click="showLogout = !showLogout">
-          <span>Trần Văn Lợi</span>
-          <span>Nhân viên kinh doanh dịch vụ hóa đơn điện tử</span>
+          <span>{{ user.Username }}</span>
+          <span>{{user.Role}}</span>
         </div>
         <div class="icon-down" @click="showLogout = !showLogout"></div>
       </div>
-      <router-link :to="'/login'" class="item-logout" v-if="showLogout">
+      <a class="item-logout" v-if="showLogout" @click="logout">
         <div class="logout">Đăng xuất</div>
-      </router-link>
+      </a>
     </div>
   </div>
 </template>
 
 <script>
+import Cookie from "@/stores/cookie"
 export default {
     name: 'headID',
     data() {
@@ -37,9 +38,23 @@ export default {
             showLogout: false
         }
     },
+    computed: {
+      user: {
+        get() {
+          return Cookie.getUser();
+        },
+        set(value) {
+          return value;
+        }
+      }
+    },
     methods: {
       outSideLogout() {
         this.showLogout = false;
+      },
+      logout() {
+        Cookie.deleteCookie();
+        this.$router.push("/");
       }
     },
 };

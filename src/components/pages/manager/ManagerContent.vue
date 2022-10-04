@@ -35,39 +35,7 @@
                   <th rowspan="2">
                     <div class="checkbox icon-uncheck"></div>
                   </th>
-                  <th>Tình trạng xử lý</th>
-                  <th>Sản phẩm</th>
-                  <th>Ứng dụng (Thuộc AMISPlatform)</th>
-                  <th>Đối tượng</th>
-                  <th>Loại giảm giá</th>
-                  <th>Số % giảm</th>
-                  <th>Số tiền trước giảm giá</th>
-                  <th>số tiền giảm giá</th>
-                  <th>Số tiền SGG</th>
-                  <th>Loại tặng tháng sử dụng</th>
-                  <th>Số tháng tối thiểu để được tặng</th>
-                  <th>Số năm tỉ lệ để được tặng</th>
-                  <th>Số tháng tặng</th>
-                  <th>Lý do</th>
-                  <th>Tên khách hàng</th>
-                  <th>Địa chỉ</th>
-                  <th>MST/CMT</th>
-                  <th>Số điện thoại</th>
-                  <th>Email</th>
-                  <th>Mã CTV</th>
-                  <th>Ngày yêu cầu</th>
-                  <th>Người yêu cầu</th>
-                  <th>Ngày duyệt</th>
-                  <th>Người duyệt</th>
-                  <th>Ngày từ chối</th>
-                  <th>Người từ chối</th>
-                  <th>Lý do từ chối</th>
-                  <th>Mã giảm giá</th>
-                  <th>Ngày bắt đầu</th>
-                  <th>Ngày hết hạn</th>
-                  <th>Thời hạn sử dụng(Ngày)</th>
-                  <th>Danh mục</th>
-                  <th>Cấp xin duyệt giảm giá</th>
+                  <th v-for="item in table.FieldNames" :key="item">{{item}}</th>
                 </tr>
                 <tr>
                   <th class="width-150">
@@ -325,77 +293,13 @@
                   <td>
                     <div class="checkbox icon-uncheck"></div>
                   </td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
+                  <td v-for="item in table.FieldNames" :key="item">test</td>
                 </tr>
                 <tr>
                   <td>
                     <div class="checkbox icon-uncheck"></div>
                   </td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
-                  <td>test</td>
+                  <td v-for="item in table.FieldNames" :key="item">test</td>
                 </tr>
               </tbody>
             </table>
@@ -411,6 +315,7 @@
   </template>
   
   <script>
+  import Table from "@/Const/table"
   import BrowsePopup from "@/components/pages/manager/BrowsePopup.vue"
   import MyPagination from "@/components/base/BasePagination.vue"
   import VoucherInfo from "@/components/pages/common/VoucherInfo.vue";
@@ -427,12 +332,13 @@
       Pane,
       VoucherInfo,
       MyPagination,
-      BrowsePopup
+      BrowsePopup,
     },
     data() {
       return {
         date: new Date(),
-        isShowPopup: false
+        isShowPopup: false,
+        table: Table
       };
     },
     methods: {

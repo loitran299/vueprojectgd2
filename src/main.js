@@ -11,6 +11,7 @@ import vClickOutsideUmd from 'click-outside-vue3'
 import { getRouter } from './router'
 const router = getRouter();
 
+
 const app = createApp(App);
 
 app.config.productionTip = false;
