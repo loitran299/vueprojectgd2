@@ -11,8 +11,8 @@
     </div>
     <div class="m-row">
       <label for="">Trạng thái</label>
-      <SearchCombobox class="width-123" :data="ComboboxData.RequestStatus" :IdName="'Id'" :ValName="'Label'" :value="statusID"
-        @changeValue="changeStatusID"></SearchCombobox>
+      <SearchCombobox class="width-123" :data="ComboboxData.RequestStatus" :IdName="'Id'" :ValName="'Label'"
+        :value="statusID" @changeValue="changeStatusID"></SearchCombobox>
       <button class="btn-txt btn-blue">Lấy dữ liệu</button>
     </div>
     <div class="m-row">
@@ -43,10 +43,12 @@
     </div>
     <RequestTable></RequestTable>
   </div>
-  <FormDetail v-if="isShowPopup" :isShow="isShowPopup" @changeShow="changeShowPopup"></FormDetail>
+  <FormDetail v-if="isShowPopup" :isShow="isShowPopup" @changeShow="changeShowPopup" :data="currentRequest" @changeData="changeCurrentRequest">
+  </FormDetail>
 </template>
 
 <script>
+import InitData from "@/stores/VoucherDetail"
 import RequestTable from "@/components/pages/common/RequestTable.vue"
 import ComboboxData from "@/stores/ComboboxData"
 import FormDetail from "@/components/pages/common/VoucherDetail.vue";
@@ -65,7 +67,8 @@ export default {
       date: new Date(),
       isShowPopup: false,
       ComboboxData: ComboboxData,
-      statusID: 1
+      statusID: 1,
+      currentRequest: InitData.NewRequest
     };
   },
   methods: {
@@ -74,6 +77,9 @@ export default {
     },
     changeStatusID(value) {
       this.statusID = value;
+    },
+    changeCurrentRequest(value) {
+      this.currentRequest = value;
     }
   },
 };

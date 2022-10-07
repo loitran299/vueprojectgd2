@@ -4,7 +4,7 @@ VoucherDetail = {
     NewRequest: {
         ProductID: "",
         ApplyFor: 1,
-        StartDate: new Date(),
+        StartDate: new Date().toISOString(),
         ExpiredDate: nextDay(),
         DiscountFor: 3,
         Status: 1,
@@ -29,7 +29,7 @@ VoucherDetail = {
 function nextDay() {
     var date = new Date();
     date.setDate(date.getDate() + 1);
-    return date;
+    return date.toISOString();
 }
 
 export default VoucherDetail

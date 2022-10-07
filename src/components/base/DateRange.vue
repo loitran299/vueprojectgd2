@@ -13,7 +13,7 @@
       :clearable="false"
       size="small"
       class="el-date-picker"
-      v-model="date"
+      v-model="cptBegin"
       type="date"
       popper-class="el-date-picker-popper"
       :max="todayDate"
@@ -26,7 +26,7 @@
       :clearable="false"
       size="small"
       class="el-date-picker"
-      v-model="date"
+      v-model="cptEnd"
       type="date"
       popper-class="el-date-picker-popper"
       :max="todayDate"
@@ -43,7 +43,7 @@ import EnumDateRange from "@/Enum/EnumDateRange";
 import SearchCombobox from "@/components/base/BaseCombobox.vue";
 export default {
   name: "dateID",
-  props: ["mode"],
+  props: ["mode", "begin", "end"],
   components: {
     SearchCombobox,
   },
@@ -60,6 +60,22 @@ export default {
         return false;
       } else {
         return true;
+      }
+    },
+    cptBegin: {
+      get() {
+        return this.begin;
+      },
+      set(value) {
+        this.$emit("changeBeginDate", value);
+      }
+    },
+    cptEnd: {
+      get() {
+        return this.end;
+      },
+      set(value) {
+        this.$emit("changeEndDate", value);
       }
     },
   },
