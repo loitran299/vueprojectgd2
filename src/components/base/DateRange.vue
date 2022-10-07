@@ -2,9 +2,9 @@
   <div id="dateID" :class="{ formMode: !isShowCombobox }">
     <SearchCombobox
       v-if="isShowCombobox"
-      :data="dateRange.data"
+      :data="ComboboxData.DateRange"
       :IdName="'Id'"
-      :ValName="'Name'"
+      :ValName="'Label'"
       :value="comboboxVal"
       @changeValue="changeComboboxVal"
     ></SearchCombobox>
@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import DateRange from "@/stores/DateRange";
+import ComboboxData from "@/stores/ComboboxData"
 import EnumDateRange from "@/Enum/EnumDateRange";
 import SearchCombobox from "@/components/base/BaseCombobox.vue";
 export default {
@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       date: new Date(),
-      dateRange: DateRange,
+      ComboboxData: ComboboxData,
       comboboxVal: 1
     };
   },

@@ -11,6 +11,7 @@
     --el-select-input-font-size: 13px !important;
     --el-select-disabled-border: 1px solid #B0BEC5 !important;
     border: none;
+    font-family: Helvetica,Tahoma,Arial,sans-serif;
     
 }
 
@@ -27,6 +28,8 @@
 }
 .el-select .el-input::-webkit-input-placeholder {
     cursor: text!important;
+    font-family: Helvetica,Tahoma,Arial,sans-serif!important;
+    font-size: 13px!important;
 }
 
 .el-select .el-input.is-focus {
@@ -38,6 +41,8 @@
     border: 1px solid #B0BEC5;
     border-radius: 0px;
     box-shadow: none;
+    font-family: Helvetica,Tahoma,Arial,sans-serif!important;
+    font-size: 13px!important;
 }
 
 .border-none {
