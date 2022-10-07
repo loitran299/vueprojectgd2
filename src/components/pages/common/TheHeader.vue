@@ -17,8 +17,8 @@
       </a>
       <div class="h-username" v-click-outside="outSideLogout">
         <div class="text" @click="showLogout = !showLogout">
-          <span>{{ user.Username }}</span>
-          <span>{{user.Role}}</span>
+          <span>{{ user.EmployeeName }}</span>
+          <span>{{user.PositionName}}</span>
         </div>
         <div class="icon-down" @click="showLogout = !showLogout"></div>
       </div>

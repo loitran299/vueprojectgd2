@@ -1,6 +1,13 @@
 <template>
-  <div id="dateID" :class="{'formMode': !isShowCombobox}">
-    <SearchCombobox v-if="isShowCombobox"></SearchCombobox>
+  <div id="dateID" :class="{ formMode: !isShowCombobox }">
+    <SearchCombobox
+      v-if="isShowCombobox"
+      :data="dateRange.data"
+      :IdName="'Id'"
+      :ValName="'Name'"
+      :value="comboboxVal"
+      @changeValue="changeComboboxVal"
+    ></SearchCombobox>
     <span>Từ</span>
     <el-date-picker
       :clearable="false"
@@ -31,6 +38,7 @@
 </template>
 
 <script>
+import DateRange from "@/stores/DateRange";
 import EnumDateRange from "@/Enum/EnumDateRange";
 import SearchCombobox from "@/components/base/BaseCombobox.vue";
 export default {
@@ -42,15 +50,22 @@ export default {
   data() {
     return {
       date: new Date(),
+      dateRange: DateRange,
+      comboboxVal: 1
     };
   },
   computed: {
     isShowCombobox() {
-      if(this.mode == EnumDateRange.mode.Compact){
+      if (this.mode == EnumDateRange.mode.Compact) {
         return false;
-      }else {
+      } else {
         return true;
       }
+    },
+  },
+  methods: {
+    changeComboboxVal(val) {
+      this.comboboxVal = val
     }
   },
 };
@@ -65,19 +80,19 @@ export default {
   display: flex;
   align-items: center;
 }
-#dateID span{
-    margin: 0 10px;
+#dateID span {
+  margin: 0 10px;
 }
 
 .formMode {
   margin-top: 2px;
 }
 
-.formMode span{
-  margin-bottom: 10px!important;
-  padding-right: 5px!important;
+.formMode span {
+  margin-bottom: 10px !important;
+  padding-right: 5px !important;
 }
-.formMode span:nth-child(1){
-  margin-left: 0!important;
+.formMode span:nth-child(1) {
+  margin-left: 0 !important;
 }
 </style>

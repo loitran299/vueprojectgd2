@@ -21,14 +21,19 @@ cookie = {
         return "";
     },
     deleteCookie: () => {
-        document.cookie = "Username=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+        document.cookie = "Token=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
         document.cookie = "Role=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-        document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+        document.cookie = "EmployeeID=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+        document.cookie = "EmployeeName=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+        document.cookie = "PositionName=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
     },
     getUser() {
         let user = {
-            Username: this.getCookie("Username"),
-            Role: this.getCookie("Role")
+            Token: this.getCookie("Token"),
+            Role: this.getCookie("Role"),
+            EmployeeID: this.getCookie("EmployeeID"),
+            EmployeeName: this.getCookie("EmployeeName"),
+            PositionName: this.getCookie("PositionName"),
           }
           return user;
     }

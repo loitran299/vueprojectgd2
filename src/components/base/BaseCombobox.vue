@@ -5,32 +5,24 @@
 */ -->
 <template>
   <el-select
-    v-model="cbValue"
+    v-model="bindValue"
     filterable
     class="el-select"
     :placeholder="' '"
     popper-class="selectbox"
     id="comboboxID"
   >
-    <el-option
-      :label="'tat ca'"
-      :value="'tat ca'"
-    />
-    <el-option
-      :label="'item1'"
-      :value="'item2'"
+    <el-option v-for="item in data" :key="item[IdName]"
+      :label="item[ValName]"
+      :value="item[IdName]"
     />
   </el-select>
 </template>
 
-<style scoped>
-@import url('@/assets/css/base/combobox.css');
-</style>
-
 <script>
 export default {
   name: "comboboxID",
-  props: [
+  props: [ "data", "IdName", "ValName", "value"
   ],
   data() {
     return {
@@ -41,6 +33,14 @@ export default {
   mounted() {
   },
   computed: {
+    bindValue: {
+      get() {
+        return this.value;
+      },
+      set(val) {
+        this.$emit("changeValue", val);
+      } 
+    }
   },
   methods: {
     /**
@@ -51,3 +51,7 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+@import url('@/assets/css/base/combobox.css');
+</style>

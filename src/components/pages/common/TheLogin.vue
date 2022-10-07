@@ -33,13 +33,14 @@ export default {
             var url = "https://localhost:44342/api/v1/Token";
             await Axios.post(url, user).then((response)=>{
                 var decoded = jwt_decode(response.data);
-                Cookie.setCookie("token",response.data, 1);
-                Cookie.setCookie("Username",decoded.name, 1);
-                Cookie.setCookie("Role",decoded.Role, 1);
-
-                if(decoded.Role == "Employee"){
+                Cookie.setCookie("Token",response.data, 1);
+                Cookie.setCookie("EmployeeID",decoded.EmployeeID, 1);
+                Cookie.setCookie("EmployeeName",decoded.EmployeeName, 1);
+                Cookie.setCookie("PositionName",decoded.PositionName, 1);
+                Cookie.setCookie("Role",decoded.role, 1);
+                if(decoded.role == "Employee"){
                     this.$router.push("employees");
-                }else if(decoded.Role == "Manager"){
+                }else{
                     this.$router.push("manager");
                 }
             }).catch((error)=> {

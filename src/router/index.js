@@ -20,10 +20,10 @@ import TheManager from '@/components/pages/manager/TheHome.vue'
     router.beforeEach((to, from, next) => {
       const userInfo= cookie.getUser();
       // next-line: check if route ("to" object) needs authenticated
-      if (to.meta.requiresAuth && !userInfo.Username) {
+      if (to.meta.requiresAuth && !userInfo.Token) {
         next('/login');
       }
-      else if (userInfo.Username) {
+      else if (userInfo.Token) {
         switch (to.name) {
           case "home":
               if(userInfo.Role == Role.Employee){
