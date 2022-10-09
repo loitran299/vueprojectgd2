@@ -13,7 +13,7 @@
       <label for="">Trạng thái</label>
       <SearchCombobox class="width-123" :data="ComboboxData.RequestStatus" :IdName="'Id'" :ValName="'Label'"
         :value="statusID" @changeValue="changeStatusID"></SearchCombobox>
-      <button class="btn-txt btn-blue">Lấy dữ liệu</button>
+      <button class="btn-txt btn-blue" @click="getRequests">Lấy dữ liệu</button>
     </div>
     <div class="m-row">
       <button class="btn-icon btn-none">
@@ -41,13 +41,15 @@
         <span>Gửi mã cho khách hàng</span>
       </button>
     </div>
-    <RequestTable :header="tableHeader"></RequestTable>
+    <RequestTable :data="tableData" :header="tableHeader"></RequestTable>
   </div>
   <FormDetail v-if="isShowPopup" :isShow="isShowPopup" @changeShow="changeShowPopup" :data="currentRequest" @changeData="changeCurrentRequest">
   </FormDetail>
 </template>
 
 <script>
+  import cookie from "@/stores/cookie";
+  import axios from "axios"
 import ConstTable from "@/Const/table"
 import InitData from "@/stores/VoucherDetail"
 import RequestTable from "@/components/pages/common/RequestTable.vue"
@@ -70,10 +72,27 @@ export default {
       ComboboxData: ComboboxData,
       statusID: 1,
       currentRequest: InitData.NewRequest,
-      tableHeader: ConstTable.Employee
+      tableHeader: ConstTable.Employee,
+      token: cookie.getCookie("Token"),
+      user: cookie.getUser(),
+      tableData: []
     };
   },
   methods: {
+    async getRequests(){
+      let url = `https://localhost:44342/api/v1/Request/Fillter?pageSize=10&pageNumber=1&employeeFilter=${this.user.EmployeeID}&sortBy=`;
+      await axios
+        .get(url, { headers: {"Authorization" : `Bearer ${this.token}`} })
+        .then((response) => {
+          if (response) {
+            this.tableData = response.data.Data;
+            console.log(this.tableData);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     changeShowPopup(value) {
       this.isShowPopup = value;
     },

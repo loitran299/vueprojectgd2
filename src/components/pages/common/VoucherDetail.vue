@@ -211,7 +211,6 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-      console.log(this.products);
     },
     /**
      * @Description Lấy nhân viên theo cấp bậc cao hơn
