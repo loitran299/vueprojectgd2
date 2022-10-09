@@ -8,220 +8,19 @@
                             <th rowspan="2">
                                 <div class="checkbox icon-uncheck"></div>
                             </th>
-                            <th v-for="item in table.FieldNames" :key="item">{{item}}</th>
+                            <th v-for="item in header" :key="item.HeadName">{{item.HeadName}}</th>
                         </tr>
                         <tr>
-                            <th class="width-150">
-                                <button class="filter-button">=</button>
+                            <th v-for="item in header" :key="item.HeadName" :class="`width-${item.Width}`">
+                                <button class="filter-button" v-if="item.ButtonType == buttonType.Equal">=</button>
+                                <button class="filter-button" v-if="item.ButtonType == buttonType.Multi">*</button>
                                 <div class="filter-input">
-                                    <SearchCombobox class="border-none"></SearchCombobox>
-                                </div>
-                            </th>
-                            <th class="width-150">
-                                <button class="filter-button">*</button>
-                                <div class="filter-input">
-                                    <input type="text" class="f-input" />
-                                </div>
-                            </th>
-                            <th class="width-220">
-                                <button class="filter-button">*</button>
-                                <div class="filter-input">
-                                    <input type="text" class="f-input" />
-                                </div>
-                            </th>
-                            <th class="width-150">
-                                <button class="filter-button">=</button>
-                                <div class="filter-input">
-                                    <SearchCombobox class="border-none"></SearchCombobox>
-                                </div>
-                            </th>
-                            <th class="width-150">
-                                <button class="filter-button">=</button>
-                                <div class="filter-input">
-                                    <SearchCombobox class="border-none"></SearchCombobox>
-                                </div>
-                            </th>
-                            <th class="width-150">
-                                <button class="filter-button">*</button>
-                                <div class="filter-input">
-                                    <input type="text" class="f-input" />
-                                </div>
-                            </th>
-                            <th class="width-180">
-                                <button class="filter-button">=</button>
-                                <div class="filter-input">
-                                    <input type="text" class="f-input" />
-                                </div>
-                            </th>
-                            <th class="width-150">
-                                <button class="filter-button">=</button>
-                                <div class="filter-input">
-                                    <SearchCombobox class="border-none"></SearchCombobox>
-                                </div>
-                            </th>
-                            <th class="width-150">
-                                <button class="filter-button">=</button>
-                                <div class="filter-input">
-                                    <input type="text" class="f-input" />
-                                </div>
-                            </th>
-                            <th class="width-220">
-                                <button class="filter-button">*</button>
-                                <div class="filter-input">
-                                    <input type="text" class="f-input" />
-                                </div>
-                            </th>
-                            <th class="width-240">
-                                <button class="filter-button">=</button>
-                                <div class="filter-input">
-                                    <input type="text" class="f-input" />
-                                </div>
-                            </th>
-                            <th class="width-150">
-                                <button class="filter-button">=</button>
-                                <div class="filter-input">
-                                    <input type="text" class="f-input" />
-                                </div>
-                            </th>
-                            <th class="width-150">
-                                <button class="filter-button">=</button>
-                                <div class="filter-input">
-                                    <input type="text" class="f-input" />
-                                </div>
-                            </th>
-                            <th class="width-300">
-                                <button class="filter-button">*</button>
-                                <div class="filter-input">
-                                    <input type="text" class="f-input" />
-                                </div>
-                            </th>
-                            <th class="width-300">
-                                <button class="filter-button">*</button>
-                                <div class="filter-input">
-                                    <input type="text" class="f-input" />
-                                </div>
-                            </th>
-                            <th class="width-300">
-                                <button class="filter-button">*</button>
-                                <div class="filter-input">
-                                    <input type="text" class="f-input" />
-                                </div>
-                            </th>
-                            <th class="width-150">
-                                <button class="filter-button">*</button>
-                                <div class="filter-input">
-                                    <input type="text" class="f-input" />
-                                </div>
-                            </th>
-                            <th class="width-150">
-                                <button class="filter-button">*</button>
-                                <div class="filter-input">
-                                    <input type="text" class="f-input" />
-                                </div>
-                            </th>
-                            <th class="width-300">
-                                <button class="filter-button">*</button>
-                                <div class="filter-input">
-                                    <input type="text" class="f-input" />
-                                </div>
-                            </th>
-                            <th class="width-150">
-                                <button class="filter-button">*</button>
-                                <div class="filter-input">
-                                    <input type="text" class="f-input" />
-                                </div>
-                            </th>
-                            <th class="width-120">
-                                <button class="filter-button">=</button>
-                                <div class="filter-input">
+                                    <SearchCombobox class="border-none" v-if="item.InputType == inputType.Combobox"></SearchCombobox>
+                                    <input type="text" class="f-input" v-if="item.InputType == inputType.InputText"/>
                                     <el-date-picker :clearable="false" size="small"
                                         class="el-date-picker date-picker-none" v-model="date" type="date"
                                         popper-class="el-date-picker-popper" placeholder="__/__/____"
-                                        format="DD/MM/YYYY" value-format="YYYY-MM-DD" />
-                                </div>
-                            </th>
-                            <th class="width-300">
-                                <button class="filter-button">*</button>
-                                <div class="filter-input">
-                                    <input type="text" class="f-input" />
-                                </div>
-                            </th>
-                            <th class="width-120">
-                                <button class="filter-button">=</button>
-                                <div class="filter-input">
-                                    <el-date-picker :clearable="false" size="small"
-                                        class="el-date-picker date-picker-none" v-model="date" type="date"
-                                        popper-class="el-date-picker-popper" placeholder="__/__/____"
-                                        format="DD/MM/YYYY" value-format="YYYY-MM-DD" />
-                                </div>
-                            </th>
-                            <th class="width-300">
-                                <button class="filter-button">*</button>
-                                <div class="filter-input">
-                                    <input type="text" class="f-input" />
-                                </div>
-                            </th>
-                            <th class="width-120">
-                                <button class="filter-button">=</button>
-                                <div class="filter-input">
-                                    <el-date-picker :clearable="false" size="small"
-                                        class="el-date-picker date-picker-none" v-model="date" type="date"
-                                        popper-class="el-date-picker-popper" placeholder="__/__/____"
-                                        format="DD/MM/YYYY" value-format="YYYY-MM-DD" />
-                                </div>
-                            </th>
-                            <th class="width-300">
-                                <button class="filter-button">*</button>
-                                <div class="filter-input">
-                                    <input type="text" class="f-input" />
-                                </div>
-                            </th>
-                            <th class="width-300">
-                                <button class="filter-button">*</button>
-                                <div class="filter-input">
-                                    <input type="text" class="f-input" />
-                                </div>
-                            </th>
-                            <th class="width-150">
-                                <button class="filter-button">*</button>
-                                <div class="filter-input">
-                                    <input type="text" class="f-input" />
-                                </div>
-                            </th>
-                            <th class="width-120">
-                                <button class="filter-button">=</button>
-                                <div class="filter-input">
-                                    <el-date-picker :clearable="false" size="small"
-                                        class="el-date-picker date-picker-none" v-model="date" type="date"
-                                        popper-class="el-date-picker-popper" placeholder="__/__/____"
-                                        format="DD/MM/YYYY" value-format="YYYY-MM-DD" />
-                                </div>
-                            </th>
-                            <th class="width-120">
-                                <button class="filter-button">=</button>
-                                <div class="filter-input">
-                                    <el-date-picker :clearable="false" size="small"
-                                        class="el-date-picker date-picker-none" v-model="date" type="date"
-                                        popper-class="el-date-picker-popper" placeholder="__/__/____"
-                                        format="DD/MM/YYYY" value-format="YYYY-MM-DD" />
-                                </div>
-                            </th>
-                            <th class="width-200">
-                                <button class="filter-button">=</button>
-                                <div class="filter-input">
-                                    <input type="text" class="f-input" />
-                                </div>
-                            </th>
-                            <th class="width-150">
-                                <button class="filter-button">=</button>
-                                <div class="filter-input">
-                                    <SearchCombobox class="border-none"></SearchCombobox>
-                                </div>
-                            </th>
-                            <th class="width-200">
-                                <button class="filter-button">=</button>
-                                <div class="filter-input">
-                                    <SearchCombobox class="border-none"></SearchCombobox>
+                                        format="DD/MM/YYYY" value-format="YYYY-MM-DD" v-if="item.InputType == inputType.InputDate"/>
                                 </div>
                             </th>
                         </tr>
@@ -231,13 +30,13 @@
                             <td>
                                 <div class="checkbox icon-uncheck"></div>
                             </td>
-                            <td v-for="item in table.FieldNames" :key="item">test</td>
+                            <td v-for="item in header" :key="item.HeadName">test</td>
                         </tr>
                         <tr>
                             <td>
                                 <div class="checkbox icon-uncheck"></div>
                             </td>
-                            <td v-for="item in table.FieldNames" :key="item">test</td>
+                            <td v-for="item in header" :key="item.HeadName">test</td>
                         </tr>
                     </tbody>
                 </table>
@@ -251,16 +50,16 @@
 </template>
 
 <script>
+import TableEnum from "@/Enum/RequestTable"
 import SearchCombobox from "@/components/base/BaseCombobox.vue";
 import MyPagination from "@/components/base/BasePagination.vue"
 import VoucherInfo from "@/components/pages/common/VoucherInfo.vue";
-import ConstTable from "@/Const/table"
 import { Splitpanes, Pane } from "splitpanes";
 import "splitpanes/dist/splitpanes.css";
 export default {
     name: 'tableID',
     props:[
-        "data"
+        "data", "header"
     ],
     components: {
         Splitpanes,
@@ -271,7 +70,8 @@ export default {
     },
     data() {
         return {
-            table: ConstTable,
+            buttonType: TableEnum.FilterButton,
+            inputType: TableEnum.FilterType
         }
     },
 }

@@ -26,14 +26,14 @@
           <span>Xem</span>
         </button>
       </div>
-      <RequestTable></RequestTable>
+      <RequestTable :header="tableheader"></RequestTable>
     </div>
     <BrowsePopup v-if="isShowPopup" :show="isShowPopup" @onClose="onClosePopup"></BrowsePopup>
   </template>
   
   <script>
   import RequestTable from "@/components/pages/common/RequestTable.vue"
-  import Table from "@/Const/table"
+  import ConstTable from "@/Const/table"
   import BrowsePopup from "@/components/pages/manager/BrowsePopup.vue"
   import DateRequest from "@/components/base/DateRange.vue";
   import SearchCombobox from "@/components/base/BaseCombobox.vue";
@@ -50,7 +50,7 @@
       return {
         date: new Date(),
         isShowPopup: false,
-        table: Table
+        tableheader: ConstTable.Manager
       };
     },
     methods: {

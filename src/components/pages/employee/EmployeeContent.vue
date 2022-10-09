@@ -41,13 +41,14 @@
         <span>Gửi mã cho khách hàng</span>
       </button>
     </div>
-    <RequestTable></RequestTable>
+    <RequestTable :header="tableHeader"></RequestTable>
   </div>
   <FormDetail v-if="isShowPopup" :isShow="isShowPopup" @changeShow="changeShowPopup" :data="currentRequest" @changeData="changeCurrentRequest">
   </FormDetail>
 </template>
 
 <script>
+import ConstTable from "@/Const/table"
 import InitData from "@/stores/VoucherDetail"
 import RequestTable from "@/components/pages/common/RequestTable.vue"
 import ComboboxData from "@/stores/ComboboxData"
@@ -68,7 +69,8 @@ export default {
       isShowPopup: false,
       ComboboxData: ComboboxData,
       statusID: 1,
-      currentRequest: InitData.NewRequest
+      currentRequest: InitData.NewRequest,
+      tableHeader: ConstTable.Employee
     };
   },
   methods: {

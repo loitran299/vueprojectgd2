@@ -238,6 +238,8 @@ export default {
      */
     async addRequest() {
       this.cptData.CreatedEmployeeID = this.user.EmployeeID;
+      this.cptData.CreatedEmployeeID = this.user.EmployeeID;
+
       let url = `https://localhost:44342/api/v1/Request`;
       await axios
         .post(url, this.cptData,{ headers: {"Authorization" : `Bearer ${this.token}`} })
