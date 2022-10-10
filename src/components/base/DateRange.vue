@@ -67,7 +67,7 @@ export default {
         return this.begin;
       },
       set(value) {
-        this.$emit("changeBeginDate", value);
+        this.$emit("changeBegin", value);
       }
     },
     cptEnd: {
@@ -75,7 +75,7 @@ export default {
         return this.end;
       },
       set(value) {
-        this.$emit("changeEndDate", value);
+        this.$emit("changeEnd", value);
       }
     },
   },

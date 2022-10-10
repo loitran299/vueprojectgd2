@@ -3,7 +3,7 @@
     <!-- ----------------------------- -->
     <div class="m-row">
       <label for="">Ngày yêu cầu</label>
-      <DateRequest></DateRequest>
+      <DateRequest :begin="dateBegin" :end="dateEnd" @changeBegin="changeDateBegin" @changeEnd="changeDateEnd"></DateRequest>
       <button class="btn-icon m-right" @click="isShowPopup = true">
         <div class="icon-add"></div>
         <span>Lập yêu cầu cấp MGG</span>
@@ -75,7 +75,9 @@ export default {
       tableHeader: ConstTable.Employee,
       token: cookie.getCookie("Token"),
       user: cookie.getUser(),
-      tableData: []
+      tableData: [],
+      dateBegin: "",
+      dateEnd: ""
     };
   },
   methods: {
@@ -101,7 +103,13 @@ export default {
     },
     changeCurrentRequest(value) {
       this.currentRequest = value;
-    }
+    },
+    changeDateBegin(val) {
+      this.dateBegin = val;
+    },
+    changeDateEnd(val) {
+      this.dateEnd = val;
+    },
   },
 };
 </script>
