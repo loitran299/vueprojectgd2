@@ -33,7 +33,7 @@
                             <td>
                                 <div class="checkbox icon-uncheck"></div>
                             </td>
-                            <td v-for="item in header" :key="item.HeadName">{{request[item.FieldName]}}</td>
+                            <td :class="`width-${item.Width}`" v-for="item in header" :key="item.HeadName">{{requestFunc[item.FieldName](request)}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import Request from "@/assets/js/request"
 import TableEnum from "@/Enum/RequestTable"
 import SearchCombobox from "@/components/base/BaseCombobox.vue";
 import MyPagination from "@/components/base/BasePagination.vue"
@@ -56,7 +57,7 @@ import "splitpanes/dist/splitpanes.css";
 export default {
     name: 'tableID',
     props: [
-        "data", "header"
+        "data", "header", "parent"
     ],
     components: {
         Splitpanes,
@@ -68,7 +69,9 @@ export default {
     data() {
         return {
             buttonType: TableEnum.FilterButton,
-            inputType: TableEnum.FilterType
+            inputType: TableEnum.FilterType,
+            tableEnum: TableEnum,
+            requestFunc: Request
         }
     },
 }

@@ -3,7 +3,8 @@
     <!-- ----------------------------- -->
     <div class="m-row">
       <label for="">Ngày yêu cầu</label>
-      <DateRequest :begin="dateBegin" :end="dateEnd" @changeBegin="changeDateBegin" @changeEnd="changeDateEnd"></DateRequest>
+      <DateRequest :begin="dateBegin" :end="dateEnd" @changeBegin="changeDateBegin" @changeEnd="changeDateEnd">
+      </DateRequest>
       <button class="btn-icon m-right" @click="isShowPopup = true">
         <div class="icon-add"></div>
         <span>Lập yêu cầu cấp MGG</span>
@@ -43,13 +44,15 @@
     </div>
     <RequestTable :data="tableData" :header="tableHeader"></RequestTable>
   </div>
-  <FormDetail v-if="isShowPopup" :isShow="isShowPopup" @changeShow="changeShowPopup" :data="currentRequest" @changeData="changeCurrentRequest">
+  <FormDetail v-if="isShowPopup" :isShow="isShowPopup" @changeShow="changeShowPopup" :data="currentRequest"
+    @changeData="changeCurrentRequest" :parent="tableEnum.TableType.Employee">
   </FormDetail>
 </template>
 
 <script>
-  import cookie from "@/stores/cookie";
-  import axios from "axios"
+import cookie from "@/stores/cookie";
+import axios from "axios"
+import EnumTable from "@/Enum/RequestTable"
 import ConstTable from "@/Const/table"
 import InitData from "@/stores/VoucherDetail"
 import RequestTable from "@/components/pages/common/RequestTable.vue"
@@ -67,24 +70,25 @@ export default {
   },
   data() {
     return {
+      tableHeader: ConstTable.Employee,
+      tableEnum: EnumTable,
+      tableData: [],
       date: new Date(),
       isShowPopup: false,
       ComboboxData: ComboboxData,
       statusID: 1,
       currentRequest: InitData.NewRequest,
-      tableHeader: ConstTable.Employee,
       token: cookie.getCookie("Token"),
       user: cookie.getUser(),
-      tableData: [],
       dateBegin: "",
       dateEnd: ""
     };
   },
   methods: {
-    async getRequests(){
+    async getRequests() {
       let url = `https://localhost:44342/api/v1/Request/Fillter?pageSize=10&pageNumber=1&employeeFilter=${this.user.EmployeeID}&sortBy=`;
       await axios
-        .get(url, { headers: {"Authorization" : `Bearer ${this.token}`} })
+        .get(url, { headers: { "Authorization": `Bearer ${this.token}` } })
         .then((response) => {
           if (response) {
             this.tableData = response.data.Data;

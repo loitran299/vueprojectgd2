@@ -18,6 +18,10 @@ Table = {
         W120: 120,
         W300: 300,
         W200: 200
+    },
+    TableType: {
+        Employee: 1,
+        Manager: 2
     }
 }
 
