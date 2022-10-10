@@ -15,6 +15,10 @@
     
 }
 
+.el-select .el-input__suffix {
+    margin-left: -5px!important;
+}
+
 .el-select.width-123 {
     width: 123px;
 }

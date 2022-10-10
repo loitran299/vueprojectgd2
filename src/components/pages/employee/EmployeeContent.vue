@@ -5,7 +5,7 @@
       <label for="">Ngày yêu cầu</label>
       <DateRequest :begin="dateBegin" :end="dateEnd" @changeBegin="changeDateBegin" @changeEnd="changeDateEnd">
       </DateRequest>
-      <button class="btn-icon m-right" @click="isShowPopup = true">
+      <button class="btn-icon m-right" @click="onShowFormAdd">
         <div class="icon-add"></div>
         <span>Lập yêu cầu cấp MGG</span>
       </button>
@@ -25,7 +25,7 @@
         <div class="icon-edit"></div>
         <span>Sửa</span>
       </button>
-      <button class="btn-icon btn-none">
+      <button class="btn-icon btn-none" @click="sendRequest">
         <div class="icon-request"></div>
         <span>Gửi yêu cầu</span>
       </button>
@@ -42,7 +42,8 @@
         <span>Gửi mã cho khách hàng</span>
       </button>
     </div>
-    <RequestTable :data="tableData" :header="tableHeader"></RequestTable>
+    <RequestTable :data="tableData" :header="tableHeader" :selected="requestSelected"
+      @changeSelected="changeRequestSelected"></RequestTable>
   </div>
   <FormDetail v-if="isShowPopup" :isShow="isShowPopup" @changeShow="changeShowPopup" :data="currentRequest"
     @changeData="changeCurrentRequest" :parent="tableEnum.TableType.Employee">
@@ -70,21 +71,27 @@ export default {
   },
   data() {
     return {
+      token: cookie.getCookie("Token"),
+      user: cookie.getUser(),
       tableHeader: ConstTable.Employee,
       tableEnum: EnumTable,
+      ComboboxData: ComboboxData,
       tableData: [],
       date: new Date(),
       isShowPopup: false,
-      ComboboxData: ComboboxData,
       statusID: 1,
       currentRequest: InitData.NewRequest,
-      token: cookie.getCookie("Token"),
-      user: cookie.getUser(),
       dateBegin: "",
-      dateEnd: ""
+      dateEnd: "",
+      requestSelected: {}
     };
   },
   methods: {
+    /**
+ * @Description Lấy request theo bộ lọc
+ * @Author TVLOI
+ * 07/10/2022
+ */
     async getRequests() {
       let url = `https://localhost:44342/api/v1/Request/Fillter?pageSize=10&pageNumber=1&employeeFilter=${this.user.EmployeeID}&sortBy=`;
       await axios
@@ -99,7 +106,37 @@ export default {
           console.log(error);
         });
     },
-    watchRequest(){
+    /**
+ * @Description Gửi request
+ * @Author TVLOI
+ * 07/10/2022
+ */
+    async sendRequest() {
+      let url = `https://localhost:44342/api/v1/Request/SendRequest`;
+      await axios
+        .put(url, this.requestSelected,{ headers: { "Authorization": `Bearer ${this.token}` } })
+        .then((response) => {
+          if (response) {
+            if(response) {
+              alert("Gửi thành công");
+              this.getRequests();
+            }
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    watchRequest() {
+      this.currentRequest = this.requestSelected;
+      this.isShowPopup = true;
+    },
+    onShowFormAdd() {
+      this.currentRequest = InitData.NewRequest;
+      this.isShowPopup = true;
+    },
+    changeRequestSelected(val) {
+      this.requestSelected = val;
     },
     changeShowPopup(value) {
       this.isShowPopup = value;

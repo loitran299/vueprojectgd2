@@ -17,6 +17,13 @@ Data = {
         {Id: 5, Label: "Đã từ chối"},
         {Id: 6, Label: "Đã gửi cho KH"},
     ],
+    RequestStatusMg: [
+        {Id: 1, Label: "Tất cả"},
+        {Id: 3, Label: "Chưa duyệt"},
+        {Id: 4, Label: "Đã duyệt"},
+        {Id: 5, Label: "Đã từ chối"},
+        {Id: 6, Label: "Đã gửi cho KH"},
+    ],
     Applicable: [
         {Id: 1, Label: "Bán mới"},
         {Id: 2, Label: "Gia hạn"},
@@ -28,6 +35,10 @@ Data = {
         {Id: 3, Label: "Dịch vụ đào tạo, Tư vấn triển khai"},
         {Id: 4, Label: "Thay đổi GPSD và dịch vụ khác (sửa mẫu, nhập liệu, điều chỉnh mã số thuế, ...)"},
         {Id: 5, Label: "Tài trợ các Tường/Trung tâm sử dụng đào tạo, miễn phí cho khách hàng triển khai thí điểm"},
+    ],
+    RequestType: [
+        {Id: 1, Label: "Cần thực hiện"},
+        {Id: 2, Label: "Đã tham gia"},
     ]
 }
 
