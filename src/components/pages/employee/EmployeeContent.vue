@@ -17,7 +17,7 @@
       <button class="btn-txt btn-blue" @click="getRequests">Lấy dữ liệu</button>
     </div>
     <div class="m-row">
-      <button class="btn-icon btn-none">
+      <button class="btn-icon btn-none" @click="watchRequest">
         <div class="icon-watching"></div>
         <span>Xem</span>
       </button>
@@ -98,6 +98,8 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    watchRequest(){
     },
     changeShowPopup(value) {
       this.isShowPopup = value;

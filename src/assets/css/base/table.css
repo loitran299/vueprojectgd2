@@ -94,7 +94,7 @@ table thead tr:nth-child(1) th:first-child{
 .grid table tbody tr:hover {
     background-color: #E9F3FE;
 }
-.grid table tbody tr.focus {
+.grid table tbody tr.active {
     background-color: #E0EDFA;
 }
 

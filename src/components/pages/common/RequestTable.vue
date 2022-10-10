@@ -29,9 +29,9 @@
                     </thead>
                     <tbody>
                         <tr v-for="request in data" :key="request.RequestMemberID
-                        ">
+                        " :class="{'active': (currentSelect == request.RequestID)}" @click="currentSelect = request.RequestID">
                             <td>
-                                <div class="checkbox icon-uncheck"></div>
+                                <div class="checkbox icon-uncheck" :class="{'active': requestsID.has(request.RequestID)}" @click="onTickRow(request)"></div>
                             </td>
                             <td :class="`width-${item.Width}`" v-for="item in header" :key="item.HeadName">{{requestFunc[item.FieldName](request)}}</td>
                         </tr>
@@ -71,7 +71,19 @@ export default {
             buttonType: TableEnum.FilterButton,
             inputType: TableEnum.FilterType,
             tableEnum: TableEnum,
-            requestFunc: Request
+            requestFunc: Request,
+            requestsID: new Set(),
+            currentSelect: ""
+        }
+    },
+    methods: {
+        onTickRow(request){
+            if(this.requestsID.has(request.RequestID)){
+                this.requestsID.delete(request.RequestID);
+            }else{  
+                this.requestsID.add(request.RequestID);
+            }
+            this.currentSelect = request.RequestID;
         }
     },
 }

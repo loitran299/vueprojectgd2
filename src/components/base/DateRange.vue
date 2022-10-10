@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import DateFunc from "@/assets/js/date"
 import ComboboxData from "@/stores/ComboboxData"
 import EnumDateRange from "@/Enum/EnumDateRange";
 import SearchCombobox from "@/components/base/BaseCombobox.vue";
@@ -53,6 +54,11 @@ export default {
       ComboboxData: ComboboxData,
       comboboxVal: 1
     };
+  },
+  mounted() {
+    this.cptBegin = new Date().toISOString();
+    this.cptEnd = new Date().toISOString();
+
   },
   computed: {
     isShowCombobox() {
@@ -81,6 +87,16 @@ export default {
   },
   methods: {
     changeComboboxVal(val) {
+      if(val == EnumDateRange.Combobox.Today){
+        this.cptBegin = new Date().toISOString();
+        this.cptEnd = new Date().toISOString();
+      }else if(val == EnumDateRange.Combobox.ThisWeek){
+        this.cptBegin = DateFunc.getMonday().toISOString();
+        this.cptEnd = DateFunc.getDate(this.cptBegin, 7);
+      }else{
+        this.cptBegin = DateFunc.getFistDayOfYear().toISOString();
+        this.cptEnd = new Date().toISOString();
+      }
       this.comboboxVal = val
     }
   },
