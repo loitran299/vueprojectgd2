@@ -3,16 +3,33 @@
     <!-- ----------------------------- -->
     <div class="m-row">
       <label for="">Ngày yêu cầu</label>
-      <DateRequest :begin="dateBegin" :end="dateEnd" @changeBegin="changeDateBegin" @changeEnd="changeDateEnd">
+      <DateRequest
+        :begin="dateBegin"
+        :end="dateEnd"
+        @changeBegin="changeDateBegin"
+        @changeEnd="changeDateEnd"
+      >
       </DateRequest>
     </div>
     <div class="m-row">
       <label for="">Trạng thái</label>
-      <SearchCombobox class="width-123" :data="ComboboxData.RequestStatusMg" :IdName="'Id'" :ValName="'Label'"
-        :value="statusID" @changeValue="changeStatusID"></SearchCombobox>
+      <SearchCombobox
+        class="width-123"
+        :data="ComboboxData.RequestStatusMg"
+        :IdName="'Id'"
+        :ValName="'Label'"
+        :value="statusID"
+        @changeValue="changeStatusID"
+      ></SearchCombobox>
       <span>Loại yêu cầu</span>
-      <SearchCombobox class="width-123 reduce-margin" :data="ComboboxData.RequestType" :IdName="'Id'" :ValName="'Label'"
-        :value="requestType" @changeValue="changeRequestType"></SearchCombobox>
+      <SearchCombobox
+        class="width-123 reduce-margin"
+        :data="ComboboxData.RequestType"
+        :IdName="'Id'"
+        :ValName="'Label'"
+        :value="requestType"
+        @changeValue="changeRequestType"
+      ></SearchCombobox>
       <button class="btn-txt btn-blue" @click="getRequests">Lấy dữ liệu</button>
     </div>
     <div class="m-row">
@@ -31,16 +48,20 @@
     </div>
     <RequestTable :header="tableheader" :data="tableData"></RequestTable>
   </div>
-  <BrowsePopup v-if="isShowPopup" :show="isShowPopup" @onClose="onClosePopup"></BrowsePopup>
+  <BrowsePopup
+    v-if="isShowPopup"
+    :show="isShowPopup"
+    @onClose="onClosePopup"
+  ></BrowsePopup>
 </template>
   
 <script>
 import cookie from "@/stores/cookie";
-import axios from 'axios'
-import ComboboxData from "@/stores/ComboboxData"
-import RequestTable from "@/components/pages/common/RequestTable.vue"
-import ConstTable from "@/Const/table"
-import BrowsePopup from "@/components/pages/manager/BrowsePopup.vue"
+import axios from "axios";
+import ComboboxData from "@/stores/ComboboxData";
+import RequestTable from "@/components/pages/common/RequestTable.vue";
+import ConstTable from "@/Const/table";
+import BrowsePopup from "@/components/pages/manager/BrowsePopup.vue";
 import DateRequest from "@/components/base/DateRange.vue";
 import SearchCombobox from "@/components/base/BaseCombobox.vue";
 import "splitpanes/dist/splitpanes.css";
@@ -50,7 +71,7 @@ export default {
     DateRequest,
     SearchCombobox,
     BrowsePopup,
-    RequestTable
+    RequestTable,
   },
   data() {
     return {
@@ -58,7 +79,7 @@ export default {
       isShowPopup: false,
       tableheader: ConstTable.Manager,
       ComboboxData: ComboboxData,
-      tableData:[],
+      tableData: [],
       token: cookie.getCookie("Token"),
       user: cookie.getUser(),
       dateBegin: "",
@@ -68,13 +89,27 @@ export default {
     };
   },
   methods: {
+    /**
+     * @Description Lấy request theo bộ lọc
+     * @Author TVLOI
+     * 07/10/2022
+     */
     async getRequests() {
-      let url = `https://localhost:44342/api/v1/Request/Fillter?pageSize=10&pageNumber=1&employeeFilter=${this.user.EmployeeID}&sortBy=`;
+      let bodyParam = {
+        EmployeeID: this.user.EmployeeID,
+        StartDate: this.dateBegin,
+        EndDate: this.dateEnd,
+        Status: this.statusID,
+        RequestType: this.requestType,
+      };
+      let url = `https://localhost:44342/api/v1/Request/Fillter?pageSize=10&pageNumber=1&sortBy=`;
       await axios
-        .get(url, { headers: { "Authorization": `Bearer ${this.token}` } })
+        .post(url, bodyParam, {
+          headers: { Authorization: `Bearer ${this.token}` },
+        })
         .then((response) => {
+          this.tableData = response.data.Data;
           if (response) {
-            this.tableData = response.data.Data;
             console.log(this.tableData);
           }
         })
@@ -99,7 +134,7 @@ export default {
     },
     changeRequestType(value) {
       this.requestType = value;
-    }
+    },
   },
 };
 </script>
@@ -114,6 +149,4 @@ export default {
 .icon-browse {
   background-size: 24px;
 }
-
-
 </style>

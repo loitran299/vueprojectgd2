@@ -1,28 +1,13 @@
 // import TableEnum from "@/Enum/RequestTable"
 import TableConst from "@/Const/table"
+import DateFunc from "@/assets/js/date"
 
 const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
     minimumFractionDigits: 2
   })
-
-  // Format ngày tháng
-const formatDate = dateSrc => {
-    let date = new Date(dateSrc),
-        year = date.getFullYear().toString(),
-        month = (date.getMonth() + 1).toString().padStart(2, '0'),
-        day = date.getDate().toString().padStart(2, '0');
-
-    return `${day}/${month}/${year}`;
-}
-
-const get_day_of_time = (d1, d2) => {
-    let ms1 = d1.getTime();
-    let ms2 = d2.getTime();
-    return Math.ceil((ms2 - ms1) / (24*60*60*1000));
-};
-
+  
 var Request = Request || {};
 
 Request = {
@@ -42,6 +27,7 @@ Request = {
         return TableConst.DiscountType[request.DiscountType];
     },
     PercentageReduction: (request) => {
+        if(!request.PercentageReduction) return 0;
         return `${request.PercentageReduction}`;
     },
     PriceBefore: (request) => {
@@ -101,7 +87,7 @@ Request = {
         if(!request.DateRequest){
             return "";
         }
-        return formatDate(request.DateRequest);
+        return DateFunc.formatDate(request.DateRequest);
     },
     /// todo
     EmployeeRequest: () => {
@@ -132,15 +118,15 @@ Request = {
         return request.VoucherCode;
     },
     StartDate: (request) => {
-        return formatDate(request.StartDate);
+        return DateFunc.formatDate(request.StartDate);
     },
     ExpiredDate: (request) => {
-        return formatDate(request.ExpiredDate);
+        return DateFunc.formatDate(request.ExpiredDate);
     },
     Expired: (request) => {
         let start = new Date(request.StartDate);
         let Expired = new Date(request.ExpiredDate);
-        return get_day_of_time(start, Expired);
+        return DateFunc.getDayOfTime(start, Expired);
     },
     Category: (request) => {
         return request.Category;
@@ -160,7 +146,7 @@ Request = {
     },
 
     CreatedDate: (request) => {
-        return formatDate(request.CreatedDate);
+        return DateFunc.formatDate(request.CreatedDate);
     },
     EmployeeCreated: () => {
         return "todo"

@@ -56,9 +56,11 @@ export default {
     };
   },
   mounted() {
-    this.cptBegin = new Date().toISOString();
-    this.cptEnd = new Date().toISOString();
-
+    let now = new Date();
+        now.setUTCHours(0,0,0,0);
+        this.cptBegin = now.toISOString();
+        now.setUTCHours(23,59,59,999);
+        this.cptEnd = now.toISOString();
   },
   computed: {
     isShowCombobox() {
@@ -88,14 +90,20 @@ export default {
   methods: {
     changeComboboxVal(val) {
       if(val == EnumDateRange.Combobox.Today){
-        this.cptBegin = new Date().toISOString();
-        this.cptEnd = new Date().toISOString();
+        let now = new Date();
+        now.setUTCHours(0,0,0,0);
+        this.cptBegin = now.toISOString();
+        now.setUTCHours(23,59,59,999);
+        this.cptEnd = now.toISOString();
       }else if(val == EnumDateRange.Combobox.ThisWeek){
         this.cptBegin = DateFunc.getMonday().toISOString();
-        this.cptEnd = DateFunc.getDate(this.cptBegin, 7);
+        this.cptEnd = DateFunc.getDate(this.cptBegin, 7).toISOString();
       }else{
         this.cptBegin = DateFunc.getFistDayOfYear().toISOString();
-        this.cptEnd = new Date().toISOString();
+        let now = new Date();
+        now.setUTCHours(23,59,59,999);
+        this.cptEnd = now.toISOString();
+
       }
       this.comboboxVal = val
     }

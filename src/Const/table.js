@@ -79,6 +79,7 @@ table = {
     ],
     Status: [
         "",
+        "",
         "Bản nháp",
         "Chưa duyệt",
         "Đã duyệt",

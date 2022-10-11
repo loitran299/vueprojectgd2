@@ -7,7 +7,7 @@ VoucherDetail = {
         StartDate: new Date().toISOString(),
         ExpiredDate: nextDay(),
         DiscountFor: 3,
-        Status: 1,
+        Status: 2,
         DiscountType: 2,
         PriceBefore: null,
         Reason: null,

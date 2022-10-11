@@ -80,7 +80,7 @@ export default {
       date: new Date(),
       isShowPopup: false,
       statusID: 1,
-      currentRequest: InitData.NewRequest,
+      currentRequest: {...InitData.NewRequest},
       dateBegin: "",
       dateEnd: "",
       requestSelected: {}
@@ -93,12 +93,19 @@ export default {
  * 07/10/2022
  */
     async getRequests() {
-      let url = `https://localhost:44342/api/v1/Request/Fillter?pageSize=10&pageNumber=1&employeeFilter=${this.user.EmployeeID}&sortBy=`;
+      let bodyParam = {
+        EmployeeID: this.user.EmployeeID,
+        StartDate: this.dateBegin,
+        EndDate: this.dateEnd,
+        Status: this.statusID,
+        RequestType: null
+      }
+      let url = `https://localhost:44342/api/v1/Request/Fillter?pageSize=10&pageNumber=1&sortBy=`;
       await axios
-        .get(url, { headers: { "Authorization": `Bearer ${this.token}` } })
+        .post(url, bodyParam,{ headers: { "Authorization": `Bearer ${this.token}` } })
         .then((response) => {
+          this.tableData = response.data.Data;
           if (response) {
-            this.tableData = response.data.Data;
             console.log(this.tableData);
           }
         })
@@ -132,7 +139,7 @@ export default {
       this.isShowPopup = true;
     },
     onShowFormAdd() {
-      this.currentRequest = InitData.NewRequest;
+      this.currentRequest = {...InitData.NewRequest};
       this.isShowPopup = true;
     },
     changeRequestSelected(val) {
