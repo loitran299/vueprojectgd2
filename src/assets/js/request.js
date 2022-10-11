@@ -7,7 +7,7 @@ const formatter = new Intl.NumberFormat('en-US', {
     currency: 'USD',
     minimumFractionDigits: 2
   })
-  
+
 var Request = Request || {};
 
 Request = {
@@ -17,7 +17,8 @@ Request = {
     Product: (request) => {
         return request.ProductName;
     },
-    Platform: () => {
+    Platform: (request) => {
+        if(!request.EmployeeID) return "";
         return "Tất cả";
     },
     ApplyFor: (request) => {
@@ -150,6 +151,10 @@ Request = {
     },
     EmployeeCreated: () => {
         return "todo"
+    },
+
+    DiscountFor: (request) => {
+        return request.DiscountFor;
     }
 }
 

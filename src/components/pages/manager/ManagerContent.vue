@@ -46,7 +46,8 @@
         <span>Xem</span>
       </button>
     </div>
-    <RequestTable :header="tableheader" :data="tableData"></RequestTable>
+    <RequestTable :header="tableheader" :data="tableData" :selected="requestSelected"
+      @changeSelected="changeRequestSelected"></RequestTable>
   </div>
   <BrowsePopup
     v-if="isShowPopup"
@@ -56,6 +57,7 @@
 </template>
   
 <script>
+import InitData from "@/stores/VoucherDetail"
 import cookie from "@/stores/cookie";
 import axios from "axios";
 import ComboboxData from "@/stores/ComboboxData";
@@ -86,6 +88,8 @@ export default {
       dateEnd: "",
       statusID: 3,
       requestType: 1,
+      currentRequest: {...InitData.NewRequest},
+      requestSelected: {}
     };
   },
   methods: {
@@ -116,6 +120,12 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    changeCurrentRequest(value) {
+      this.currentRequest = value;
+    },
+    changeRequestSelected(val) {
+      this.requestSelected = val;
     },
     changeShowPopup(value) {
       this.isShowPopup = value;

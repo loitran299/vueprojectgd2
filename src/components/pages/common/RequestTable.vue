@@ -61,13 +61,13 @@
             <tr
               v-for="request in data"
               :key="request.RequestMemberID"
-              :class="{ active: currentSelect == request.RequestID }"
+              :class="{ active: currentSelect == request.RequestMemberID }"
               @click="onClickRow(request)"
             >
               <td>
                 <div
                   class="checkbox icon-uncheck"
-                  :class="{ active: requestsID.has(request.RequestID) }"
+                  :class="{ active: requestsID.has(request.RequestMemberID) }"
                   @click="onTickRow(request)"
                 ></div>
               </td>
@@ -85,7 +85,7 @@
       <MyPagination></MyPagination>
     </Pane>
     <Pane size="30" min-size="0">
-      <VoucherInfo></VoucherInfo>
+      <VoucherInfo :data="requestSelected"></VoucherInfo>
     </Pane>
   </Splitpanes>
 </template>
@@ -135,12 +135,12 @@ export default {
      * 07/10/2022
      */
     onTickRow(request) {
-      if (this.requestsID.has(request.RequestID)) {
-        this.requestsID.delete(request.RequestID);
+      if (this.requestsID.has(request.RequestMemberID)) {
+        this.requestsID.delete(request.RequestMemberID);
       } else {
-        this.requestsID.add(request.RequestID);
+        this.requestsID.add(request.RequestMemberID);
       }
-      this.currentSelect = request.RequestID;
+      this.currentSelect = request.RequestMemberID;
       this.requestSelected = { ...request };
     },
     /**
@@ -150,7 +150,7 @@ export default {
      */
     onClickRow(request) {
       this.requestSelected = { ...request };
-      this.currentSelect = request.RequestID;
+      this.currentSelect = request.RequestMemberID;
     },
   },
 };

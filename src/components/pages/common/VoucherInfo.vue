@@ -1,5 +1,5 @@
 <template>
-    <div class="voucher-info">
+    <div class="voucher-info" id="infoID">
         <div class="info-header">
             <a class="a-header-tab voucher active">Mã giảm giá</a>
             <a class="a-header-tab voucher">Danh sách hàng hóa</a>
@@ -8,43 +8,43 @@
             <div class="info-content-col">
                 <div class="info-content-row">
                     <span>Sản phẩm</span>
-                    <div>AMIS Kế toán</div>
+                    <div>{{RequestFunc.Product(data)}}</div>
                 </div>
                 <div class="info-content-row">
                     <span>Ứng dụng (thuộc AMISPlatform)</span>
-                    <div>AMIS Kế toán</div>
+                    <div>{{RequestFunc.Platform(data)}}</div>
                 </div>
                 <div class="info-content-row">
                     <span>Đối tượng</span>
-                    <div>Tất cả</div>
+                    <div>{{RequestFunc.ApplyFor(data)}}</div>
                 </div>
                 <div class="info-content-row">
                     <span>Mã giảm giá</span>
-                    <div></div>
+                    <div>{{RequestFunc.VoucherCode(data)}}</div>
                 </div>
                 <div class="info-content-row">
                     <span>Loại giảm giá</span>
-                    <div>Giảm %</div>
+                    <div>{{RequestFunc.DiscountType(data)}}</div>
                 </div>
                 <div class="info-content-row">
                     <span>Giảm giá cho</span>
-                    <div>Toàn bộ đơn hàng</div>
+                    <div>{{RequestFunc.DiscountFor(data)}}</div>
                 </div>
                 <div class="info-content-row">
                     <span>Số % giảm</span>
-                    <div>5</div>
+                    <div>{{RequestFunc.PercentageReduction(data)}}</div>
                 </div>
                 <div class="info-content-row">
                     <span>Số tiền giảm</span>
-                    <div>0</div>
+                    <div>{{RequestFunc.DiscountAmount(data)}}</div>
                 </div>
                 <div class="info-content-row">
                     <span>Số tiền TGG</span>
-                    <div>10.000.000</div>
+                    <div>{{RequestFunc.PriceBefore(data)}}</div>
                 </div>
                 <div class="info-content-row">
                     <span>Số tiền SGG</span>
-                    <div>9.500.000</div>
+                    <div>{{RequestFunc.AmountAfterDiscount(data)}}</div>
                 </div>
             </div>
             <div class="info-content-col">
@@ -84,11 +84,11 @@
                 </div>
                 <div class="info-content-row height-62">
                     <span>Lý do xin duyệt</span>
-                    <textarea name="" id="" cols="42" rows="4"></textarea>
+                    <textarea name="" id="" cols="42" rows="4" class="text-area" readonly :value="RequestFunc.Reason(data)"></textarea>
                 </div>
                 <div class="info-content-row height-62">
                     <span>Lý do từ chối</span>
-                    <textarea name="" id="" cols="42" rows="4"></textarea>
+                    <textarea name="" id="" cols="42" rows="4" class="text-area" readonly :value="RequestFunc.ReasonForRefusal(data)"></textarea>
                 </div>
             </div>
         </div>
@@ -96,8 +96,15 @@
 </template>
 
 <script>
+import Request from "@/assets/js/request";
 export default {
-
+    name: "infoID",
+    data() {
+        return {
+            RequestFunc: Request
+        }
+    },
+    props: ["data"],
 }
 </script>
 

@@ -63,7 +63,7 @@ import DateRequest from "@/components/base/DateRange.vue";
 import SearchCombobox from "@/components/base/BaseCombobox.vue";
 export default {
   name: "voucherID",
-  components: {
+  components: { 
     DateRequest,
     SearchCombobox,
     FormDetail,

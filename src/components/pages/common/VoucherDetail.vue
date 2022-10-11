@@ -135,6 +135,7 @@
               cols="87"
               rows="5"
               v-model="cptData.Reason"
+              class="text-area"
             ></textarea>
           </div>
           <div class="box-row">
@@ -284,7 +285,7 @@
           <div class="icon-save16"></div>
           <span>Cất</span>
         </button>
-        <button class="btn-icon btn-none">
+        <button class="btn-icon btn-none" @click="isShowForm = false">
           <div class="icon-cancel16"></div>
           <span>Hủy</span>
         </button>
@@ -302,7 +303,7 @@ import BaseCombobox from "@/components/base/BaseCombobox.vue";
 import axios from "axios";
 export default {
   name: "formDetail",
-  props: ["isShow", "data"],
+  props: ["isShow", "data", "mode"],
   components: {
     BaseCombobox,
     DateRequest,
