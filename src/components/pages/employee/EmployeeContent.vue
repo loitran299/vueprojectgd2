@@ -94,7 +94,7 @@ export default {
   },
   data() {
     return {
-      formMode: EnumForm.Save,
+      formMode: EnumForm.FormMode.Save,
       token: cookie.getCookie("Token"),
       user: cookie.getUser(),
       tableHeader: ConstTable.Employee,
@@ -173,6 +173,7 @@ export default {
       this.isShowPopup = true;
     },
     onShowFormAdd() {
+      this.formMode = EnumForm.FormMode.Save;
       this.currentRequest = { ...InitData.NewRequest };
       this.isShowPopup = true;
     },
