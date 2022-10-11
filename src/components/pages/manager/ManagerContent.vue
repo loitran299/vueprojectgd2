@@ -41,23 +41,38 @@
         <div class="icon-refuse"></div>
         <span>Từ chối</span>
       </button>
-      <button class="btn-icon btn-none">
+      <button class="btn-icon btn-none" @click="watchRequest">
         <div class="icon-watching"></div>
         <span>Xem</span>
       </button>
     </div>
-    <RequestTable :header="tableheader" :data="tableData" :selected="requestSelected"
-      @changeSelected="changeRequestSelected"></RequestTable>
+    <RequestTable
+      :header="tableheader"
+      :data="tableData"
+      :selected="requestSelected"
+      @changeSelected="changeRequestSelected"
+    ></RequestTable>
   </div>
   <BrowsePopup
     v-if="isShowPopup"
     :show="isShowPopup"
     @onClose="onClosePopup"
   ></BrowsePopup>
+
+  <FormDetail
+    v-if="isShowPopup"
+    :isShow="isShowPopup"
+    @changeShow="changeShowPopup"
+    :data="currentRequest"
+    :mode="formMode"
+  >
+  </FormDetail>
 </template>
   
 <script>
-import InitData from "@/stores/VoucherDetail"
+import FormDetail from "@/components/pages/common/VoucherDetail.vue";
+import EnumForm from "@/Enum/VoucherDetail";
+import InitData from "@/stores/VoucherDetail";
 import cookie from "@/stores/cookie";
 import axios from "axios";
 import ComboboxData from "@/stores/ComboboxData";
@@ -74,9 +89,11 @@ export default {
     SearchCombobox,
     BrowsePopup,
     RequestTable,
+    FormDetail,
   },
   data() {
     return {
+      formMode: EnumForm.FormMode.Watch,
       date: new Date(),
       isShowPopup: false,
       tableheader: ConstTable.Manager,
@@ -88,8 +105,8 @@ export default {
       dateEnd: "",
       statusID: 3,
       requestType: 1,
-      currentRequest: {...InitData.NewRequest},
-      requestSelected: {}
+      currentRequest: { ...InitData.NewRequest },
+      requestSelected: {},
     };
   },
   methods: {
@@ -121,6 +138,19 @@ export default {
           console.log(error);
         });
     },
+    /**
+     * @Description Xem yêu cầu đã chọn
+     * @Author TVLOI
+     * 11/10/2022
+     */
+    watchRequest() {
+      this.formMode = EnumForm.FormMode.Watch;
+      this.currentRequest = this.requestSelected;
+      this.isShowPopup = true;
+    },
+    onClosePopup(value) {
+      this.isShowPopup = value;
+    },
     changeCurrentRequest(value) {
       this.currentRequest = value;
     },
@@ -128,9 +158,6 @@ export default {
       this.requestSelected = val;
     },
     changeShowPopup(value) {
-      this.isShowPopup = value;
-    },
-    onClosePopup(value) {
       this.isShowPopup = value;
     },
     changeDateBegin(val) {

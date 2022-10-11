@@ -144,6 +144,9 @@
     border: 1px solid #cfcfcf;
     outline: none;
     border-radius: 2px;
+}
+
+.text-align-end {
     text-align: end;
 }
 .box-row .box-input:focus {

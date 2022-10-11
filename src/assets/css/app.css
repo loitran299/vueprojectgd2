@@ -29,3 +29,7 @@
 .text-area:focus {
     border-color: #3E96F4;
 }
+
+/* button:disabled {
+    background-color: #3E96F4;
+} */

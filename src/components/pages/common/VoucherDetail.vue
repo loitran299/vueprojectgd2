@@ -95,7 +95,7 @@
             <input
               type="number"
               min="1"
-              class="box-input icon-spinner"
+              class="box-input text-align-end"
               v-model="cptData.PercentageReduction"
               :disabled="cptData.DiscountType == 2"
             />
@@ -113,7 +113,7 @@
             <input
               type="number"
               min="1"
-              class="box-input icon-spinner"
+              class="box-input text-align-end"
               v-model="cptData.ReductionAmount"
               :disabled="cptData.DiscountType == 1"
             />
@@ -123,7 +123,7 @@
             <input
               type="number"
               min="1"
-              class="box-input icon-spinner"
+              class="box-input text-align-end"
               v-model="cptData.PriceBefore"
             />
           </div>
@@ -281,7 +281,7 @@
       </div>
 
       <div class="content-bottom">
-        <button class="btn-icon btn-none" @click="addRequest">
+        <button class="btn-icon btn-none" @click="addRequest" :disabled="mode == Enum.FormMode.Watch">
           <div class="icon-save16"></div>
           <span>Cất</span>
         </button>
@@ -295,6 +295,7 @@
 </template>
 
 <script>
+import Enum from "@/Enum/VoucherDetail"
 import cookie from "@/stores/cookie";
 import ComboboxData from "@/stores/ComboboxData";
 import EnumDateRange from "@/Enum/EnumDateRange";
@@ -310,6 +311,7 @@ export default {
   },
   data() {
     return {
+      Enum: Enum,
       EnumDateRange: EnumDateRange,
       ComboboxData: ComboboxData,
       applicableID: 1,
