@@ -30,7 +30,7 @@ cookie = {
     getUser() {
         let user = {
             Token: this.getCookie("Token"),
-            Role: this.getCookie("Role"),
+            Level: this.getCookie("Role"),
             EmployeeID: this.getCookie("EmployeeID"),
             EmployeeName: this.getCookie("EmployeeName"),
             PositionName: this.getCookie("PositionName"),

@@ -70,6 +70,7 @@
 </template>
   
 <script>
+import EmployeeLevel from "@/Enum/EmployeeLevel"
 import FormDetail from "@/components/pages/common/VoucherDetail.vue";
 import EnumForm from "@/Enum/VoucherDetail";
 import InitData from "@/stores/VoucherDetail";
@@ -122,6 +123,8 @@ export default {
         EndDate: this.dateEnd,
         Status: this.statusID,
         RequestType: this.requestType,
+        IsManager: true,
+        CurrentLevel: EmployeeLevel[this.user.Level]
       };
       let url = `https://localhost:44342/api/v1/Request/Fillter?pageSize=10&pageNumber=1&sortBy=`;
       await axios

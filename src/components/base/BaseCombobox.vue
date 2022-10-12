@@ -15,6 +15,7 @@
     <el-option v-for="item in data" :key="item[IdName]"
       :label="item[ValName]"
       :value="item[IdName]"
+      
     />
   </el-select>
 </template>

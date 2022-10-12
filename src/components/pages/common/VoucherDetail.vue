@@ -369,7 +369,7 @@ export default {
      * 07/10/2022
      */
     async getEmployees() {
-      let url = `https://localhost:44342/api/v1/Employee/NextLevel?level=10`;
+      let url = `https://localhost:44342/api/v1/Employee/Browser?level=5`;
       await axios
         .get(url, { headers: { Authorization: `Bearer ${this.token}` } })
         .then((response) => {

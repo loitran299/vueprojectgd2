@@ -32,7 +32,7 @@
         <div class="icon-watching"></div>
         <span>Xem</span>
       </button>
-      <button class="btn-icon btn-none">
+      <button class="btn-icon btn-none" @click="editRequest">
         <div class="icon-edit"></div>
         <span>Sửa</span>
       </button>
@@ -123,6 +123,8 @@ export default {
         EndDate: this.dateEnd,
         Status: this.statusID,
         RequestType: null,
+        IsManager: false,
+        CurrentLevel: 5,
       };
       let url = `https://localhost:44342/api/v1/Request/Fillter?pageSize=10&pageNumber=1&sortBy=`;
       await axios
@@ -169,6 +171,16 @@ export default {
      */
     watchRequest() {
       this.formMode = EnumForm.FormMode.Watch;
+      this.currentRequest = this.requestSelected;
+      this.isShowPopup = true;
+    },
+    /**
+     * @Description Xem yêu cầu đã chọn
+     * @Author TVLOI
+     * 11/10/2022
+     */
+    editRequest() {
+      this.formMode = EnumForm.FormMode.Edit;
       this.currentRequest = this.requestSelected;
       this.isShowPopup = true;
     },
