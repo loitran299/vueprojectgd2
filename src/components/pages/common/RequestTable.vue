@@ -100,7 +100,7 @@ import { Splitpanes, Pane } from "splitpanes";
 import "splitpanes/dist/splitpanes.css";
 export default {
   name: "tableID",
-  props: ["data", "header", "parent", "selected"],
+  props: ["data", "header", "parent", "selected" , "requests"],
   components: {
     Splitpanes,
     Pane,
@@ -127,6 +127,14 @@ export default {
         this.$emit("changeSelected", val);
       },
     },
+    requestsSelected: {
+      get() {
+        return this.requests;
+      },
+      set(value) {
+        this.$emit("changeRequestsSelected", value);
+      }
+    }
   },
   methods: {
     /**
@@ -136,9 +144,11 @@ export default {
      */
     onTickRow(request) {
       if (this.requestsID.has(request.RequestMemberID)) {
+        this.requestsSelected.delete(request);
         this.requestsID.delete(request.RequestMemberID);
       } else {
         this.requestsID.add(request.RequestMemberID);
+        this.requestsSelected.add(request);
       }
       this.currentSelect = request.RequestMemberID;
       this.requestSelected = { ...request };

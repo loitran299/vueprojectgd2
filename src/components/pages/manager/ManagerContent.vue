@@ -110,6 +110,9 @@ export default {
       requestSelected: {},
     };
   },
+  created() {
+    this.getRequests();
+  },
   methods: {
     /**
      * @Description Lấy request theo bộ lọc

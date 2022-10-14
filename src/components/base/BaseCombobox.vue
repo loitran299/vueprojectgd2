@@ -11,6 +11,7 @@
     :placeholder="' '"
     popper-class="selectbox"
     id="comboboxID"
+    :disabled="disabled"
   >
     <el-option v-for="item in data" :key="item[IdName]"
       :label="item[ValName]"
@@ -23,7 +24,7 @@
 <script>
 export default {
   name: "comboboxID",
-  props: [ "data", "IdName", "ValName", "value"
+  props: [ "data", "IdName", "ValName", "value" , "disabled"
   ],
   data() {
     return {

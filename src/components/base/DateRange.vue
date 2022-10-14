@@ -7,6 +7,7 @@
       :ValName="'Label'"
       :value="comboboxVal"
       @changeValue="changeComboboxVal"
+      :disabled="disabled"
     ></SearchCombobox>
     <span>Từ</span>
     <el-date-picker
@@ -20,6 +21,7 @@
       placeholder="DD/MM/YYYY"
       format="DD/MM/YYYY"
       value-format="YYYY-MM-DD"
+      :disabled="disabled"
     />
     <span>Đến</span>
     <el-date-picker
@@ -33,6 +35,7 @@
       placeholder="DD/MM/YYYY"
       format="DD/MM/YYYY"
       value-format="YYYY-MM-DD"
+      :disabled="disabled"
     />
   </div>
 </template>
@@ -44,7 +47,7 @@ import EnumDateRange from "@/Enum/EnumDateRange";
 import SearchCombobox from "@/components/base/BaseCombobox.vue";
 export default {
   name: "dateID",
-  props: ["mode", "begin", "end"],
+  props: ["mode", "begin", "end", "disabled"],
   components: {
     SearchCombobox,
   },

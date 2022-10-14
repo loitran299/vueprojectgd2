@@ -31,6 +31,7 @@
               :ValName="'ProductName'"
               :value="cptData.ProductID"
               @changeValue="changeProduct"
+              :disabled="mode == Enum.FormMode.Watch"
             ></BaseCombobox>
           </div>
           <div class="box-row">
@@ -42,6 +43,7 @@
               :ValName="'Label'"
               :value="cptData.ApplyFor"
               @changeValue="changeApplyFor"
+              :disabled="mode == Enum.FormMode.Watch"
             ></BaseCombobox>
           </div>
           <div class="box-row">
@@ -52,6 +54,7 @@
               :end="cptData.ExpiredDate"
               @changeBegin="changeDateBegin"
               @changeEnd="changeDateEnd"
+              :disabled="mode == Enum.FormMode.Watch"
             >
             </DateRequest>
           </div>
@@ -63,6 +66,7 @@
               type="radio"
               v-model="cptData.DiscountFor"
               :value="1"
+              :disabled="mode == Enum.FormMode.Watch"
             />
             <label for="type">Gói sản phẩm</label>
             <input
@@ -71,6 +75,7 @@
               type="radio"
               v-model="cptData.DiscountFor"
               :value="2"
+              :disabled="mode == Enum.FormMode.Watch"
             />
             <label for="type">Sản phẩm</label>
             <input
@@ -79,6 +84,7 @@
               type="radio"
               v-model="cptData.DiscountFor"
               :value="3"
+              :disabled="mode == Enum.FormMode.Watch"
             />
             <label for="type">Toàn bộ đơn hàng</label>
           </div>
@@ -90,6 +96,7 @@
               name="applyFor"
               v-model="cptData.DiscountType"
               :value="1"
+              :disabled="mode == Enum.FormMode.Watch"
             />
             <label for="" class="width-80">%</label>
             <input
@@ -98,6 +105,7 @@
               class="box-input text-align-end"
               v-model="cptData.PercentageReduction"
               :disabled="cptData.DiscountType == 2"
+              :readonly="mode == Enum.FormMode.Watch"
             />
           </div>
           <div class="box-row">
@@ -108,6 +116,7 @@
               name="applyFor"
               v-model="cptData.DiscountType"
               :value="2"
+              :disabled="mode == Enum.FormMode.Watch"
             />
             <label for="" class="width-80">Số tiền</label>
             <input
@@ -115,7 +124,8 @@
               min="1"
               class="box-input text-align-end"
               v-model="cptData.ReductionAmount"
-              :disabled="cptData.DiscountType == 1"
+              :disabled="(cptData.DiscountType == 1)"
+              :readonly="mode == Enum.FormMode.Watch"
             />
           </div>
           <div class="box-row">
@@ -125,6 +135,7 @@
               min="1"
               class="box-input text-align-end"
               v-model="cptData.PriceBefore"
+              :readonly="mode == Enum.FormMode.Watch"
             />
           </div>
           <div class="box-row">
@@ -136,6 +147,7 @@
               rows="5"
               v-model="cptData.Reason"
               class="text-area"
+              :readonly="mode == Enum.FormMode.Watch"
             ></textarea>
           </div>
           <div class="box-row">
@@ -147,6 +159,7 @@
               :ValName="'Label'"
               :value="cptData.Category"
               @changeValue="changeCategory"
+              :disabled="mode == Enum.FormMode.Watch"
             ></BaseCombobox>
           </div>
           <div class="box-row">
@@ -157,6 +170,7 @@
               name="level"
               v-model="cptData.LevelCreatedUserChoose"
               :value="10"
+              :disabled="mode == Enum.FormMode.Watch"
             />
             <label for=""
               >Ban GĐ TTKD (HAN, HCM)/ TP KD (DNG, BMT, CTH)/ TP GHCN khối
@@ -171,6 +185,7 @@
               name="level"
               v-model="cptData.LevelCreatedUserChoose"
               :value="15"
+              :disabled="mode == Enum.FormMode.Watch"
             />
             <label for="">Ban GĐ Văn phòng</label>
           </div>
@@ -182,6 +197,7 @@
               name="level"
               v-model="cptData.LevelCreatedUserChoose"
               :value="20"
+              :disabled="mode == Enum.FormMode.Watch"
             />
             <label for="">Ban Tổng giám đốc</label>
           </div>
@@ -194,6 +210,7 @@
               :ValName="'EmployeeName'"
               :value="cptData.EmployeeIDCreatedUserChoose"
               @changeValue="changeBrowser"
+              :disabled="mode == Enum.FormMode.Watch"
             ></BaseCombobox>
           </div>
           <div class="box-row">
@@ -203,13 +220,14 @@
               min="1"
               class="box-input flex1"
               v-model="cptData.CollaboratorCode"
+              :readonly="mode == Enum.FormMode.Watch"
             />
           </div>
           <div class="box-row">
             <span>Cấp cho:</span>
-            <input type="radio" class="box-radio" name="who" />
+            <input type="radio" class="box-radio" name="who" :disabled="mode == Enum.FormMode.Watch"/>
             <label for="">Một khách hàng</label>
-            <input type="radio" class="box-radio" name="who" />
+            <input type="radio" class="box-radio" name="who" :disabled="mode == Enum.FormMode.Watch"/>
             <label for="">Danh sách khách hàng</label>
           </div>
 
@@ -223,6 +241,7 @@
               type="text"
               class="box-input"
               v-model="cptData.CustomerIdentity"
+              :readonly="mode == Enum.FormMode.Watch"
             />
           </div>
           <div class="box-row">
@@ -231,6 +250,7 @@
               type="text"
               class="box-input flex1"
               v-model="cptData.CustomerName"
+              :readonly="mode == Enum.FormMode.Watch"
             />
           </div>
           <div class="box-row">
@@ -239,11 +259,12 @@
               type="text"
               class="box-input flex1"
               v-model="cptData.Address"
+              :readonly="mode == Enum.FormMode.Watch"
             />
           </div>
           <div class="box-row">
             <span>Mã ngân sách</span>
-            <input type="text" class="box-input" v-model="cptData.BudgetCode" />
+            <input type="text" class="box-input" v-model="cptData.BudgetCode" :readonly="mode == Enum.FormMode.Watch"/>
             <span class="span-right">Ngày thành lập</span>
             <el-date-picker
               :clearable="false"
@@ -256,6 +277,7 @@
               placeholder="DD/MM/YYYY"
               format="DD/MM/YYYY"
               value-format="YYYY-MM-DD"
+              :disabled="mode == Enum.FormMode.Watch"
             />
           </div>
 
@@ -265,6 +287,7 @@
               type="text"
               class="box-input flex1"
               v-model="cptData.ContactBy"
+              :readonly="mode == Enum.FormMode.Watch"
             />
           </div>
           <div class="box-row">
@@ -273,15 +296,20 @@
               type="text"
               class="box-input"
               v-model="cptData.PhoneNumber"
+              :readonly="mode == Enum.FormMode.Watch"
             />
             <span class="span-right">Email <span>(*)</span></span>
-            <input type="text" class="box-input" v-model="cptData.Email" />
+            <input type="text" class="box-input" v-model="cptData.Email" :readonly="mode == Enum.FormMode.Watch"/>
           </div>
         </div>
       </div>
 
       <div class="content-bottom">
-        <button class="btn-icon btn-none" @click="addRequest" :disabled="mode == Enum.FormMode.Watch">
+        <button
+          class="btn-icon btn-none"
+          @click="addRequest"
+          :disabled="mode == Enum.FormMode.Watch"
+        >
           <div class="icon-save16"></div>
           <span>Cất</span>
         </button>
@@ -295,7 +323,7 @@
 </template>
 
 <script>
-import Enum from "@/Enum/VoucherDetail"
+import Enum from "@/Enum/VoucherDetail";
 import cookie from "@/stores/cookie";
 import ComboboxData from "@/stores/ComboboxData";
 import EnumDateRange from "@/Enum/EnumDateRange";
@@ -387,23 +415,39 @@ export default {
      * 07/10/2022
      */
     async addRequest() {
-      this.cptData.CreatedEmployeeID = this.user.EmployeeID;
-      this.cptData.CreatedEmployeeID = this.user.EmployeeID;
-
       let url = `https://localhost:44342/api/v1/Request`;
-      await axios
-        .post(url, this.cptData, {
-          headers: { Authorization: `Bearer ${this.token}` },
-        })
-        .then((response) => {
-          if (response) {
-            this.isShowForm = false;
-            alert("Thêm thành công");
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      if (this.mode == Enum.FormMode.Save) {
+        this.cptData.CreatedEmployeeID = this.user.EmployeeID;
+        await axios
+          .post(url, this.cptData, {
+            headers: { Authorization: `Bearer ${this.token}` },
+          })
+          .then((response) => {
+            if (response) {
+              this.isShowForm = false;
+              alert("Thêm thành công");
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else if (this.mode == Enum.FormMode.Edit) {
+          url = `${url}/${this.cptData.RequestID}`;
+          await axios
+            .put(url, this.cptData, {
+              headers: { Authorization: `Bearer ${this.token}` },
+            })
+            .then((response) => {
+              if (response) {
+                this.isShowForm = false;
+                alert("Sửa thành công");
+                this.$emit("saveSuccess");
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+      }
     },
     /**
      * @Description Thay đổi id sản phẩm
@@ -450,7 +494,7 @@ export default {
      * @Author TVLOI
      * 07/10/2022
      */
-     changeDateEnd(val) {
+    changeDateEnd(val) {
       this.cptData.ExpiredDate = val;
     },
   },

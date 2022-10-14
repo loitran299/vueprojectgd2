@@ -56,8 +56,10 @@
     <RequestTable
       :data="tableData"
       :header="tableHeader"
+      :requests="requestsSelected"
       :selected="requestSelected"
       @changeSelected="changeRequestSelected"
+      @changeRequestsSelected="changeRequestsSelected"
     ></RequestTable>
   </div>
   <FormDetail
@@ -68,11 +70,13 @@
     @changeData="changeCurrentRequest"
     :parent="tableEnum.TableType.Employee"
     :mode="formMode"
+    @saveSuccess="saveSuccess"
   >
   </FormDetail>
 </template>
 
 <script>
+import RequestStatus from "@/Enum/RequestStatus";
 import EnumForm from "@/Enum/VoucherDetail";
 import cookie from "@/stores/cookie";
 import axios from "axios";
@@ -108,6 +112,7 @@ export default {
       dateBegin: "",
       dateEnd: "",
       requestSelected: {},
+      requestsSelected: new Set()
     };
   },
   methods: {
@@ -182,7 +187,19 @@ export default {
     editRequest() {
       this.formMode = EnumForm.FormMode.Edit;
       this.currentRequest = this.requestSelected;
-      this.isShowPopup = true;
+      if (this.currentRequest.Status != RequestStatus.Draft) {
+        alert("Chỉ được sửa ở tình trạng bản nháp");
+      } else {
+        this.isShowPopup = true;
+      }
+    },
+        /**
+     * @Description Lưu thành công
+     * @Author TVLOI
+     * 11/10/2022
+     */
+    saveSuccess(){
+      this.getRequests();
     },
     onShowFormAdd() {
       this.formMode = EnumForm.FormMode.Save;
@@ -191,6 +208,10 @@ export default {
     },
     changeRequestSelected(val) {
       this.requestSelected = val;
+    },
+    changeRequestsSelected(val){
+      this.requestsSelected = val;
+      console.log(this.requestsSelected);
     },
     changeShowPopup(value) {
       this.isShowPopup = value;
