@@ -40,11 +40,11 @@
         <div class="icon-request"></div>
         <span>Gửi yêu cầu</span>
       </button>
-      <button class="btn-icon btn-none">
+      <button class="btn-icon btn-none" @click="revokeRequests">
         <div class="icon-undo"></div>
         <span>Thu hồi yêu cầu</span>
       </button>
-      <button class="btn-icon btn-none">
+      <button class="btn-icon btn-none" @click="deleteRequests">
         <div class="icon-cancel"></div>
         <span>Xóa yêu cầu</span>
       </button>
@@ -58,8 +58,10 @@
       :header="tableHeader"
       :requests="requestsSelected"
       :selected="requestSelected"
+      :pagination="pagination"
       @changeSelected="changeRequestSelected"
       @changeRequestsSelected="changeRequestsSelected"
+      @changePagination="changePagination"
     ></RequestTable>
   </div>
   <FormDetail
@@ -112,7 +114,13 @@ export default {
       dateBegin: "",
       dateEnd: "",
       requestSelected: {},
-      requestsSelected: new Set()
+      requestsSelected: new Set(),
+      pagination: {
+        totalRecords: 0,
+        totalPages: 1,
+        currentPage: 1,
+        recordPerPage: 10
+      }
     };
   },
   methods: {
@@ -131,13 +139,16 @@ export default {
         IsManager: false,
         CurrentLevel: 5,
       };
-      let url = `https://localhost:44342/api/v1/Request/Fillter?pageSize=10&pageNumber=1&sortBy=`;
+      let url = `https://localhost:44342/api/v1/Request/Fillter?pageSize=${this.pagination.recordPerPage}&pageNumber=${this.pagination.currentPage}&sortBy=`;
       await axios
         .post(url, bodyParam, {
           headers: { Authorization: `Bearer ${this.token}` },
         })
         .then((response) => {
           this.tableData = response.data.Data;
+          this.pagination.currentPage = response.data.CurrentPage;
+          this.pagination.totalPages = response.data.TotalPages;
+          this.pagination.totalRecords = response.data.TotalRecords;
           if (response) {
             console.log(this.tableData);
           }
@@ -154,15 +165,14 @@ export default {
     async sendRequest() {
       let url = `https://localhost:44342/api/v1/Request/SendRequest`;
       await axios
-        .put(url, this.requestSelected, {
+        .put(url, Array.from(this.requestsSelected), {
           headers: { Authorization: `Bearer ${this.token}` },
         })
         .then((response) => {
+          this.getRequests();
           if (response) {
-            if (response) {
-              alert("Gửi thành công");
-              this.getRequests();
-            }
+            this.requestsSelected = new Set();
+            alert("Gửi thành công");
           }
         })
         .catch((error) => {
@@ -193,12 +203,56 @@ export default {
         this.isShowPopup = true;
       }
     },
-        /**
+    /**
      * @Description Lưu thành công
      * @Author TVLOI
      * 11/10/2022
      */
-    saveSuccess(){
+    async deleteRequests() {
+      let url = `https://localhost:44342/api/v1/Request/Multiple`;
+      await axios
+        .put(url, Array.from(this.requestsSelected), {
+          headers: { Authorization: `Bearer ${this.token}` },
+        })
+        .then((response) => {
+          this.getRequests();
+          if (response) {
+            this.requestsSelected = new Set();
+            alert("Xóa thành công");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    /**
+     * @Description Thu hồi yêu cầu
+     * @Author TVLOI
+     * 11/10/2022
+     */
+    async revokeRequests() {
+      let url = `https://localhost:44342/api/v1/Request/Revoke`;
+      await axios
+        .put(url, Array.from(this.requestsSelected), {
+          headers: { Authorization: `Bearer ${this.token}` },
+        })
+        .then((response) => {
+          this.getRequests();
+          if (response) {
+            this.requestsSelected = new Set();
+            alert("Thu hồi thành công");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    /**
+     * @Description Lưu thành công
+     * @Author TVLOI
+     * 11/10/2022
+     */
+    saveSuccess() {
       this.getRequests();
     },
     onShowFormAdd() {
@@ -206,10 +260,13 @@ export default {
       this.currentRequest = { ...InitData.NewRequest };
       this.isShowPopup = true;
     },
+    changePagination(val) {
+      this.pagination = val;
+    },
     changeRequestSelected(val) {
       this.requestSelected = val;
     },
-    changeRequestsSelected(val){
+    changeRequestsSelected(val) {
       this.requestsSelected = val;
       console.log(this.requestsSelected);
     },

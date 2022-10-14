@@ -67,7 +67,7 @@
               <td>
                 <div
                   class="checkbox icon-uncheck"
-                  :class="{ active: requestsID.has(request.RequestMemberID) }"
+                  :class="{ active: requestsSelected.has(request.RequestMemberID) }"
                   @click="onTickRow(request)"
                 ></div>
               </td>
@@ -82,7 +82,7 @@
           </tbody>
         </table>
       </div>
-      <MyPagination></MyPagination>
+      <MyPagination :data="paging" @changeData="changePaging"></MyPagination>
     </Pane>
     <Pane size="30" min-size="0">
       <VoucherInfo :data="requestSelected"></VoucherInfo>
@@ -100,7 +100,7 @@ import { Splitpanes, Pane } from "splitpanes";
 import "splitpanes/dist/splitpanes.css";
 export default {
   name: "tableID",
-  props: ["data", "header", "parent", "selected" , "requests"],
+  props: ["data", "header", "parent", "selected" , "requests", "pagination"],
   components: {
     Splitpanes,
     Pane,
@@ -114,7 +114,6 @@ export default {
       inputType: TableEnum.FilterType,
       tableEnum: TableEnum,
       requestFunc: Request,
-      requestsID: new Set(),
       currentSelect: "",
     };
   },
@@ -134,6 +133,14 @@ export default {
       set(value) {
         this.$emit("changeRequestsSelected", value);
       }
+    },
+    paging: {
+      get() {
+        return this.pagination;
+      },
+      set (val) {
+        this.$emit("changePagination", val);
+      }
     }
   },
   methods: {
@@ -143,12 +150,10 @@ export default {
      * 07/10/2022
      */
     onTickRow(request) {
-      if (this.requestsID.has(request.RequestMemberID)) {
-        this.requestsSelected.delete(request);
-        this.requestsID.delete(request.RequestMemberID);
+      if (this.requestsSelected.has(request.RequestMemberID)) {
+        this.requestsSelected.delete(request.RequestMemberID);
       } else {
-        this.requestsID.add(request.RequestMemberID);
-        this.requestsSelected.add(request);
+        this.requestsSelected.add(request.RequestMemberID);
       }
       this.currentSelect = request.RequestMemberID;
       this.requestSelected = { ...request };
@@ -162,6 +167,9 @@ export default {
       this.requestSelected = { ...request };
       this.currentSelect = request.RequestMemberID;
     },
+    changePaging(val) {
+      this.paging = val;
+    }
   },
 };
 </script>

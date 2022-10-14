@@ -427,6 +427,7 @@ export default {
               this.isShowForm = false;
               alert("Thêm thành công");
             }
+            this.$emit("saveSuccess");
           })
           .catch((error) => {
             console.log(error);
@@ -441,8 +442,8 @@ export default {
               if (response) {
                 this.isShowForm = false;
                 alert("Sửa thành công");
-                this.$emit("saveSuccess");
               }
+              this.$emit("saveSuccess");
             })
             .catch((error) => {
               console.log(error);

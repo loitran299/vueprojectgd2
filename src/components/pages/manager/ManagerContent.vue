@@ -51,6 +51,10 @@
       :data="tableData"
       :selected="requestSelected"
       @changeSelected="changeRequestSelected"
+      :requests="requestsSelected"
+      @changeRequestsSelected="changeRequestsSelected"
+      :pagination="pagination"
+      @changePagination="changePagination"
     ></RequestTable>
   </div>
   <BrowsePopup
@@ -70,7 +74,7 @@
 </template>
   
 <script>
-import EmployeeLevel from "@/Enum/EmployeeLevel"
+import EmployeeLevel from "@/Enum/EmployeeLevel";
 import FormDetail from "@/components/pages/common/VoucherDetail.vue";
 import EnumForm from "@/Enum/VoucherDetail";
 import InitData from "@/stores/VoucherDetail";
@@ -108,6 +112,13 @@ export default {
       requestType: 1,
       currentRequest: { ...InitData.NewRequest },
       requestSelected: {},
+      requestsSelected: new Set(),
+      pagination: {
+        totalRecords: 0,
+        totalPages: 1,
+        currentPage: 1,
+        recordPerPage: 10,
+      },
     };
   },
   created() {
@@ -127,15 +138,18 @@ export default {
         Status: this.statusID,
         RequestType: this.requestType,
         IsManager: true,
-        CurrentLevel: EmployeeLevel[this.user.Level]
+        CurrentLevel: EmployeeLevel[this.user.Level],
       };
-      let url = `https://localhost:44342/api/v1/Request/Fillter?pageSize=10&pageNumber=1&sortBy=`;
+      let url = `https://localhost:44342/api/v1/Request/Fillter?pageSize=${this.pagination.recordPerPage}&pageNumber=${this.pagination.currentPage}&sortBy=`;
       await axios
         .post(url, bodyParam, {
           headers: { Authorization: `Bearer ${this.token}` },
         })
         .then((response) => {
           this.tableData = response.data.Data;
+          this.pagination.currentPage = response.data.CurrentPage;
+          this.pagination.totalPages = response.data.TotalPages;
+          this.pagination.totalRecords = response.data.TotalRecords;
           if (response) {
             console.log(this.tableData);
           }
@@ -162,6 +176,10 @@ export default {
     },
     changeRequestSelected(val) {
       this.requestSelected = val;
+    },
+    changeRequestsSelected(val) {
+      this.requestsSelected = val;
+      console.log(this.requestsSelected);
     },
     changeShowPopup(value) {
       this.isShowPopup = value;

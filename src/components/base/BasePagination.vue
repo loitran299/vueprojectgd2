@@ -7,9 +7,9 @@
       </div>
       <div class="cb-change-page">
         Trang
-        <input class="page-input" type="number">
+        <input class="page-input" :value="cptData.currentPage" type="number">
         Trên
-        <span>1</span>
+        <span>{{cptData.totalPages}}</span>
       </div>
       <div class="cb-change-page">
         <button><div class="icon-page-next"></div></button>
@@ -26,7 +26,7 @@
           <span>100</span>
         </div>
       </div>
-      <div>Tổng số: <span>12</span> bản ghi</div>
+      <div>Tổng số: <span>{{cptData.totalRecords}}</span> bản ghi</div>
     </div>
   </div>
 </template>
@@ -34,6 +34,19 @@
 <script>
 export default {
   name: "paginationID",
+  props: [
+    "data"
+  ],
+  computed: {
+    cptData: {
+      get() {
+        return this.data;
+      },
+      set (val) {
+        this.$emit("changeData", val);
+      }
+    }
+  },
   data() {
     return {
       showPopup: false,
