@@ -13,9 +13,27 @@
       :parent="false"
       class="form-content"
     >
-    <div class="content-top">
-        <span>MiSA Promotion Process</span>
-        <button class="icon-close" @click="isShowForm = false"></button>
+      <div class="content-top">
+        <span>MISA Promotion Process</span>
+        <button class="icon-close" @click="isShowPopup = false"></button>
+      </div>
+      <div class="content-center">
+        <div class="icon-warning"></div>
+        <span>{{message}}</span>
+      </div>
+
+      <div class="content-bottom">
+        <!-- <button
+          class="btn-icon btn-none"
+          @click="addRequest"
+        >
+          <div class="icon-save16"></div>
+          <span>Cất</span>
+        </button> -->
+        <button class="btn-icon btn-none" @click="isShowPopup = false">
+          <div class="icon-cancel16"></div>
+          <span>Đóng</span>
+        </button>
       </div>
     </Vue3DraggableResizable>
   </div>
@@ -24,6 +42,22 @@
 <script>
 export default {
   name: "messageID",
+  props: ["message", "isShow"],
+  data() {
+    return {
+        
+    }
+  },
+  computed: {
+    isShowPopup: {
+        get() {
+            return this.isShow;
+        },
+        set(val) {
+            this.$emit("changeShowMessage", val);
+        }
+    }
+  },
 };
 </script>
 

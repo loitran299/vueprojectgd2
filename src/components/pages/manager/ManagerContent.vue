@@ -78,7 +78,7 @@ import EmployeeLevel from "@/Enum/EmployeeLevel";
 import FormDetail from "@/components/pages/common/VoucherDetail.vue";
 import EnumForm from "@/Enum/VoucherDetail";
 import InitData from "@/stores/VoucherDetail";
-import cookie from "@/stores/cookie";
+import cookie from "@/stores/Cookie";
 import axios from "axios";
 import ComboboxData from "@/stores/ComboboxData";
 import RequestTable from "@/components/pages/common/RequestTable.vue";

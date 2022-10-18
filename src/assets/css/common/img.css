@@ -182,3 +182,11 @@
     background-repeat: no-repeat;
     background-position: center;
 }
+.icon-warning {
+    background-image: url('./../../img/warning.png');
+    height: 32px;
+    width: 32px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}

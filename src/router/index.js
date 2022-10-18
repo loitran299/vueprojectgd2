@@ -1,5 +1,5 @@
-import cookie from '@/stores/cookie'
-import Role from '@/Const/role'
+import Cookie from '@/stores/Cookie'
+import Role from '@/Const/Role'
 import {createRouter ,createWebHistory} from 'vue-router'
 import TheLogin from '@/components/pages/common/TheLogin.vue'
 import TheEmployee from '@/components/pages/employee/TheHome.vue'
@@ -18,7 +18,7 @@ import TheManager from '@/components/pages/manager/TheHome.vue'
       routes: routes
     })
     router.beforeEach((to, from, next) => {
-      const userInfo= cookie.getUser();
+      const userInfo= Cookie.getUser();
       // next-line: check if route ("to" object) needs authenticated
       if (to.meta.requiresAuth && !userInfo.Token) {
         next('/login');

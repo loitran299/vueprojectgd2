@@ -324,7 +324,7 @@
 
 <script>
 import Enum from "@/Enum/VoucherDetail";
-import cookie from "@/stores/cookie";
+import cookie from "@/stores/Cookie";
 import ComboboxData from "@/stores/ComboboxData";
 import EnumDateRange from "@/Enum/EnumDateRange";
 import DateRequest from "@/components/base/DateRange.vue";

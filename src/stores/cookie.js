@@ -1,6 +1,6 @@
-var cookie = cookie || {};
+var Cookie = Cookie || {};
 
-cookie = {
+Cookie = {
     // Hàm thiết lập Cookie
     setCookie: (cname, cvalue, exdays) => {
         var d = new Date();
@@ -39,4 +39,4 @@ cookie = {
     }
 }
 
-export default cookie
+export default Cookie

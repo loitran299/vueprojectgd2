@@ -77,14 +77,14 @@
     @saveSuccess="saveSuccess"
   >
   </FormDetail>
-  <MessageBox v-if="true"></MessageBox>
+  <MessageBox v-if="isShowMessageBox" :message="warningMessage" :isShow="isShowMessageBox" @changeShowMessage="changeShowMessage" ></MessageBox>
 </template>
 
 <script>
 import MessageBox from "@/components/base/MessageBox.vue"
 import RequestStatus from "@/Enum/RequestStatus";
 import EnumForm from "@/Enum/VoucherDetail";
-import cookie from "@/stores/cookie";
+import cookie from "@/stores/Cookie";
 import axios from "axios";
 import EnumTable from "@/Enum/RequestTable";
 import ConstTable from "@/Const/table";
@@ -126,7 +126,9 @@ export default {
         currentPage: 1,
         recordPerPage: 10
       },
-      onlyDraft: true
+      onlyDraft: true,
+      isShowMessageBox: false,
+      warningMessage: ''
     };
   },
   methods: {
@@ -169,8 +171,14 @@ export default {
      * 07/10/2022
      */
     async sendRequest() {
+      if(this.requestsSelected.size == 0){
+        this.isShowMessageBox = true;
+        this.warningMessage = "Bạn cần chọn ít nhất 1 yêu cầu";
+        return;
+      }
       if(!this.onlyDraft){
-        alert("Chỉ được gửi yêu cầu trạng thái bản nháp");
+        this.isShowMessageBox = true;
+        this.warningMessage = "Chỉ có thể gửi yêu cầu ở trạng thái bản nháp";
         return;
       }
       let url = `https://localhost:44342/api/v1/Request/SendRequest`;
@@ -301,6 +309,9 @@ export default {
     changeDateEnd(val) {
       this.dateEnd = val;
     },
+    changeShowMessage(val) {
+      this.isShowMessageBox = val;
+    }
   },
 };
 </script>

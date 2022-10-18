@@ -4,3 +4,5 @@ Role = {
     Manager: "Manager",
     Employee: "Employee"
 }
+
+export default Role

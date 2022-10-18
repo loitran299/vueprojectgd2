@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import Cookie from "@/stores/cookie"
+import Cookie from "@/stores/Cookie"
 export default {
     name: 'headID',
     data() {

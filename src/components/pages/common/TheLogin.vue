@@ -14,7 +14,7 @@
 
 <script>
 import jwt_decode from 'jwt-decode';
-import Cookie from "@/stores/cookie"
+import Cookie from "@/stores/Cookie"
 import Axios from "axios"
 export default {
     name: "loginID",

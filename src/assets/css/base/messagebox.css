@@ -3,3 +3,21 @@
     max-height: 124px;
     
 }
+
+/* .content-top {
+    height: 34px!important;
+} */
+
+.content-center {
+    overflow: hidden!important;
+    padding: 5px 10px 0 10px;
+    display: flex;
+    align-items: center;
+}
+.content-center div{
+    margin-right: 8px;
+}
+
+.content-bottom {
+    border: none!important;
+}
