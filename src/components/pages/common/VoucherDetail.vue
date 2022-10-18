@@ -502,7 +502,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @import url("@/assets/css/common/formdetail.css");
 
 .el-date-picker .el-input__wrapper {

@@ -81,13 +81,14 @@
 </template>
 
 <script>
+import warningMessage from "@/Const/WarningMessage"
 import MessageBox from "@/components/base/MessageBox.vue"
 import RequestStatus from "@/Enum/RequestStatus";
 import EnumForm from "@/Enum/VoucherDetail";
 import cookie from "@/stores/Cookie";
 import axios from "axios";
 import EnumTable from "@/Enum/RequestTable";
-import ConstTable from "@/Const/table";
+import ConstTable from "@/Const/Table";
 import InitData from "@/stores/VoucherDetail";
 import RequestTable from "@/components/pages/common/RequestTable.vue";
 import ComboboxData from "@/stores/ComboboxData";
@@ -101,7 +102,7 @@ export default {
     SearchCombobox,
     FormDetail,
     RequestTable,
-    MessageBox
+    MessageBox,
   },
   data() {
     return {
@@ -173,12 +174,12 @@ export default {
     async sendRequest() {
       if(this.requestsSelected.size == 0){
         this.isShowMessageBox = true;
-        this.warningMessage = "Bạn cần chọn ít nhất 1 yêu cầu";
+        this.warningMessage = warningMessage.RequireChoose;
         return;
       }
       if(!this.onlyDraft){
         this.isShowMessageBox = true;
-        this.warningMessage = "Chỉ có thể gửi yêu cầu ở trạng thái bản nháp";
+        this.warningMessage = warningMessage.SendOnlyDraft;
         return;
       }
       let url = `https://localhost:44342/api/v1/Request/SendRequest`;
@@ -216,7 +217,8 @@ export default {
       this.formMode = EnumForm.FormMode.Edit;
       this.currentRequest = this.requestSelected;
       if (this.currentRequest.Status != RequestStatus.Draft) {
-        alert("Chỉ được sửa ở tình trạng bản nháp");
+        this.isShowMessageBox = true;
+        this.warningMessage = warningMessage.Edit;
       } else {
         this.isShowPopup = true;
       }

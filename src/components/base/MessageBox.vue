@@ -1,5 +1,5 @@
 <template>
-  <div id="messageID" class="overlay">
+  <div id="messageID" class="overlay message-box">
     <Vue3DraggableResizable
       :initW="833"
       :initH="596"

@@ -82,7 +82,7 @@ import cookie from "@/stores/Cookie";
 import axios from "axios";
 import ComboboxData from "@/stores/ComboboxData";
 import RequestTable from "@/components/pages/common/RequestTable.vue";
-import ConstTable from "@/Const/table";
+import ConstTable from "@/Const/Table";
 import BrowsePopup from "@/components/pages/manager/BrowsePopup.vue";
 import DateRequest from "@/components/base/DateRange.vue";
 import SearchCombobox from "@/components/base/BaseCombobox.vue";

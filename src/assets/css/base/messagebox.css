@@ -1,4 +1,4 @@
-.form-content {
+.message-box .form-content {
     max-width: 414px;
     max-height: 124px;
     
@@ -8,16 +8,16 @@
     height: 34px!important;
 } */
 
-.content-center {
+.message-box .content-center {
     overflow: hidden!important;
     padding: 5px 10px 0 10px;
     display: flex;
     align-items: center;
 }
-.content-center div{
+.message-box .content-center div{
     margin-right: 8px;
 }
 
-.content-bottom {
+.message-box .content-bottom {
     border: none!important;
 }

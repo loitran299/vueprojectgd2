@@ -1,5 +1,5 @@
 // import TableEnum from "@/Enum/RequestTable"
-import TableConst from "@/Const/table"
+import TableConst from "@/Const/Table"
 import DateFunc from "@/assets/js/date"
 
 const formatter = new Intl.NumberFormat('en-US', {
