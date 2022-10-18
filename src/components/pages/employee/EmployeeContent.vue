@@ -48,7 +48,7 @@
         <div class="icon-cancel"></div>
         <span>Xóa yêu cầu</span>
       </button>
-      <button class="btn-icon btn-none">
+      <button class="btn-icon btn-none" @click="sendVoucherCode">
         <div class="icon-go"></div>
         <span>Gửi mã cho khách hàng</span>
       </button>
@@ -59,9 +59,11 @@
       :requests="requestsSelected"
       :selected="requestSelected"
       :pagination="pagination"
+      :onlyDraft="onlyDraft"
       @changeSelected="changeRequestSelected"
       @changeRequestsSelected="changeRequestsSelected"
       @changePagination="changePagination"
+      @changeOnlyDraft="changeOnlyDraft"
     ></RequestTable>
   </div>
   <FormDetail
@@ -75,9 +77,11 @@
     @saveSuccess="saveSuccess"
   >
   </FormDetail>
+  <MessageBox v-if="true"></MessageBox>
 </template>
 
 <script>
+import MessageBox from "@/components/base/MessageBox.vue"
 import RequestStatus from "@/Enum/RequestStatus";
 import EnumForm from "@/Enum/VoucherDetail";
 import cookie from "@/stores/cookie";
@@ -97,6 +101,7 @@ export default {
     SearchCombobox,
     FormDetail,
     RequestTable,
+    MessageBox
   },
   data() {
     return {
@@ -120,7 +125,8 @@ export default {
         totalPages: 1,
         currentPage: 1,
         recordPerPage: 10
-      }
+      },
+      onlyDraft: true
     };
   },
   methods: {
@@ -163,6 +169,10 @@ export default {
      * 07/10/2022
      */
     async sendRequest() {
+      if(!this.onlyDraft){
+        alert("Chỉ được gửi yêu cầu trạng thái bản nháp");
+        return;
+      }
       let url = `https://localhost:44342/api/v1/Request/SendRequest`;
       await axios
         .put(url, Array.from(this.requestsSelected), {
@@ -247,6 +257,9 @@ export default {
           console.log(error);
         });
     },
+    sendVoucherCode(){
+      alert(this.onlyDraft);
+    },
     /**
      * @Description Lưu thành công
      * @Author TVLOI
@@ -254,6 +267,9 @@ export default {
      */
     saveSuccess() {
       this.getRequests();
+    },
+    changeOnlyDraft(val) {
+      this.onlyDraft = val;
     },
     onShowFormAdd() {
       this.formMode = EnumForm.FormMode.Save;

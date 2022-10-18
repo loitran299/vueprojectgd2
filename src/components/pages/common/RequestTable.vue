@@ -67,7 +67,9 @@
               <td>
                 <div
                   class="checkbox icon-uncheck"
-                  :class="{ active: requestsSelected.has(request.RequestMemberID) }"
+                  :class="{
+                    active: requestsSelected.has(request.RequestMemberID),
+                  }"
                   @click="onTickRow(request)"
                 ></div>
               </td>
@@ -91,6 +93,7 @@
 </template>
 
 <script>
+import RequestStatus from "@/Enum/RequestStatus";
 import Request from "@/assets/js/request";
 import TableEnum from "@/Enum/RequestTable";
 import SearchCombobox from "@/components/base/BaseCombobox.vue";
@@ -100,7 +103,15 @@ import { Splitpanes, Pane } from "splitpanes";
 import "splitpanes/dist/splitpanes.css";
 export default {
   name: "tableID",
-  props: ["data", "header", "parent", "selected" , "requests", "pagination"],
+  props: [
+    "data",
+    "header",
+    "parent",
+    "selected",
+    "requests",
+    "pagination",
+    "onlyDraft",
+  ],
   components: {
     Splitpanes,
     Pane,
@@ -115,6 +126,7 @@ export default {
       tableEnum: TableEnum,
       requestFunc: Request,
       currentSelect: "",
+      listSelected: new Set(),
     };
   },
   computed: {
@@ -132,15 +144,42 @@ export default {
       },
       set(value) {
         this.$emit("changeRequestsSelected", value);
-      }
+      },
     },
     paging: {
       get() {
         return this.pagination;
       },
-      set (val) {
+      set(val) {
         this.$emit("changePagination", val);
-      }
+      },
+    },
+    cptOnlyDraft: {
+      get() {
+        return this.onlyDraft;
+      },
+      set(val) {
+        this.$emit("changeOnlyDraft", val);
+      },
+    },
+    // checkOnlyDraft() {
+    //   var check = true;
+    //     if (
+    //       this.listSelected.has((x) => {
+    //         if (x.Status == RequestStatus.Draft) {
+    //           return true;
+    //         }
+    //         return false;
+    //       })
+    //     ) {
+    //       check = false;
+    //     }
+    //     return check;
+    // }
+  },
+  watch: {
+    listSelected: function() {
+      this.cptOnlyDraft = this.checkOnlyDraft();
     }
   },
   methods: {
@@ -152,11 +191,14 @@ export default {
     onTickRow(request) {
       if (this.requestsSelected.has(request.RequestMemberID)) {
         this.requestsSelected.delete(request.RequestMemberID);
+        this.listSelected.delete(request);
       } else {
         this.requestsSelected.add(request.RequestMemberID);
+        this.listSelected.add(request);
       }
       this.currentSelect = request.RequestMemberID;
       this.requestSelected = { ...request };
+      this.cptOnlyDraft = this.checkOnlyDraft();
     },
     /**
      * @Description khi click 1 row
@@ -169,6 +211,14 @@ export default {
     },
     changePaging(val) {
       this.paging = val;
+    },
+    checkOnlyDraft() {
+      let listRequestSelected = Array.from(this.listSelected);
+      var check = true;
+        if (listRequestSelected.some(e => e.Status != RequestStatus.Draft)) {
+          check = false;
+        }
+        return check;
     }
   },
 };
