@@ -34,7 +34,7 @@ Data = {
         {Id: 2, Label: "Cấp thuê bao/GPSD cho KH Dự án"},
         {Id: 3, Label: "Dịch vụ đào tạo, Tư vấn triển khai"},
         {Id: 4, Label: "Thay đổi GPSD và dịch vụ khác (sửa mẫu, nhập liệu, điều chỉnh mã số thuế, ...)"},
-        {Id: 5, Label: "Tài trợ các Tường/Trung tâm sử dụng đào tạo, miễn phí cho khách hàng triển khai thí điểm"},
+        {Id: 5, Label: "Tài trợ các Trường/Trung tâm sử dụng đào tạo, miễn phí cho khách hàng triển khai thí điểm"},
     ],
     RequestType: [
         {Id: 1, Label: "Cần thực hiện"},

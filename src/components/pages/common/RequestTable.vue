@@ -86,7 +86,7 @@
       </div>
       <MyPagination :data="paging" @changeData="changePaging"></MyPagination>
     </Pane>
-    <Pane size="30" min-size="0">
+    <Pane size="30" min-size="10">
       <VoucherInfo :data="requestSelected"></VoucherInfo>
     </Pane>
   </Splitpanes>

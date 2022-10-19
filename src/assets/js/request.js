@@ -85,20 +85,29 @@ Request = {
     },
     /// ---------------------
     DateRequest: (request) => {
-        if(!request.DateRequest){
+        if(!request.SentDate){
             return "";
         }
-        return DateFunc.formatDate(request.DateRequest);
+        return DateFunc.formatDate(request.SentDate);
     },
     /// todo
-    EmployeeRequest: () => {
-        return "todo";
+    EmployeeRequest: (request) => {
+        if(!request.SentBy){
+            return "";
+        }
+        return request.SentBy;
     },
-    DateApprovel: () => {
-        return "todo";
+    DateApprovel: (request) => {
+        if(!request.ApprovedDate){
+            return "";
+        }
+        return DateFunc.formatDate(request.ApprovedDate);
     },
-    EmployeeApprovel: () => {
-        return "todo";
+    EmployeeApprovel: (request) => {
+        if(!request.ApprovedBy){
+            return "";
+        }
+        return request.ApprovedBy;
     },
     DateRefuse: () => {
         return "todo";
@@ -130,7 +139,7 @@ Request = {
         return DateFunc.getDayOfTime(start, Expired);
     },
     Category: (request) => {
-        return request.Category;
+        return TableConst.Category[request.Category];
     },
     LevelCreatedUserChoose: (request) => {
         if(request.LevelCreatedUserChoose == 10){
@@ -149,8 +158,11 @@ Request = {
     CreatedDate: (request) => {
         return DateFunc.formatDate(request.CreatedDate);
     },
-    EmployeeCreated: () => {
-        return "todo"
+    EmployeeCreated: (request) => {
+        if(!request.CreatedBy){
+            return "";
+        }
+        return request.CreatedBy;
     },
 
     DiscountFor: (request) => {

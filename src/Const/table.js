@@ -97,6 +97,14 @@ table = {
         "Giảm %",
         "Giảm số tiền"
     ],
+    Category: [
+        "",
+        "Cấp thuê bao/GPSD cho KH lẻ",
+        "Cấp thuê bao/GPSD cho KH Dự án",
+        "Dịch vụ đào tạo, Tư vấn triển khai",
+        "Thay đổi GPSD và dịch vụ khác (sửa mẫu, nhập liệu, điều chỉnh mã số thuế, ...)",
+        "Tài trợ các Trường/Trung tâm sử dụng đào tạo, miễn phí cho khách hàng triển khai thí điểm",
+    ]
 }
 
 export default table

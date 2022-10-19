@@ -50,27 +50,27 @@
             <div class="info-content-col">
                 <div class="info-content-row">
                     <span>Người lập</span>
-                    <div>Trần Văn Lợi - C09-0389</div>
+                    <div>{{RequestFunc.EmployeeCreated(data)}}</div>
                 </div>
                 <div class="info-content-row">
                     <span>Ngày lập</span>
-                    <div>27/09/2022</div>
+                    <div>{{RequestFunc.CreatedDate(data)}}</div>
                 </div>
                 <div class="info-content-row">
                     <span>Người yêu cầu</span>
-                    <div>Trần Văn Lợi - C09-0389</div>
+                    <div>{{RequestFunc.EmployeeRequest(data)}}</div>
                 </div>
                 <div class="info-content-row">
                     <span>Ngày yêu cầu</span>
-                    <div>27/09/2022</div>
+                    <div>{{RequestFunc.DateRequest(data)}}</div>
                 </div>
                 <div class="info-content-row">
                     <span>Người duyệt</span>
-                    <div>Trần Văn Lợi - C09-0389</div>
+                    <div>{{RequestFunc.EmployeeApprovel(data)}}</div>
                 </div>
                 <div class="info-content-row">
                     <span>Ngày duyệt</span>
-                    <div>27/09/2022</div>
+                    <div>{{RequestFunc.DateApprovel (data)}}</div>
                 </div>
             </div>
             <div class="info-content-col">

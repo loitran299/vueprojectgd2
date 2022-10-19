@@ -204,6 +204,11 @@ export default {
      * 11/10/2022
      */
     watchRequest() {
+      if(!this.currentRequest.RequestID){
+        this.isShowMessageBox = true;
+        this.warningMessage = warningMessage.RequireChooseOne;
+        return;
+      }
       this.formMode = EnumForm.FormMode.Watch;
       this.currentRequest = this.requestSelected;
       this.isShowPopup = true;
@@ -216,6 +221,11 @@ export default {
     editRequest() {
       this.formMode = EnumForm.FormMode.Edit;
       this.currentRequest = this.requestSelected;
+      if(!this.currentRequest.RequestID){
+        this.isShowMessageBox = true;
+        this.warningMessage = warningMessage.RequireChooseOne;
+        return;
+      }
       if (this.currentRequest.Status != RequestStatus.Draft) {
         this.isShowMessageBox = true;
         this.warningMessage = warningMessage.Edit;
@@ -229,6 +239,16 @@ export default {
      * 11/10/2022
      */
     async deleteRequests() {
+      if(this.requestsSelected.size == 0){
+        this.isShowMessageBox = true;
+        this.warningMessage = warningMessage.RequireChoose;
+        return;
+      }
+      if(!this.onlyDraft){
+        this.isShowMessageBox = true;
+        this.warningMessage = warningMessage.Delete;
+        return;
+      }
       let url = `https://localhost:44342/api/v1/Request/Multiple`;
       await axios
         .put(url, Array.from(this.requestsSelected), {
@@ -251,6 +271,11 @@ export default {
      * 11/10/2022
      */
     async revokeRequests() {
+      if(this.requestsSelected.size == 0){
+        this.isShowMessageBox = true;
+        this.warningMessage = warningMessage.RequireChoose;
+        return;
+      }
       let url = `https://localhost:44342/api/v1/Request/Revoke`;
       await axios
         .put(url, Array.from(this.requestsSelected), {

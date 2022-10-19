@@ -33,7 +33,7 @@
       <button class="btn-txt btn-blue" @click="getRequests">Lấy dữ liệu</button>
     </div>
     <div class="m-row">
-      <button class="btn-icon btn-none" @click="isShowPopup = true">
+      <button class="btn-icon btn-none" @click="showPopupBrowse = true">
         <div class="icon-browse"></div>
         <span>Duyệt</span>
       </button>
@@ -58,8 +58,8 @@
     ></RequestTable>
   </div>
   <BrowsePopup
-    v-if="isShowPopup"
-    :show="isShowPopup"
+    v-if="showPopupBrowse"
+    :show="showPopupBrowse"
     @onClose="onClosePopup"
   ></BrowsePopup>
 
@@ -101,6 +101,7 @@ export default {
       formMode: EnumForm.FormMode.Watch,
       date: new Date(),
       isShowPopup: false,
+      showPopupBrowse: false,
       tableheader: ConstTable.Manager,
       ComboboxData: ComboboxData,
       tableData: [],
@@ -169,7 +170,7 @@ export default {
       this.isShowPopup = true;
     },
     onClosePopup(value) {
-      this.isShowPopup = value;
+      this.showPopupBrowse = value;
     },
     changeCurrentRequest(value) {
       this.currentRequest = value;
