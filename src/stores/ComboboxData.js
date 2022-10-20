@@ -39,6 +39,11 @@ Data = {
     RequestType: [
         {Id: 1, Label: "Cần thực hiện"},
         {Id: 2, Label: "Đã tham gia"},
+    ],
+    LevelUserChoose: [
+        {Id: 10, Label: "Ban GĐ TTKD (HAN, HCM)/ TP KD (DNG, BMT, CTH)/ TP GHCN khối DN"},
+        {Id: 15, Label: "Ban GĐ Văn phòng"},
+        {Id: 20, Label: "Ban Tổng giám đốc"},
     ]
 }
 

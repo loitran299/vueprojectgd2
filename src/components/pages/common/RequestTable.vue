@@ -111,6 +111,7 @@ export default {
     "requests",
     "pagination",
     "onlyDraft",
+    "onlyNotApproval"
   ],
   components: {
     Splitpanes,
@@ -162,24 +163,19 @@ export default {
         this.$emit("changeOnlyDraft", val);
       },
     },
-    // checkOnlyDraft() {
-    //   var check = true;
-    //     if (
-    //       this.listSelected.has((x) => {
-    //         if (x.Status == RequestStatus.Draft) {
-    //           return true;
-    //         }
-    //         return false;
-    //       })
-    //     ) {
-    //       check = false;
-    //     }
-    //     return check;
-    // }
+    cptOnlyNotApproval: {
+      get() {
+        return this.onlyDraft;
+      },
+      set(val) {
+        this.$emit("changeOnlyNotApproval", val);
+      },
+    }
   },
   watch: {
     listSelected: function() {
       this.cptOnlyDraft = this.checkOnlyDraft();
+      this.cptOnlyNotApproval = this.checkOnlyNotApproval();
     }
   },
   methods: {
@@ -219,7 +215,15 @@ export default {
           check = false;
         }
         return check;
-    }
+    },
+    checkOnlyNotApproval() {
+      let listRequestSelected = Array.from(this.listSelected);
+      var check = true;
+        if (listRequestSelected.some(e => e.Status != RequestStatus.NotApproved)) {
+          check = false;
+        }
+        return check;
+    },
   },
 };
 </script>

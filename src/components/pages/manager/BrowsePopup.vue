@@ -11,14 +11,6 @@
       :draggable="true"
       :resizable="false"
       :parent="false"
-      @activated="print('activated')"
-      @deactivated="print('deactivated')"
-      @drag-start="print('drag-start')"
-      @resize-start="print('resize-start')"
-      @dragging="print('dragging')"
-      @resizing="print('resizing')"
-      @drag-end="print('drag-end')"
-      @resize-end="print('resize-end')"
       class="form-content"
     >
       <div class="content-top">
@@ -29,27 +21,52 @@
       <div class="content-center">
         <div class="browse-content">
           <label for="">Cấp duyệt giảm giá</label>
-          <BaseCombobox></BaseCombobox>
+          <BaseCombobox
+              :data="ComboboxData.LevelUserChoose"
+              :IdName="'Id'"
+              :ValName="'Label'"
+              :value="approvalLevel"
+              disabled="true"
+            ></BaseCombobox>
           <label for="">Người duyệt yêu cầu</label>
-          <BaseCombobox></BaseCombobox>
+          <BaseCombobox
+              :data="employees"
+              :IdName="'EmployeeID'"
+              :ValName="'EmployeeName'"
+              :value="requestSelected.EmployeeIDCreatedUserChoose"
+              @changeValue="changeBrowser"
+            ></BaseCombobox>
         </div>
       </div>
 
       <div class="content-bottom">
-        <button class="btn-txt btn-blue">Đồng ý</button>
-        <button class="btn-txt">Hủy bỏ</button>
+        <button class="btn-txt btn-blue" @click="admit">Đồng ý</button>
+        <button class="btn-txt" @click="isShow = fasle">Hủy bỏ</button>
       </div>
     </Vue3DraggableResizable>
   </div>
 </template>
 
 <script>
+import axios from "axios"
+import ComboboxData from "@/stores/ComboboxData"
 import BaseCombobox from "@/components/base/BaseCombobox.vue";
 export default {
   name: "browseID",
-  props: ["show"],
+  props: ["show", "level", "request"],
   components: {
     BaseCombobox,
+  },
+  data() {
+    return {
+      ComboboxData: ComboboxData,
+      employees: [],
+      approvalLevel: 10,
+      requestSelected: {...this.request}
+    }
+  },
+  async created() {
+    await this.getEmployees();
   },
   computed: {
     isShow: {
@@ -60,6 +77,29 @@ export default {
         this.$emit("onClose", val);
       }
     }
+  },
+  methods: {
+    async getEmployees() {
+      let url = `https://localhost:44342/api/v1/Employee/Browser?level=${this.level}`;
+      await axios
+        .get(url, { headers: { Authorization: `Bearer ${this.token}` } })
+        .then((response) => {
+          if (response) {
+            this.employees = response.data;
+            this.approvalLevel = this.employees[0].Level;
+            this.requestSelected.EmployeeIDCreatedUserChoose = this.employees[0].EmployeeID;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    admit() {
+      this.$emit("admit");
+    },
+    changeBrowser(val) {
+      this.requestSelected.EmployeeIDCreatedUserChoose = val;
+    },
   },
 };
 </script>

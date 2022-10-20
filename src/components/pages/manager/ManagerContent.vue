@@ -33,7 +33,7 @@
       <button class="btn-txt btn-blue" @click="getRequests">Lấy dữ liệu</button>
     </div>
     <div class="m-row">
-      <button class="btn-icon btn-none" @click="showPopupBrowse = true">
+      <button class="btn-icon btn-none" @click="onBrowse">
         <div class="icon-browse"></div>
         <span>Duyệt</span>
       </button>
@@ -55,12 +55,17 @@
       @changeRequestsSelected="changeRequestsSelected"
       :pagination="pagination"
       @changePagination="changePagination"
+      :onlyNotApproval="onlyNotApproval"
+      @changeOnlyNotApproval="changeOnlyNotApproval"
     ></RequestTable>
   </div>
   <BrowsePopup
     v-if="showPopupBrowse"
     :show="showPopupBrowse"
     @onClose="onClosePopup"
+    :level="EmployeeLevel[user.Level]"
+    :request="requestSelected"
+    @admit="approvalRequest"
   ></BrowsePopup>
 
   <FormDetail
@@ -71,9 +76,12 @@
     :mode="formMode"
   >
   </FormDetail>
+  <MessageBox v-if="isShowMessageBox" :message="warningMessage" :isShow="isShowMessageBox" @changeShowMessage="changeShowMessage" ></MessageBox>
 </template>
   
 <script>
+import warningMessage from "@/Const/WarningMessage"
+import MessageBox from "@/components/base/MessageBox.vue"
 import EmployeeLevel from "@/Enum/EmployeeLevel";
 import FormDetail from "@/components/pages/common/VoucherDetail.vue";
 import EnumForm from "@/Enum/VoucherDetail";
@@ -95,6 +103,7 @@ export default {
     BrowsePopup,
     RequestTable,
     FormDetail,
+    MessageBox
   },
   data() {
     return {
@@ -104,6 +113,7 @@ export default {
       showPopupBrowse: false,
       tableheader: ConstTable.Manager,
       ComboboxData: ComboboxData,
+      EmployeeLevel: EmployeeLevel,
       tableData: [],
       token: cookie.getCookie("Token"),
       user: cookie.getUser(),
@@ -120,10 +130,12 @@ export default {
         currentPage: 1,
         recordPerPage: 10,
       },
+      isShowMessageBox: false,
+      warningMessage: '',
+      onlyNotApproval: true,
     };
   },
   created() {
-    this.getRequests();
   },
   methods: {
     /**
@@ -159,6 +171,22 @@ export default {
           console.log(error);
         });
     },
+    approvalRequest(){
+
+    },
+    onBrowse() {
+      if(this.requestsSelected.size == 0){
+        this.isShowMessageBox = true;
+        this.warningMessage = warningMessage.RequireChoose;
+        return;
+      }
+      if(!this.onlyNotApproval) {
+        this.isShowMessageBox = true;
+        this.warningMessage = warningMessage.OnlyNotApproval;
+        return;
+      }
+      this.showPopupBrowse = true;
+    },
     /**
      * @Description Xem yêu cầu đã chọn
      * @Author TVLOI
@@ -168,6 +196,12 @@ export default {
       this.formMode = EnumForm.FormMode.Watch;
       this.currentRequest = this.requestSelected;
       this.isShowPopup = true;
+    },
+    changeOnlyNotApproval(val) {
+      this.onlyNotApproval = val;
+    },
+    changeShowMessage(val){
+      this.isShowMessageBox = val;
     },
     onClosePopup(value) {
       this.showPopupBrowse = value;

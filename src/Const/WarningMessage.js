@@ -6,8 +6,8 @@ WarningMessage = {
     Edit: "Bạn chỉ được yêu cầu ở trạng thái Bản nháp",
     Recall: "Bạn chỉ được thu hồi yêu cầu ở trạng thái chưa duyệt",
     Delete: "Bạn chỉ được xóa yêu cầu ở trạng thái bản nháp",
-    RequireChooseOne: "Bạn chưa chọn yêu cầu"
-
+    RequireChooseOne: "Bạn chưa chọn yêu cầu",
+    OnlyNotApproval: "Bạn chỉ được duyệt yêu cầu ở trạng thái chưa duyệt",
 }
 
 export default WarningMessage
