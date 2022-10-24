@@ -15,7 +15,7 @@ const router = getRouter();
 const app = createApp(App);
 
 app.config.productionTip = false;
-
+app.config.silent = true;
 app.use(vClickOutsideUmd);
 app.use(router);
 app.use(Vue3DraggableResizable)

@@ -66,8 +66,9 @@
     :show="showPopupBrowse"
     @onClose="onClosePopup"
     :level="EmployeeLevel[user.Level]"
-    :request="requestSelected"
-    @admit="approvalRequest"
+    :request="transferRequest"
+    @changeTransferRequest="changeTransferRequest"
+    @admit="sendRequest"
   ></BrowsePopup>
 
   <FormDetail
@@ -119,11 +120,12 @@ export default {
       tableData: [],
       token: cookie.getCookie("Token"),
       user: cookie.getUser(),
-      dateBegin: "",
-      dateEnd: "",
+      dateBegin: new Date(),
+      dateEnd: new Date(),
       statusID: 3,
       requestType: 1,
       currentRequest: { ...InitData.NewRequest },
+      transferRequest: { ...InitData.NewRequest },
       requestSelected: {},
       requestsSelected: new Set(),
       objRequests: new Set(),
@@ -136,9 +138,11 @@ export default {
       isShowMessageBox: false,
       warningMessage: '',
       onlyNotApproval: true,
+      transferRequests: []
     };
   },
   created() {
+    this.getRequests();
   },
   methods: {
     /**
@@ -216,6 +220,7 @@ export default {
       }).filter(Boolean)
       var transferItems = [...requests].map((request) => {
         if(request.LevelCreatedUserChoose > request.CurrentLevel){
+          this.transferRequest = request;
           return request.RequestID;
         }
       }).filter(Boolean)
@@ -223,9 +228,34 @@ export default {
         await this.approvalRequest(approvalItems);
       }
       if(transferItems.length > 0){
-        console.log(transferItems);
         this.showPopupBrowse = true;
+        this.transferRequests = [...transferItems];
+        console.log(this.transferRequest);
       }
+    },
+        /**
+     * @Description gọi api gửi request lên cấp trên
+     * @Author TVLOI
+     * 24/10/2022
+     */
+    async sendRequest(){
+      let url = `https://localhost:44342/api/v1/Request/Transfer?employeeIdChooser=${this.transferRequest.EmployeeIDCreatedUserChoose}&level=${this.transferRequest.CurrentLevel}`;
+      await axios
+        .put(url, this.transferRequests, {
+          headers: { Authorization: `Bearer ${this.token}` },
+        })
+        .then((response) => {
+          this.getRequests();
+          if (response) {
+            this.requestsSelected = new Set();
+            this.objRequests = new Set();
+            alert("Đã chuyển yêu cầu");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      console.log(url);
     },
     /**
      * @Description Xem yêu cầu đã chọn
@@ -236,6 +266,9 @@ export default {
       this.formMode = EnumForm.FormMode.Watch;
       this.currentRequest = this.requestSelected;
       this.isShowPopup = true;
+    },
+    changeTransferRequest(val) {
+      this.transferRequest = val;
     },
     changeObjRequests(val) {
       this.objRequests = val;

@@ -35,6 +35,9 @@ Request = {
         return formatter.format(request.PriceBefore);
     },
     DiscountAmount: (request) => {
+        if(!request.ReductionAmount){
+            return "";
+        }
         return formatter.format(request.ReductionAmount);
     },
     AmountAfterDiscount: (request) => {

@@ -33,7 +33,7 @@
               :data="employees"
               :IdName="'EmployeeID'"
               :ValName="'EmployeeName'"
-              :value="requestSelected.EmployeeIDCreatedUserChoose"
+              :value="transferRequest.EmployeeIDCreatedUserChoose"
               @changeValue="changeBrowser"
             ></BaseCombobox>
         </div>
@@ -76,6 +76,14 @@ export default {
       set(val) {
         this.$emit("onClose", val);
       }
+    },
+    transferRequest: {
+      get() {
+        return this.request;
+      },
+      set(val) {
+        this.$emit('changeTransferRequest', val);
+      }
     }
   },
   methods: {
@@ -87,7 +95,8 @@ export default {
           if (response) {
             this.employees = response.data;
             this.approvalLevel = this.employees[0].Level;
-            this.requestSelected.EmployeeIDCreatedUserChoose = this.employees[0].EmployeeID;
+            this.transferRequest.EmployeeIDCreatedUserChoose = this.employees[0].EmployeeID;
+            this.transferRequest.CurrentLevel = this.employees[0].Level;
           }
         })
         .catch((error) => {
@@ -98,7 +107,7 @@ export default {
       this.$emit("admit");
     },
     changeBrowser(val) {
-      this.requestSelected.EmployeeIDCreatedUserChoose = val;
+      this.transferRequest.EmployeeIDCreatedUserChoose = val;
     },
   },
 };
