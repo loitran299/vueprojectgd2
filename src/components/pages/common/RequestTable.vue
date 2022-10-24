@@ -111,7 +111,8 @@ export default {
     "requests",
     "pagination",
     "onlyDraft",
-    "onlyNotApproval"
+    "onlyNotApproval",
+    "objRequests"
   ],
   components: {
     Splitpanes,
@@ -127,7 +128,6 @@ export default {
       tableEnum: TableEnum,
       requestFunc: Request,
       currentSelect: "",
-      listSelected: new Set(),
     };
   },
   computed: {
@@ -170,6 +170,14 @@ export default {
       set(val) {
         this.$emit("changeOnlyNotApproval", val);
       },
+    },
+    listSelected: {
+      get() {
+        return this.objRequests;
+      },
+      set(val) {
+        this.$emit("changeObjRequests", val);
+      }
     }
   },
   watch: {

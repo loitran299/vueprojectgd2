@@ -1,5 +1,5 @@
 import Cookie from '@/stores/Cookie'
-import Role from '@/Const/Role'
+import Role from '@/Const/role'
 import {createRouter ,createWebHistory} from 'vue-router'
 import TheLogin from '@/components/pages/common/TheLogin.vue'
 import TheEmployee from '@/components/pages/employee/TheHome.vue'

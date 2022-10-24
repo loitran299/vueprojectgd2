@@ -57,6 +57,8 @@
       @changePagination="changePagination"
       :onlyNotApproval="onlyNotApproval"
       @changeOnlyNotApproval="changeOnlyNotApproval"
+      :objRequests="objRequests"
+      @changeObjRequests="changeObjRequests"
     ></RequestTable>
   </div>
   <BrowsePopup
@@ -124,6 +126,7 @@ export default {
       currentRequest: { ...InitData.NewRequest },
       requestSelected: {},
       requestsSelected: new Set(),
+      objRequests: new Set(),
       pagination: {
         totalRecords: 0,
         totalPages: 1,
@@ -171,10 +174,30 @@ export default {
           console.log(error);
         });
     },
-    approvalRequest(){
-
+    async approvalRequest(requests){
+      let url = `https://localhost:44342/api/v1/Request/Approval`;
+      await axios
+        .put(url, requests, {
+          headers: { Authorization: `Bearer ${this.token}` },
+        })
+        .then((response) => {
+          this.getRequests();
+          if (response) {
+            this.requestsSelected = new Set();
+            this.objRequests = new Set();
+            alert("Đã duyệt yêu cầu");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
-    onBrowse() {
+        /**
+     * @Description Xử lý sự kiện duyệt yêu cầu duyệt hoặc chuyển lên cấp cao hơn
+     * @Author TVLOI
+     * 07/10/2022
+     */
+    async onBrowse() {
       if(this.requestsSelected.size == 0){
         this.isShowMessageBox = true;
         this.warningMessage = warningMessage.RequireChoose;
@@ -185,7 +208,24 @@ export default {
         this.warningMessage = warningMessage.OnlyNotApproval;
         return;
       }
-      this.showPopupBrowse = true;
+      let requests = Array.from(this.objRequests);
+      var approvalItems = [...requests].map((request) => {
+        if(request.LevelCreatedUserChoose == request.CurrentLevel){
+          return request.RequestID;
+        }
+      }).filter(Boolean)
+      var transferItems = [...requests].map((request) => {
+        if(request.LevelCreatedUserChoose > request.CurrentLevel){
+          return request.RequestID;
+        }
+      }).filter(Boolean)
+      if(approvalItems.length > 0){
+        await this.approvalRequest(approvalItems);
+      }
+      if(transferItems.length > 0){
+        console.log(transferItems);
+        this.showPopupBrowse = true;
+      }
     },
     /**
      * @Description Xem yêu cầu đã chọn
@@ -196,6 +236,9 @@ export default {
       this.formMode = EnumForm.FormMode.Watch;
       this.currentRequest = this.requestSelected;
       this.isShowPopup = true;
+    },
+    changeObjRequests(val) {
+      this.objRequests = val;
     },
     changeOnlyNotApproval(val) {
       this.onlyNotApproval = val;
