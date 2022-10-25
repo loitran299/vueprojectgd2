@@ -392,6 +392,12 @@ export default {
         this.$emit("changeData", value);
       },
     },
+    validateForm() {
+      if(!this.cptData.ProductID) {
+        return false;
+      }
+      return true;
+    }
   },
   methods: {
     /**

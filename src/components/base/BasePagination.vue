@@ -3,7 +3,7 @@
     <div class="paging-left">
       <div class="cb-change-page">
         <button><div class="icon-page-first" @click="cptData.currentPage = 1"></div></button>
-        <button><div class="icon-page-prev" @click="onClickPrevPages"></div></button>
+        <button><div class="icon-page-prev" @click="onClickPrevPages" :disabled="cptData.currentPage == 1"></div></button>
       </div>
       <div class="cb-change-page">
         Trang
@@ -12,7 +12,7 @@
         <span>{{cptData.totalPages}}</span>
       </div>
       <div class="cb-change-page">
-        <button><div class="icon-page-next" @click="onClickNextPages"></div></button>
+        <button><div class="icon-page-next" @click="onClickNextPages" :disabled="cptData.currentPage == cptData.totalPages"></div></button>
         <button><div class="icon-page-last" @click="cptData.currentPage = cptData.totalPages"></div></button>
       </div>
       <button><div class="icon-page-refresh"></div></button>
@@ -21,9 +21,9 @@
       <div class="select-popup">
         <input class="icon-down" type="number" readonly @click="showPopup = !showPopup" v-click-outside="outsidePopup" :value="cptData.recordPerPage">
         <div class="popup" v-if="showPopup">
-          <span @click="cptData.recordPerPage = 1" :class="{'active' : cptData.recordPerPage == 1}">10</span>
-          <span @click="cptData.recordPerPage = 3" :class="{'active' : cptData.recordPerPage == 3}">30</span>
-          <span @click="cptData.recordPerPage = 5" :class="{'active' : cptData.recordPerPage == 5}">50</span>
+          <span @click="cptData.recordPerPage = 10" :class="{'active' : cptData.recordPerPage == 10}">10</span>
+          <span @click="cptData.recordPerPage = 30" :class="{'active' : cptData.recordPerPage == 30}">30</span>
+          <span @click="cptData.recordPerPage = 50" :class="{'active' : cptData.recordPerPage == 50}">50</span>
         </div>
       </div>
       <div>Tổng số: <span>{{cptData.totalRecords}}</span> bản ghi</div>

@@ -126,6 +126,11 @@
     flex: 1;
     height: 28px;
 }
+.box-row .form-combobox.active .el-input__wrapper {
+    border: 1px solid red;
+}
+
+
 
 .box-row .box-radio {
     margin-right: 4px;
