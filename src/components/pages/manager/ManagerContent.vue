@@ -145,6 +145,15 @@ export default {
   created() {
     this.getRequests();
   },
+  watch: {
+    pagination: {
+      handler(newVal){
+        console.log("handler-------"+newVal)
+        this.getRequests();
+      },
+      immediate: true,
+    }
+  },
   methods: {
     /**
      * @Description Lấy request theo bộ lọc
@@ -305,6 +314,11 @@ export default {
       this.formMode = EnumForm.FormMode.Watch;
       this.currentRequest = this.requestSelected;
       this.isShowPopup = true;
+    },
+    changePagination(val) {
+      debugger
+      this.pagination = val;
+      this.getRequests();
     },
     changeTransferRequest(val) {
       this.transferRequest = val;

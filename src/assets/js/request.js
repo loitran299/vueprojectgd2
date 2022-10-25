@@ -28,10 +28,11 @@ Request = {
         return TableConst.DiscountType[request.DiscountType];
     },
     PercentageReduction: (request) => {
-        if(!request.PercentageReduction) return 0;
+        if(!request.PercentageReduction) return "";
         return `${request.PercentageReduction}`;
     },
     PriceBefore: (request) => {
+        if(!request.PriceBefore) return "";
         return formatter.format(request.PriceBefore);
     },
     DiscountAmount: (request) => {
@@ -41,6 +42,7 @@ Request = {
         return formatter.format(request.ReductionAmount);
     },
     AmountAfterDiscount: (request) => {
+        if(!request.PriceBefore) return "";
         let priceBefore = parseInt(request.PriceBefore);
         let percen = parseInt(request.PercentageReduction);
         let priceReduc = parseInt(request.ReductionAmount);
@@ -159,6 +161,9 @@ Request = {
     },
 
     CreatedDate: (request) => {
+        if(!request.CreatedDate){
+            return "";
+        }
         return DateFunc.formatDate(request.CreatedDate);
     },
     EmployeeCreated: (request) => {

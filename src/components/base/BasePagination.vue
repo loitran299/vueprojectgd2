@@ -2,8 +2,8 @@
   <div class="pagination" id="paginationID">
     <div class="paging-left">
       <div class="cb-change-page">
-        <button><div class="icon-page-first"></div></button>
-        <button><div class="icon-page-prev"></div></button>
+        <button><div class="icon-page-first" @click="cptData.currentPage = 1"></div></button>
+        <button><div class="icon-page-prev" @click="onClickPrevPages"></div></button>
       </div>
       <div class="cb-change-page">
         Trang
@@ -12,18 +12,18 @@
         <span>{{cptData.totalPages}}</span>
       </div>
       <div class="cb-change-page">
-        <button><div class="icon-page-next"></div></button>
-        <button><div class="icon-page-last"></div></button>
+        <button><div class="icon-page-next" @click="onClickNextPages"></div></button>
+        <button><div class="icon-page-last" @click="cptData.currentPage = cptData.totalPages"></div></button>
       </div>
       <button><div class="icon-page-refresh"></div></button>
     </div>
     <div class="paging-right">
       <div class="select-popup">
-        <input class="icon-down" type="number" readonly @click="showPopup = !showPopup" v-click-outside="outsidePopup">
+        <input class="icon-down" type="number" readonly @click="showPopup = !showPopup" v-click-outside="outsidePopup" :value="cptData.recordPerPage">
         <div class="popup" v-if="showPopup">
-          <span>30</span>
-          <span>50</span>
-          <span>100</span>
+          <span @click="cptData.recordPerPage = 1" :class="{'active' : cptData.recordPerPage == 1}">10</span>
+          <span @click="cptData.recordPerPage = 3" :class="{'active' : cptData.recordPerPage == 3}">30</span>
+          <span @click="cptData.recordPerPage = 5" :class="{'active' : cptData.recordPerPage == 5}">50</span>
         </div>
       </div>
       <div>Tổng số: <span>{{cptData.totalRecords}}</span> bản ghi</div>
@@ -37,6 +37,11 @@ export default {
   props: [
     "data"
   ],
+  data() {
+    return {
+      showPopup: false,
+    }
+  },
   computed: {
     cptData: {
       get() {
@@ -47,15 +52,32 @@ export default {
       }
     }
   },
-  data() {
-    return {
-      showPopup: false,
+  watch: {
+    cptData: {
+      handler(newVal, oldVal){
+        console.log(newVal)
+        console.log(oldVal)
+        if(newVal.recordPerPage != oldVal.recordPerPage){
+          this.cptData.currentPage = 1;
+        }
+      },
+      deep: true
     }
   },
   methods: {
     outsidePopup() {
       this.showPopup = false;
-    }
+    },
+    onClickPrevPages() {
+      if(this.cptData.currentPage > 1){
+        this.cptData.currentPage -=1;
+      }
+    },
+    onClickNextPages() {
+      if(this.cptData.currentPage < this.cptData.totalPages){
+        this.cptData.currentPage +=1;
+      }
+    },
   },
 }
 </script>
@@ -64,6 +86,9 @@ export default {
 @import url('@/assets/css/base/pagination.css');
 .select-popup {
   position: relative;
+}
+.select-popup input{
+  padding-left: 5px;
 }
 .select-popup .popup{
   position: absolute;

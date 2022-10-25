@@ -184,6 +184,12 @@ export default {
     listSelected: function() {
       this.cptOnlyDraft = this.checkOnlyDraft();
       this.cptOnlyNotApproval = this.checkOnlyNotApproval();
+    },
+    paging: {
+      handler(){
+        this.$emit("PagingEvent");
+      },
+      deep: true,
     }
   },
   methods: {

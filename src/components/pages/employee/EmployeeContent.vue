@@ -66,6 +66,7 @@
       @changeOnlyDraft="changeOnlyDraft"
       :objRequests="objRequests"
       @changeObjRequests="changeObjRequests"
+      @PagingEvent="onPagingEvent"
     ></RequestTable>
   </div>
   <FormDetail
@@ -135,6 +136,8 @@ export default {
       isShowMessageBox: false,
       warningMessage: ''
     };
+  },
+  watch: {
   },
   methods: {
     /**
@@ -332,6 +335,9 @@ export default {
       this.formMode = EnumForm.FormMode.Save;
       this.currentRequest = { ...InitData.NewRequest };
       this.isShowPopup = true;
+    },
+    onPagingEvent() {
+      this.getRequests();
     },
     changePagination(val) {
       this.pagination = val;
