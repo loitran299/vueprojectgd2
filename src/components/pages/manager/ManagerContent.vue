@@ -37,7 +37,7 @@
         <div class="icon-browse"></div>
         <span>Duyệt</span>
       </button>
-      <button class="btn-icon btn-none">
+      <button class="btn-icon btn-none" @click="refuseRequests">
         <div class="icon-refuse"></div>
         <span>Từ chối</span>
       </button>
@@ -83,6 +83,7 @@
 </template>
   
 <script>
+import Notification from "@/assets/js/Notification";
 import warningMessage from "@/Const/WarningMessage"
 import MessageBox from "@/components/base/MessageBox.vue"
 import EmployeeLevel from "@/Enum/EmployeeLevel";
@@ -187,9 +188,9 @@ export default {
         .then((response) => {
           this.getRequests();
           if (response) {
+            Notification.success("Duyệt thành công", `Đã duyệt ${this.requestsSelected.size} yêu cầu`);
             this.requestsSelected = new Set();
             this.objRequests = new Set();
-            alert("Đã duyệt yêu cầu");
           }
         })
         .catch((error) => {
@@ -232,6 +233,7 @@ export default {
         this.transferRequests = [...transferItems];
         console.log(this.transferRequest);
       }
+      this.objRequests = new Set();
     },
         /**
      * @Description gọi api gửi request lên cấp trên
@@ -247,15 +249,52 @@ export default {
         .then((response) => {
           this.getRequests();
           if (response) {
+            Notification.success("Duyệt thành công", `Đã duyệt ${this.transferRequest.length} yêu cầu`);
             this.requestsSelected = new Set();
             this.objRequests = new Set();
-            alert("Đã chuyển yêu cầu");
+            this.showPopupBrowse = false;
           }
         })
         .catch((error) => {
           console.log(error);
         });
-      console.log(url);
+    },
+        /**
+     * @Description Từ chối yêu cầu
+     * @Author TVLOI
+     * 25/10/2022
+     */
+    async refuseRequests() {
+      if(this.requestsSelected.size == 0){
+        this.isShowMessageBox = true;
+        this.warningMessage = warningMessage.RequireChoose;
+        return;
+      }
+      let requests = Array.from(this.objRequests);
+      if(!this.onlyNotApproval || requests.some(obj => obj.EmployeeIDCreatedUserChoose != this.user.EmployeeID)) {
+        this.isShowMessageBox = true;
+        this.warningMessage = warningMessage.RefuseOnlyApproval;
+        return;
+      }
+      var approvalItems = [...requests].map((request) => {
+          return request.RequestID;
+      }).filter(Boolean)
+      let url = `https://localhost:44342/api/v1/Request/Refuse?reasonForRefusal=test`;
+      await axios
+        .put(url, approvalItems, {
+          headers: { Authorization: `Bearer ${this.token}` },
+        })
+        .then((response) => {
+          this.getRequests();
+          if (response) {
+            Notification.success("Từ chối thành công", `Đã từ chối ${approvalItems.length} yêu cầu`);
+            this.requestsSelected = new Set();
+            this.objRequests = new Set();
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     /**
      * @Description Xem yêu cầu đã chọn

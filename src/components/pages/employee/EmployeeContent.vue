@@ -64,6 +64,8 @@
       @changeRequestsSelected="changeRequestsSelected"
       @changePagination="changePagination"
       @changeOnlyDraft="changeOnlyDraft"
+      :objRequests="objRequests"
+      @changeObjRequests="changeObjRequests"
     ></RequestTable>
   </div>
   <FormDetail
@@ -81,6 +83,7 @@
 </template>
 
 <script>
+import Notification from "@/assets/js/Notification";
 import warningMessage from "@/Const/WarningMessage"
 import MessageBox from "@/components/base/MessageBox.vue"
 import RequestStatus from "@/Enum/RequestStatus";
@@ -117,10 +120,11 @@ export default {
       isShowPopup: false,
       statusID: 1,
       currentRequest: { ...InitData.NewRequest },
-      dateBegin: "",
-      dateEnd: "",
+      dateBegin: new Date(),
+      dateEnd: new Date(),
       requestSelected: {},
       requestsSelected: new Set(),
+      objRequests: new Set(),
       pagination: {
         totalRecords: 0,
         totalPages: 1,
@@ -190,8 +194,11 @@ export default {
         .then((response) => {
           this.getRequests();
           if (response) {
-            this.requestsSelected = new Set();
-            alert("Gửi thành công");
+            Notification.success(
+              "Gửi thành công",
+              `Đã gửi  ${this.requestsSelected.size} yêu cầu`
+              );
+              this.requestsSelected = new Set();
           }
         })
         .catch((error) => {
@@ -226,7 +233,7 @@ export default {
         this.warningMessage = warningMessage.RequireChooseOne;
         return;
       }
-      if (this.currentRequest.Status != RequestStatus.Draft) {
+      if (this.currentRequest.Status != RequestStatus.Draft && this.currentRequest.Status != RequestStatus.Refused) {
         this.isShowMessageBox = true;
         this.warningMessage = warningMessage.Edit;
       } else {
@@ -257,8 +264,11 @@ export default {
         .then((response) => {
           this.getRequests();
           if (response) {
+            Notification.success(
+              "Xóa thành công",
+              `Đã xóa ${this.requestsSelected.size} yêu cầu`
+              );
             this.requestsSelected = new Set();
-            alert("Xóa thành công");
           }
         })
         .catch((error) => {
@@ -276,6 +286,12 @@ export default {
         this.warningMessage = warningMessage.RequireChoose;
         return;
       }
+      let requests = Array.from(this.objRequests);
+      if(requests.some(request => request.CurrentLevel > 10)){
+        this.isShowMessageBox = true;
+        this.warningMessage = warningMessage.RevokeLevel;
+        return;
+      }
       let url = `https://localhost:44342/api/v1/Request/Revoke`;
       await axios
         .put(url, Array.from(this.requestsSelected), {
@@ -284,8 +300,11 @@ export default {
         .then((response) => {
           this.getRequests();
           if (response) {
+            Notification.success(
+              "Thu hồi thành công",
+              `Đã thu hồi ${this.requestsSelected.size} yêu cầu`
+              );
             this.requestsSelected = new Set();
-            alert("Thu hồi thành công");
           }
         })
         .catch((error) => {
@@ -302,6 +321,9 @@ export default {
      */
     saveSuccess() {
       this.getRequests();
+    },
+    changeObjRequests(val) {
+      this.objRequests = val;
     },
     changeOnlyDraft(val) {
       this.onlyDraft = val;

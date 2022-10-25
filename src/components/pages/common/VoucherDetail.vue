@@ -124,7 +124,7 @@
               min="1"
               class="box-input text-align-end"
               v-model="cptData.ReductionAmount"
-              :disabled="(cptData.DiscountType == 1)"
+              :disabled="cptData.DiscountType == 1"
               :readonly="mode == Enum.FormMode.Watch"
             />
           </div>
@@ -225,9 +225,19 @@
           </div>
           <div class="box-row">
             <span>Cấp cho:</span>
-            <input type="radio" class="box-radio" name="who" :disabled="mode == Enum.FormMode.Watch"/>
+            <input
+              type="radio"
+              class="box-radio"
+              name="who"
+              :disabled="mode == Enum.FormMode.Watch"
+            />
             <label for="">Một khách hàng</label>
-            <input type="radio" class="box-radio" name="who" :disabled="mode == Enum.FormMode.Watch"/>
+            <input
+              type="radio"
+              class="box-radio"
+              name="who"
+              :disabled="mode == Enum.FormMode.Watch"
+            />
             <label for="">Danh sách khách hàng</label>
           </div>
 
@@ -264,7 +274,12 @@
           </div>
           <div class="box-row">
             <span>Mã ngân sách</span>
-            <input type="text" class="box-input" v-model="cptData.BudgetCode" :readonly="mode == Enum.FormMode.Watch"/>
+            <input
+              type="text"
+              class="box-input"
+              v-model="cptData.BudgetCode"
+              :readonly="mode == Enum.FormMode.Watch"
+            />
             <span class="span-right">Ngày thành lập</span>
             <el-date-picker
               :clearable="false"
@@ -299,7 +314,12 @@
               :readonly="mode == Enum.FormMode.Watch"
             />
             <span class="span-right">Email <span>(*)</span></span>
-            <input type="text" class="box-input" v-model="cptData.Email" :readonly="mode == Enum.FormMode.Watch"/>
+            <input
+              type="text"
+              class="box-input"
+              v-model="cptData.Email"
+              :readonly="mode == Enum.FormMode.Watch"
+            />
           </div>
         </div>
       </div>
@@ -323,6 +343,7 @@
 </template>
 
 <script>
+import Notification from "@/assets/js/Notification";
 import Enum from "@/Enum/VoucherDetail";
 import cookie from "@/stores/Cookie";
 import ComboboxData from "@/stores/ComboboxData";
@@ -424,8 +445,8 @@ export default {
           })
           .then((response) => {
             if (response) {
+              Notification.success("Thêm thành công", `Đã thêm 1 yêu cầu`);
               this.isShowForm = false;
-              alert("Thêm thành công");
             }
             this.$emit("saveSuccess");
           })
@@ -433,21 +454,21 @@ export default {
             console.log(error);
           });
       } else if (this.mode == Enum.FormMode.Edit) {
-          url = `${url}/${this.cptData.RequestID}`;
-          await axios
-            .put(url, this.cptData, {
-              headers: { Authorization: `Bearer ${this.token}` },
-            })
-            .then((response) => {
-              if (response) {
-                this.isShowForm = false;
-                alert("Sửa thành công");
-              }
-              this.$emit("saveSuccess");
-            })
-            .catch((error) => {
-              console.log(error);
-            });
+        url = `${url}/${this.cptData.RequestID}`;
+        await axios
+          .put(url, this.cptData, {
+            headers: { Authorization: `Bearer ${this.token}` },
+          })
+          .then((response) => {
+            if (response) {
+              Notification.success("Sửa thành công", `Đã Sửa yêu cầu`);
+              this.isShowForm = false;
+            }
+            this.$emit("saveSuccess");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
     },
     /**
