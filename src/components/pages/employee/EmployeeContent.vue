@@ -84,6 +84,7 @@
 </template>
 
 <script>
+import DateFunc from "@/assets/js/date"
 import Notification from "@/assets/js/Notification";
 import warningMessage from "@/Const/WarningMessage"
 import MessageBox from "@/components/base/MessageBox.vue"
@@ -121,7 +122,7 @@ export default {
       isShowPopup: false,
       statusID: 1,
       currentRequest: { ...InitData.NewRequest },
-      dateBegin: new Date(),
+      dateBegin: DateFunc.getMonday().toISOString(),
       dateEnd: new Date(),
       requestSelected: {},
       requestsSelected: new Set(),
@@ -214,13 +215,13 @@ export default {
      * 11/10/2022
      */
     watchRequest() {
+      this.currentRequest = this.requestSelected;
       if(!this.currentRequest.RequestID){
         this.isShowMessageBox = true;
         this.warningMessage = warningMessage.RequireChooseOne;
         return;
       }
       this.formMode = EnumForm.FormMode.Watch;
-      this.currentRequest = this.requestSelected;
       this.isShowPopup = true;
     },
     /**

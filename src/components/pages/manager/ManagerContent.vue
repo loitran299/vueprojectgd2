@@ -83,6 +83,7 @@
 </template>
   
 <script>
+import DateFunc from "@/assets/js/date"
 import Notification from "@/assets/js/Notification";
 import warningMessage from "@/Const/WarningMessage"
 import MessageBox from "@/components/base/MessageBox.vue"
@@ -121,7 +122,7 @@ export default {
       tableData: [],
       token: cookie.getCookie("Token"),
       user: cookie.getUser(),
-      dateBegin: new Date(),
+      dateBegin: DateFunc.getMonday().toISOString(),
       dateEnd: new Date(),
       statusID: 3,
       requestType: 1,
@@ -142,7 +143,7 @@ export default {
       transferRequests: []
     };
   },
-  created() {
+  mounted() {
     this.getRequests();
   },
   watch: {
@@ -311,8 +312,13 @@ export default {
      * 11/10/2022
      */
     watchRequest() {
-      this.formMode = EnumForm.FormMode.Watch;
       this.currentRequest = this.requestSelected;
+      if(!this.currentRequest.RequestID){
+        this.isShowMessageBox = true;
+        this.warningMessage = warningMessage.RequireChooseOne;
+        return;
+      }
+      this.formMode = EnumForm.FormMode.Watch;
       this.isShowPopup = true;
     },
     changePagination(val) {

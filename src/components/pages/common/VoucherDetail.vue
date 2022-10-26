@@ -26,6 +26,7 @@
             <span>Sản phẩm<span>(*)</span></span>
             <BaseCombobox
               class="form-combobox"
+              :class="{ warning: isValidate && !cptData.ProductID }"
               :data="products"
               :IdName="'ProductID'"
               :ValName="'ProductName'"
@@ -38,6 +39,7 @@
             <span>Áp dụng cho<span>(*)</span></span>
             <BaseCombobox
               class="form-combobox"
+              :class="{ warning: isValidate && !cptData.ApplyFor }"
               :data="ComboboxData.Applicable"
               :IdName="'Id'"
               :ValName="'Label'"
@@ -134,6 +136,7 @@
               type="number"
               min="1"
               class="box-input text-align-end"
+              :class="{ warning: isValidate && !cptDate.PriceBefore }"
               v-model="cptData.PriceBefore"
               :readonly="mode == Enum.FormMode.Watch"
             />
@@ -369,6 +372,7 @@ export default {
       token: cookie.getCookie("Token"),
       employees: [],
       user: cookie.getUser(),
+      isValidate: false,
     };
   },
   created() {
@@ -393,11 +397,11 @@ export default {
       },
     },
     validateForm() {
-      if(!this.cptData.ProductID) {
+      if (!this.cptData.ProductID) {
         return false;
       }
       return true;
-    }
+    },
   },
   methods: {
     /**
@@ -475,6 +479,28 @@ export default {
           .catch((error) => {
             console.log(error);
           });
+      }
+    },
+    /**
+     * @Description Thay đổi id sản phẩm
+     * @Author TVLOI
+     * 07/10/2022
+     */
+    validateOnBlur($event) {
+      try {
+        // Lấy ra target của sự kiện blur
+        const target = $event.currentTarget || $event.target;
+        const boundElement = target.closest(".input-validate");
+        // Nếu input là bắt buộc mà lại không được nhập
+        if (target.hasAttribute("required") && !target.value) {
+          // Gán thuộc tính cho input
+          boundElement.setAttribute("redBoder", true);
+        } else {
+          // Bỏ thuộc tính nếu hợp lệ
+          boundElement.removeAttribute("redBoder");
+        }
+      } catch (error) {
+        console.log(error);
       }
     },
     /**

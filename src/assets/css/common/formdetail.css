@@ -22,6 +22,10 @@
     border: none;
 }
 
+.form-content .input-validate[redBoder] {
+    border: 1px solid red;
+}
+
 .content-top button{
     border: none;
     background-color: transparent;
@@ -126,7 +130,7 @@
     flex: 1;
     height: 28px;
 }
-.box-row .form-combobox.active .el-input__wrapper {
+.box-row .form-combobox.warning .el-input__wrapper {
     border: 1px solid red;
 }
 
@@ -156,6 +160,9 @@
 }
 .box-row .box-input:focus {
     border: 1px solid #238de6;
+}
+.box-row .box-input.warning {
+    border: 1px solid red;
 }
 
 .box-row textarea {
