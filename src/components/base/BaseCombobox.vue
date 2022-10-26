@@ -6,12 +6,15 @@
 <template>
   <el-select
     v-model="bindValue"
+    :storeValue="bindValue"
     filterable
     class="el-select"
     :placeholder="' '"
     popper-class="selectbox"
     id="comboboxID"
     :disabled="disabled"
+    @blur="whenBlur"
+    combobox
   >
     <el-option v-for="item in data" :key="item[IdName]"
       :label="item[ValName]"
@@ -50,6 +53,9 @@ export default {
      * @Author TVLOI
      * 05/08/2022
      */
+     whenBlur(e) {
+      this.$emit('onBlur', e)
+    }
   },
 };
 </script>

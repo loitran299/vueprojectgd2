@@ -50,6 +50,10 @@
     font-size: 13px!important;
 }
 
+.el-select[comboboxRedBoder] .el-input__wrapper {
+    border: 1px solid red!important;
+}
+
 .border-none {
     width: inherit!important;
     height: 32px;

@@ -25,7 +25,7 @@
           <div class="box-row">
             <span>Sản phẩm<span>(*)</span></span>
             <BaseCombobox
-              class="form-combobox"
+              class="form-combobox input-validate"
               :class="{ warning: isValidate && !cptData.ProductID }"
               :data="products"
               :IdName="'ProductID'"
@@ -33,12 +33,14 @@
               :value="cptData.ProductID"
               @changeValue="changeProduct"
               :disabled="mode == Enum.FormMode.Watch"
+              @onBlur="validateOnBlur"
+              required
             ></BaseCombobox>
           </div>
           <div class="box-row">
             <span>Áp dụng cho<span>(*)</span></span>
             <BaseCombobox
-              class="form-combobox"
+              class="form-combobox input-validate"
               :class="{ warning: isValidate && !cptData.ApplyFor }"
               :data="ComboboxData.Applicable"
               :IdName="'Id'"
@@ -46,6 +48,8 @@
               :value="cptData.ApplyFor"
               @changeValue="changeApplyFor"
               :disabled="mode == Enum.FormMode.Watch"
+              @onBlur="validateOnBlur"
+              required
             ></BaseCombobox>
           </div>
           <div class="box-row">
@@ -135,10 +139,12 @@
             <input
               type="number"
               min="1"
-              class="box-input text-align-end"
+              class="box-input text-align-end input-validate"
               :class="{ warning: isValidate && !cptDate.PriceBefore }"
               v-model="cptData.PriceBefore"
               :readonly="mode == Enum.FormMode.Watch"
+              @blur="validateOnBlur"
+              required
             />
           </div>
           <div class="box-row">
@@ -207,13 +213,15 @@
           <div class="box-row">
             <span>Người duyệt yêu cầu<span>(*)</span></span>
             <BaseCombobox
-              class="form-combobox"
+              class="form-combobox input-validate"
               :data="employees"
               :IdName="'EmployeeID'"
               :ValName="'EmployeeName'"
               :value="cptData.EmployeeIDCreatedUserChoose"
               @changeValue="changeBrowser"
               :disabled="mode == Enum.FormMode.Watch"
+              @onBlur="validateOnBlur"
+              required
             ></BaseCombobox>
           </div>
           <div class="box-row">
@@ -252,7 +260,7 @@
             <span>MST/CMT <span>(*)</span></span>
             <input
               type="text"
-              class="box-input"
+              class="box-input input-validate"
               v-model="cptData.CustomerIdentity"
               :readonly="mode == Enum.FormMode.Watch"
             />
@@ -270,9 +278,11 @@
             <span>Địa chỉ <span>(*)</span></span>
             <input
               type="text"
-              class="box-input flex1"
+              class="box-input flex1 input-validate"
               v-model="cptData.Address"
               :readonly="mode == Enum.FormMode.Watch"
+              @blur="validateOnBlur"
+              required
             />
           </div>
           <div class="box-row">
@@ -303,25 +313,31 @@
             <span>Người liên hệ <span>(*)</span></span>
             <input
               type="text"
-              class="box-input flex1"
+              class="box-input flex1 input-validate"
               v-model="cptData.ContactBy"
               :readonly="mode == Enum.FormMode.Watch"
+              @blur="validateOnBlur"
+              required
             />
           </div>
           <div class="box-row">
             <span>Số điện thoại <span>(*)</span></span>
             <input
               type="text"
-              class="box-input"
+              class="box-input input-validate"
               v-model="cptData.PhoneNumber"
               :readonly="mode == Enum.FormMode.Watch"
+              @blur="validateOnBlur"
+              required
             />
             <span class="span-right">Email <span>(*)</span></span>
             <input
               type="text"
-              class="box-input"
+              class="box-input input-validate"
               v-model="cptData.Email"
               :readonly="mode == Enum.FormMode.Watch"
+              @blur="validateOnBlur"
+              required
             />
           </div>
         </div>
@@ -343,9 +359,17 @@
       </div>
     </Vue3DraggableResizable>
   </div>
+
+  <MessageBox
+    v-if="isShowMessageBox"
+    :message="warningMessage"
+    :isShow="isShowMessageBox"
+    @changeShowMessage="changeShowMessage"
+  ></MessageBox>
 </template>
 
 <script>
+import MessageBox from "@/components/base/MessageBox.vue";
 import Notification from "@/assets/js/Notification";
 import Enum from "@/Enum/VoucherDetail";
 import cookie from "@/stores/Cookie";
@@ -360,6 +384,7 @@ export default {
   components: {
     BaseCombobox,
     DateRequest,
+    MessageBox,
   },
   data() {
     return {
@@ -373,6 +398,8 @@ export default {
       employees: [],
       user: cookie.getUser(),
       isValidate: false,
+      isShowMessageBox: false,
+      warningMessage: "",
     };
   },
   created() {
@@ -446,6 +473,11 @@ export default {
      * 07/10/2022
      */
     async addRequest() {
+      let validate = this.validateRequest();
+      if (!validate) {
+        this.validateAll();
+        return;
+      }
       let url = `https://localhost:44342/api/v1/Request`;
       if (this.mode == Enum.FormMode.Save) {
         this.cptData.CreatedEmployeeID = this.user.EmployeeID;
@@ -481,10 +513,27 @@ export default {
           });
       }
     },
+    validateAll() {
+      const elements = document.getElementsByClassName("input-validate");
+      Array.from(elements).forEach((el) => {
+        if (el.hasAttribute("required")) {
+          // Gán thuộc tính cho input
+          if(el.hasAttribute("combobox") && !el.querySelector('input').value){
+            
+            el.setAttribute("comboboxRedBoder", true);
+          }else if(!el.value && !el.hasAttribute("combobox")) {
+            el.setAttribute("redBoder", true);
+          }
+        }else{
+          el.removeAttribute("redBoder");
+          el.removeAttribute("comboboxRedBoder");
+        }
+      });
+    },
     /**
-     * @Description Thay đổi id sản phẩm
+     * @Description Xử lý sự kiện khi blur các input validate
      * @Author TVLOI
-     * 07/10/2022
+     * 26/10/2022
      */
     validateOnBlur($event) {
       try {
@@ -495,13 +544,158 @@ export default {
         if (target.hasAttribute("required") && !target.value) {
           // Gán thuộc tính cho input
           boundElement.setAttribute("redBoder", true);
-        } else {
+        } else if (boundElement.hasAttribute("required")) {
           // Bỏ thuộc tính nếu hợp lệ
+          setTimeout(() => {
+            if (!target.value) {
+              boundElement.setAttribute("comboboxRedBoder", true);
+            } else {
+              boundElement.removeAttribute("comboboxRedBoder");
+            }
+          }, 100);
+        } else {
           boundElement.removeAttribute("redBoder");
         }
       } catch (error) {
         console.log(error);
       }
+    },
+    /**
+     * @Description validate thông tin yêu cầu
+     * @Author TVLOI
+     * 26/10/2022
+     */
+    validateRequest() {
+      var me = this;
+      try {
+        let isValid = true;
+
+        // Nếu trường Product Id rỗng
+        if (!me.cptData.ProductID) {
+          // Cập nhật lại biến isValid
+          isValid = false;
+          // Cập nhật errorMsg và set invalid cho input
+          this.warningMessage = "Sản phẩm không được để trống";
+          this.isShowMessageBox = true;
+          return;
+        }
+
+        // Nếu trường Số tiền trước giảm giá rỗng
+        if (!me.cptData.PriceBefore) {
+          // Cập nhật lại biến isValid
+          isValid = false;
+          // Cập nhật errorMsg và set invalid cho input
+          this.warningMessage = "Số tiền trước giảm giá không được để trống";
+          this.isShowMessageBox = true;
+          return;
+        }
+
+        // Nếu chọn loại giảm giá theo số tiền và số tiền giảm rỗng hoặc lớn hơn Số tiền trước giảm giá
+        if (me.cptData.DiscountType === 1) {
+          if (!me.cptData.ReductionAmount) {
+            // Cập nhật lại biến isValid
+            isValid = false;
+            // Cập nhật errorMsg và set invalid cho input
+            this.warningMessage = "Số tiền giảm giá không được để trống";
+            this.isShowMessageBox = true;
+            return;
+          } else if (
+            me.cptData.PriceBefore &&
+            parseInt(me.cptData.ReductionAmount) >
+              parseInt(me.cptData.PriceBefore)
+          ) {
+            // Cập nhật lại biến isValid
+            isValid = false;
+            // Cập nhật errorMsg và set invalid cho input
+            this.warningMessage =
+              "Số tiền giảm giá không được lớn hơn trước giảm giá";
+            this.isShowMessageBox = true;
+            return;
+          }
+        }
+
+        // Nếu trường Danh mục rỗng
+        if (!me.cptData.Category) {
+          // Cập nhật lại biến isValid
+          isValid = false;
+          // Cập nhật errorMsg và set invalid cho input
+          this.warningMessage = "Danh mục không được để trống";
+          this.isShowMessageBox = true;
+          return;
+        }
+
+        // Nếu trường Nhân viên duyệt rỗng
+        if (!me.cptData.EmployeeIDCreatedUserChoose) {
+          // Cập nhật lại biến isValid
+          isValid = false;
+          // Cập nhật errorMsg và set invalid cho input
+          this.warningMessage = "Nhân viên duyệt không được để trống";
+          this.isShowMessageBox = true;
+          return;
+        }
+
+        // Nếu trường ID khách hàng rỗng
+        if (!me.cptData.CustomerIdentity) {
+          // Cập nhật lại biến isValid
+          isValid = false;
+          // Cập nhật errorMsg và set invalid cho input
+          this.warningMessage = "Id khách hàng không được để trống";
+          this.isShowMessageBox = true;
+          return;
+        }
+
+        // Nếu trường địa chỉ khách hàng rỗng
+        if (!me.cptData.Address) {
+          // Cập nhật lại biến isValid
+          isValid = false;
+          // Cập nhật errorMsg và set invalid cho input
+          this.warningMessage = "Địa chỉ không được để trống";
+          this.isShowMessageBox = true;
+          return;
+        }
+
+        // Nếu trường người liên hệ của khách hàng rỗng
+        if (!me.cptData.ContactBy) {
+          // Cập nhật lại biến isValid
+          isValid = false;
+          // Cập nhật errorMsg và set invalid cho input
+          this.warningMessage = "Người liên hệ không được để trống";
+          this.isShowMessageBox = true;
+          return;
+        }
+
+        // Nếu trường phonenumber khách hàng rỗng
+        if (!me.cptData.PhoneNumber) {
+          // Cập nhật lại biến isValid
+          isValid = false;
+          // Cập nhật errorMsg và set invalid cho input
+          this.warningMessage = "Số điện thoại không được để trống";
+          this.isShowMessageBox = true;
+          return;
+        }
+
+        // Nếu trường Email khách hàng rỗng
+        if (!me.cptData.Email) {
+          // Cập nhật lại biến isValid
+          isValid = false;
+          // Cập nhật errorMsg và set invalid cho input
+          this.warningMessage = "Email không được để trống";
+          this.isShowMessageBox = true;
+          return;
+        }
+
+        return isValid;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    /**
+     * @Description Thay đổi biến ẩn hiện messagebox
+     * @Author TVLOI
+     * 26/10/2022
+     */
+    changeShowMessage(val) {
+      this.isShowMessageBox = val;
     },
     /**
      * @Description Thay đổi id sản phẩm
