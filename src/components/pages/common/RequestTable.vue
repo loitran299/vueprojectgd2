@@ -6,7 +6,9 @@
           <thead>
             <tr>
               <th rowspan="2">
-                <div class="checkbox icon-uncheck"></div>
+                <div class="checkbox icon-uncheck" @click="checkboxAll" :class="{
+                    active: selectAll,
+                  }"></div>
               </th>
               <th v-for="item in header" :key="item.HeadName">
                 {{ item.HeadName }}
@@ -128,6 +130,7 @@ export default {
       tableEnum: TableEnum,
       requestFunc: Request,
       currentSelect: "",
+      selectAll: false
     };
   },
   computed: {
@@ -199,6 +202,7 @@ export default {
      * 07/10/2022
      */
     onTickRow(request) {
+      this.selectAll = false;
       if (this.requestsSelected.has(request.RequestMemberID)) {
         this.requestsSelected.delete(request.RequestMemberID);
         this.listSelected.delete(request);
@@ -209,6 +213,7 @@ export default {
       this.currentSelect = request.RequestMemberID;
       this.requestSelected = { ...request };
       this.cptOnlyDraft = this.checkOnlyDraft();
+      this.cptOnlyNotApproval = this.checkOnlyNotApproval();
     },
     /**
      * @Description khi click 1 row
@@ -238,6 +243,20 @@ export default {
         }
         return check;
     },
+    checkboxAll() {
+      this.selectAll = !this.selectAll;
+      if(this.selectAll){
+        [...this.data].filter((item) => {
+          this.listSelected.add(item);
+          this.requestsSelected.add(item.RequestMemberID);
+        })
+      }else {
+        this.listSelected = new Set();
+        this.requestsSelected = new Set();
+      }
+      this.cptOnlyDraft = this.checkOnlyDraft();
+      this.cptOnlyNotApproval = this.checkOnlyNotApproval();
+    }
   },
 };
 </script>

@@ -37,7 +37,7 @@
         <div class="icon-browse"></div>
         <span>Duyệt</span>
       </button>
-      <button class="btn-icon btn-none" @click="refuseRequests">
+      <button class="btn-icon btn-none" @click="checkRefuse">
         <div class="icon-refuse"></div>
         <span>Từ chối</span>
       </button>
@@ -71,6 +71,8 @@
     @admit="sendRequest"
   ></BrowsePopup>
 
+  <RefusePopup v-if="showRefusePopup" @admit="refuseRequests" @cancel="showRefusePopup = false"></RefusePopup>
+
   <FormDetail
     v-if="isShowPopup"
     :isShow="isShowPopup"
@@ -79,14 +81,19 @@
     :mode="formMode"
   >
   </FormDetail>
-  <MessageBox v-if="isShowMessageBox" :message="warningMessage" :isShow="isShowMessageBox" @changeShowMessage="changeShowMessage" ></MessageBox>
+  <MessageBox
+    v-if="isShowMessageBox"
+    :message="warningMessage"
+    :isShow="isShowMessageBox"
+    @changeShowMessage="changeShowMessage"
+  ></MessageBox>
 </template>
   
 <script>
-import DateFunc from "@/assets/js/date"
+import DateFunc from "@/assets/js/date";
 import Notification from "@/assets/js/Notification";
-import warningMessage from "@/Const/WarningMessage"
-import MessageBox from "@/components/base/MessageBox.vue"
+import warningMessage from "@/Const/WarningMessage";
+import MessageBox from "@/components/base/MessageBox.vue";
 import EmployeeLevel from "@/Enum/EmployeeLevel";
 import FormDetail from "@/components/pages/common/VoucherDetail.vue";
 import EnumForm from "@/Enum/VoucherDetail";
@@ -97,6 +104,7 @@ import ComboboxData from "@/stores/ComboboxData";
 import RequestTable from "@/components/pages/common/RequestTable.vue";
 import ConstTable from "@/Const/Table";
 import BrowsePopup from "@/components/pages/manager/BrowsePopup.vue";
+import RefusePopup from "@/components/pages/manager/RefuseRequest.vue";
 import DateRequest from "@/components/base/DateRange.vue";
 import SearchCombobox from "@/components/base/BaseCombobox.vue";
 import "splitpanes/dist/splitpanes.css";
@@ -108,7 +116,8 @@ export default {
     BrowsePopup,
     RequestTable,
     FormDetail,
-    MessageBox
+    MessageBox,
+    RefusePopup,
   },
   data() {
     return {
@@ -138,9 +147,10 @@ export default {
         recordPerPage: 10,
       },
       isShowMessageBox: false,
-      warningMessage: '',
+      showRefusePopup: false,
+      warningMessage: "",
       onlyNotApproval: true,
-      transferRequests: []
+      transferRequests: [],
     };
   },
   mounted() {
@@ -148,12 +158,12 @@ export default {
   },
   watch: {
     pagination: {
-      handler(newVal){
-        console.log("handler-------"+newVal)
+      handler(newVal) {
+        console.log("handler-------" + newVal);
         this.getRequests();
       },
       immediate: true,
-    }
+    },
   },
   methods: {
     /**
@@ -189,7 +199,7 @@ export default {
           console.log(error);
         });
     },
-    async approvalRequest(requests){
+    async approvalRequest(requests) {
       let url = `https://localhost:44342/api/v1/Request/Approval`;
       await axios
         .put(url, requests, {
@@ -198,7 +208,10 @@ export default {
         .then((response) => {
           this.getRequests();
           if (response) {
-            Notification.success("Duyệt thành công", `Đã duyệt ${this.requestsSelected.size} yêu cầu`);
+            Notification.success(
+              "Duyệt thành công",
+              `Đã duyệt ${this.requestsSelected.size} yêu cầu`
+            );
             this.requestsSelected = new Set();
             this.objRequests = new Set();
           }
@@ -207,50 +220,54 @@ export default {
           console.log(error);
         });
     },
-        /**
+    /**
      * @Description Xử lý sự kiện duyệt yêu cầu duyệt hoặc chuyển lên cấp cao hơn
      * @Author TVLOI
      * 07/10/2022
      */
     async onBrowse() {
-      if(this.requestsSelected.size == 0){
+      if (this.requestsSelected.size == 0) {
         this.isShowMessageBox = true;
         this.warningMessage = warningMessage.RequireChoose;
         return;
       }
-      if(!this.onlyNotApproval) {
+      if (!this.onlyNotApproval) {
         this.isShowMessageBox = true;
         this.warningMessage = warningMessage.OnlyNotApproval;
         return;
       }
       let requests = Array.from(this.objRequests);
-      var approvalItems = [...requests].map((request) => {
-        if(request.LevelCreatedUserChoose == request.CurrentLevel){
-          return request.RequestID;
-        }
-      }).filter(Boolean)
-      var transferItems = [...requests].map((request) => {
-        if(request.LevelCreatedUserChoose > request.CurrentLevel){
-          this.transferRequest = request;
-          return request.RequestID;
-        }
-      }).filter(Boolean)
-      if(approvalItems.length > 0){
+      var approvalItems = [...requests]
+        .map((request) => {
+          if (request.LevelCreatedUserChoose == request.CurrentLevel) {
+            return request.RequestID;
+          }
+        })
+        .filter(Boolean);
+      var transferItems = [...requests]
+        .map((request) => {
+          if (request.LevelCreatedUserChoose > request.CurrentLevel) {
+            this.transferRequest = request;
+            return request.RequestID;
+          }
+        })
+        .filter(Boolean);
+      if (approvalItems.length > 0) {
         await this.approvalRequest(approvalItems);
       }
-      if(transferItems.length > 0){
+      if (transferItems.length > 0) {
         this.showPopupBrowse = true;
         this.transferRequests = [...transferItems];
         console.log(this.transferRequest);
       }
       this.objRequests = new Set();
     },
-        /**
+    /**
      * @Description gọi api gửi request lên cấp trên
      * @Author TVLOI
      * 24/10/2022
      */
-    async sendRequest(){
+    async sendRequest() {
       let url = `https://localhost:44342/api/v1/Request/Transfer?employeeIdChooser=${this.transferRequest.EmployeeIDCreatedUserChoose}&level=${this.transferRequest.CurrentLevel}`;
       await axios
         .put(url, this.transferRequests, {
@@ -259,7 +276,10 @@ export default {
         .then((response) => {
           this.getRequests();
           if (response) {
-            Notification.success("Duyệt thành công", `Đã duyệt ${this.transferRequest.length} yêu cầu`);
+            Notification.success(
+              "Duyệt thành công",
+              `Đã duyệt ${this.transferRequest.length} yêu cầu`
+            );
             this.requestsSelected = new Set();
             this.objRequests = new Set();
             this.showPopupBrowse = false;
@@ -269,27 +289,43 @@ export default {
           console.log(error);
         });
     },
-        /**
-     * @Description Từ chối yêu cầu
+    /**
+     * @Description check trước khi từ chối yêu cầu
      * @Author TVLOI
      * 25/10/2022
      */
-    async refuseRequests() {
-      if(this.requestsSelected.size == 0){
+    async checkRefuse() {
+      if (this.requestsSelected.size == 0) {
         this.isShowMessageBox = true;
         this.warningMessage = warningMessage.RequireChoose;
         return;
       }
       let requests = Array.from(this.objRequests);
-      if(!this.onlyNotApproval || requests.some(obj => obj.EmployeeIDCreatedUserChoose != this.user.EmployeeID)) {
+      if (
+        !this.onlyNotApproval ||
+        requests.some(
+          (obj) => obj.EmployeeIDCreatedUserChoose != this.user.EmployeeID
+        )
+      ) {
         this.isShowMessageBox = true;
         this.warningMessage = warningMessage.RefuseOnlyApproval;
         return;
       }
-      var approvalItems = [...requests].map((request) => {
+      this.showRefusePopup = true;
+    },
+        /**
+     * @Description gọi Api từ chối yêu cầu
+     * @Author TVLOI
+     * 30/10/2022
+     */
+    async refuseRequests(reasonForRefusal){
+      let requests = Array.from(this.objRequests);
+      var approvalItems = [...requests]
+        .map((request) => {
           return request.RequestID;
-      }).filter(Boolean)
-      let url = `https://localhost:44342/api/v1/Request/Refuse?reasonForRefusal=test`;
+        })
+        .filter(Boolean);
+      let url = `https://localhost:44342/api/v1/Request/Refuse?reasonForRefusal=${reasonForRefusal}`;
       await axios
         .put(url, approvalItems, {
           headers: { Authorization: `Bearer ${this.token}` },
@@ -297,7 +333,11 @@ export default {
         .then((response) => {
           this.getRequests();
           if (response) {
-            Notification.success("Từ chối thành công", `Đã từ chối ${approvalItems.length} yêu cầu`);
+            this.showRefusePopup = false;
+            Notification.success(
+              "Từ chối thành công",
+              `Đã từ chối ${approvalItems.length} yêu cầu`
+            );
             this.requestsSelected = new Set();
             this.objRequests = new Set();
           }
@@ -313,7 +353,7 @@ export default {
      */
     watchRequest() {
       this.currentRequest = this.requestSelected;
-      if(!this.currentRequest.RequestID){
+      if (!this.currentRequest.RequestID) {
         this.isShowMessageBox = true;
         this.warningMessage = warningMessage.RequireChooseOne;
         return;
@@ -322,7 +362,7 @@ export default {
       this.isShowPopup = true;
     },
     changePagination(val) {
-      debugger
+      debugger;
       this.pagination = val;
       this.getRequests();
     },
@@ -335,7 +375,7 @@ export default {
     changeOnlyNotApproval(val) {
       this.onlyNotApproval = val;
     },
-    changeShowMessage(val){
+    changeShowMessage(val) {
       this.isShowMessageBox = val;
     },
     onClosePopup(value) {

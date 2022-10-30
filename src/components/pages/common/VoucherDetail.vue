@@ -181,7 +181,7 @@
               :value="10"
               :disabled="mode == Enum.FormMode.Watch"
             />
-            <label for=""
+            <label for="" title="Ban giám đốc trung tâm kinh doanh (Hà Nội, Hồ Chí Minh)/ Trưởng phòng kinh doanh..."
               >Ban GĐ TTKD (HAN, HCM)/ TP KD (DNG, BMT, CTH)/ TP GHCN khối
               DN</label
             >
@@ -256,7 +256,7 @@
         </div>
         <div class="content-center-box">
           <div class="box-title"><span>Thông tin khách hàng</span></div>
-          <div class="box-row">
+          <div class="box-row" title="Mã số thuế/Chứng minh thư">
             <span>MST/CMT <span>(*)</span></span>
             <input
               type="text"
@@ -544,7 +544,7 @@ export default {
         if (target.hasAttribute("required") && !target.value) {
           // Gán thuộc tính cho input
           boundElement.setAttribute("redBoder", true);
-        } else if (boundElement.hasAttribute("required")) {
+        } else if (boundElement.hasAttribute("required") && boundElement.hasAttribute("combobox")) {
           // Bỏ thuộc tính nếu hợp lệ
           setTimeout(() => {
             if (!target.value) {
@@ -580,18 +580,8 @@ export default {
           return;
         }
 
-        // Nếu trường Số tiền trước giảm giá rỗng
-        if (!me.cptData.PriceBefore) {
-          // Cập nhật lại biến isValid
-          isValid = false;
-          // Cập nhật errorMsg và set invalid cho input
-          this.warningMessage = "Số tiền trước giảm giá không được để trống";
-          this.isShowMessageBox = true;
-          return;
-        }
-
         // Nếu chọn loại giảm giá theo số tiền và số tiền giảm rỗng hoặc lớn hơn Số tiền trước giảm giá
-        if (me.cptData.DiscountType === 1) {
+        if (me.cptData.DiscountType === 2) {
           if (!me.cptData.ReductionAmount) {
             // Cập nhật lại biến isValid
             isValid = false;
@@ -612,6 +602,16 @@ export default {
             this.isShowMessageBox = true;
             return;
           }
+        }
+
+        // Nếu trường Số tiền trước giảm giá rỗng
+        if (!me.cptData.PriceBefore) {
+          // Cập nhật lại biến isValid
+          isValid = false;
+          // Cập nhật errorMsg và set invalid cho input
+          this.warningMessage = "Số tiền trước giảm giá không được để trống";
+          this.isShowMessageBox = true;
+          return;
         }
 
         // Nếu trường Danh mục rỗng

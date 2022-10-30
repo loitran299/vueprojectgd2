@@ -290,6 +290,11 @@ export default {
         this.warningMessage = warningMessage.RequireChoose;
         return;
       }
+      if(!this.onlyDraft){
+        this.isShowMessageBox = true;
+        this.warningMessage = warningMessage.Recall;
+        return;
+      }
       let requests = Array.from(this.objRequests);
       if(requests.some(request => request.CurrentLevel > 10)){
         this.isShowMessageBox = true;
@@ -309,6 +314,7 @@ export default {
               `Đã thu hồi ${this.requestsSelected.size} yêu cầu`
               );
             this.requestsSelected = new Set();
+            this.objRequests = new Set();
           }
         })
         .catch((error) => {
